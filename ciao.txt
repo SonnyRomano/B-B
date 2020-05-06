@@ -1,7 +1,3 @@
 ciao
-<<<<<<< HEAD
-sdfad
 pirrone best prof
-=======
 prova2
->>>>>>> f9ef510d13d0412cd26a53df345834346615aa1b
