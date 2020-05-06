@@ -1,11 +1,5 @@
 ciao
-<<<<<<< HEAD
 prova2
 test franco
-=======
 pirrone best prof
-<<<<<<< HEAD
 prova2 wfiga
->>>>>>> 8f62da6ead179f097a7ce63ac91e918697ce674c
-=======
->>>>>>> 684bb7eba603212c8300c76be66566b38aaa5544
