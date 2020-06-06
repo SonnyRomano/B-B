@@ -8,12 +8,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!--librerie per il data-picker-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <title>Document</title>
     <style>
         .navbar {
             background-color: transparent;
-            /* text-align: right; */
-
         }
 
         .container-fluid {
@@ -26,19 +29,21 @@
         }
 
         a {
-            color: darkblue;
+            color: blue;
         }
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(6, 35, 232)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            padding: 0%;
         }
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
-
-
         <nav class="navbar navbar-expand-md">
             <!-- Brand -->
             <a class="navbar-brand" href="#">MARS Team</a>
@@ -84,7 +89,7 @@
                         <a class="nav-link" href="#">Diventa host</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Accedi</a>
+                        <a class="nav-link" href="LoginPage.html">Accedi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Registrati</a>
@@ -92,18 +97,73 @@
                 </ul>
             </div>
         </nav>
+        <!-- Campo di ricerca -->
 
-        <div class="container py-5 col-8">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Inserisci Località" aria-label=""
-                    aria-describedby="basic-addon1">
-                <small id="locationInputHelp" class="form-text text-muted sr-only">Inserisci località di
-                    destinazione.</small>
-                <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary btn-light" type="button">Cerca</button>
+        <!-- aggiungo card con data-picker-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 py-5">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h1 class="h3">Book homes, hotels, and more on Airbnb</h1>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
+
+
+
+                            <form>
+                                <div class="form-group">
+                                    <!--inserisco label per cercare la località-->
+                                    <label for="locationInput">DOVE</label>
+                                    <input type="email" class="form-control" id="locationInput"
+                                        aria-describedby="locationInputHelp" placeholder="Località">
+                                    <small id="locationInputHelp" class="form-text text-muted sr-only">Please type in
+                                        your desired destination.</small>
+                                    Check In: <input id="startDate" width="276" />
+                                    Check Out: <input id="endDate" width="276" />
+
+                                </div>
+                            </form>
+                            <a href="#" class="btn btn-danger btn-block">Cerca</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <script>
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('#startDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+    <!--sezione card data-picker -->
+    <div class="container-fluid container bg-secondary display-1">
+
+
 
     </div>
 </body>
