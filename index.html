@@ -20,32 +20,34 @@
             background-color: transparent;
         }
 
-        .container-fluid {
+        body {
             padding: 0;
-            background-image: url("./backgroundimg.jpg");
-            height: 100vh;
-            background-repeat: no-repeat, repeat;
-            /* background-attachment: fixed; */
-            background-size: cover;
-            position: fixed;
+
+            /* position: fixed; */
         }
 
         a {
             color: darkblue;
-            font-weight: 600;
+            /* font-weight: 500; */
         }
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(6, 35, 232)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
         }
 
-        .container {
+        .container-fluid {
             padding: 0%;
+            background-image: url("./backgroundimg.jpg");
+            height: 100vh;
+            background-repeat: no-repeat, repeat;
+            /* background-attachment: fixed; */
+            background-size: cover;
+
         }
 
         .footer {
             text-align: center;
-            padding: 3px;
+            /* padding: 3px; */
             background-color: transparent;
             /* color; */
             position: bottom;
@@ -119,72 +121,72 @@
 
 
         <!-- aggiungo card con data-picker-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sd-2 py-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- card-body -->
+        <div class="container justify-content-center">
 
-                            <h1 class="h3">Prenota case vacanza e B&B sul nostro sito</h1>
-                            <p class="card-text">Seleziona la località desiderata, le date di check in, check-out e il
-                                numero di ospiti</p>
+            <div class="col-md-8 py-5 ">
+                <div class="card">
+                    <div class="card-body" style="padding: 2rem;">
+                        <!-- card-body -->
 
-                            <form>
+                        <h1 class="h3">Prenota case vacanza e B&B sul nostro sito</h1>
+                        <p class="card-text">Seleziona la località desiderata, le date di check in, check-out e il
+                            numero di ospiti</p>
 
-                                <div class="form-group">
-                                    <label for="locationInput">DOVE</label>
-                                    <input type="email" class="form-control" id="locationInput" placeholder="Località">
-                                    <small id="locationInputHelp" class="form-text text-muted sr-only">Please type in
-                                        your desired destination.</small>
-                                    <!-- Check In: <input id="startDate" />
-                                    Check Out: <input id="endDate" /> -->
+                        <form>
 
-                                </div>
+                            <div class="form-group">
+                                <label for="locationInput">DOVE</label>
+                                <input type="email" class="form-control" id="locationInput" placeholder="Località">
+                                <small id="locationInputHelp" class="form-text text-muted sr-only">Please type in
+                                    your desired destination.</small>
+                                <!-- Check In: <input id="startDate" />
+                                        Check Out: <input id="endDate" /> -->
 
-                                <div class="form-group">
-                                    <div class="form-row">
-                                        <div class="col-6">
-                                            <label for="birthdate">Check In</label>
-                                            <input name="birthdate" id="birthdate" type="date" class="form-control" />
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="birthdate">Check Out</label>
-                                            <input name="birthdate" id="birthdate" type="date" class="form-control" />
-                                        </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <label for="birthdate">Check In</label>
+                                        <input name="birthdate" id="birthdate" type="date" class="form-control" />
                                     </div>
-                                    <label for="num_ospiti">Numero di ospiti</label>
-                                    <select id="num_ospiti" class="custom-select" name="region" required>
-                                        <option value="" selected></option>
-                                        <option value="0">1</option>
-                                        <option value="1">2</option>
-                                        <option value="2">3</option>
-                                        <option value="3">4</option>
-                                        <option value="4">5</option>
-                                        <option value="5">6</option>
-                                        <option value="6">7</option>
-                                        <option value="7">8</option>
-                                        <option value="8">9</option>
-                                        <option value="9">10</option>
-                                        <!--                                         <option value="10">Molise</option>
-                                        <option value="11">Piemonte</option>
-                                        <option value="12">Puglia</option>
-                                        <option value="13">Sardegna</option>
-                                        <option value="14">Sicilia</option>
-                                        <option value="15">Toscana</option>
-                                        <option value="16">Trentino-Alto Adige</option>
-                                        <option value="17">Umbria</option>
-                                        <option value="18">Valle d'Aosta</option>
-                                        <option value="19">Veneto</option>
- -->
-                                    </select>
+                                    <div class="col-6">
+                                        <label for="birthdate">Check Out</label>
+                                        <input name="birthdate" id="birthdate" type="date" class="form-control" />
+                                    </div>
                                 </div>
-                            </form>
-                            <a href="#" class="btn btn-danger btn-block mt-5">Cerca</a>
-                        </div><!-- card-body -->
-                    </div>
+                                <label for="num_ospiti">Numero di ospiti</label>
+                                <select id="num_ospiti" class="custom-select" name="region" required>
+                                    <option value="" selected></option>
+                                    <option value="0">1</option>
+                                    <option value="1">2</option>
+                                    <option value="2">3</option>
+                                    <option value="3">4</option>
+                                    <option value="4">5</option>
+                                    <option value="5">6</option>
+                                    <option value="6">7</option>
+                                    <option value="7">8</option>
+                                    <option value="8">9</option>
+                                    <option value="9">10</option>
+                                    <!--                                         <option value="10">Molise</option>
+                                            <option value="11">Piemonte</option>
+                                            <option value="12">Puglia</option>
+                                            <option value="13">Sardegna</option>
+                                            <option value="14">Sicilia</option>
+                                            <option value="15">Toscana</option>
+                                            <option value="16">Trentino-Alto Adige</option>
+                                            <option value="17">Umbria</option>
+                                            <option value="18">Valle d'Aosta</option>
+                                            <option value="19">Veneto</option>
+     -->
+                                </select>
+                            </div>
+                        </form>
+                        <a href="#" class="btn btn-danger btn-block mt-5">Cerca</a>
+                    </div><!-- card-body -->
                 </div>
             </div>
+
 
         </div>
 
@@ -192,26 +194,29 @@
 
 
         <!--     <script>
-        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-        $('#startDate').datepicker({
-            uiLibrary: 'bootstrap4',
-            iconsLibrary: 'fontawesome',
-            minDate: today,
-            maxDate: function () {
-                return $('#endDate').val();
-            }
-        });
-        $('#endDate').datepicker({
-            uiLibrary: 'bootstrap4',
-            iconsLibrary: 'fontawesome',
-            minDate: function () {
-                return $('#startDate').val();
-            }
-        });
-    </script> -->
+            var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+            $('#startDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                iconsLibrary: 'fontawesome',
+                minDate: today,
+                maxDate: function () {
+                    return $('#endDate').val();
+                }
+            });
+            $('#endDate').datepicker({
+                uiLibrary: 'bootstrap4',
+                iconsLibrary: 'fontawesome',
+                minDate: function () {
+                    return $('#startDate').val();
+                }
+            });
+        </script> -->
 
 
-
+        <div class="container text-center">
+            <p style=" margin-bottom: 0;">© Team MARS 2020<br>
+                <a href="mailto:hege@example.com">hege@example.com</a></p>
+        </div>
 
 
 
@@ -222,11 +227,14 @@
         <!-- <div class="container-fluid container bg-secondary display-1"> -->
 
 
-        <div class="container text-center" style="margin-bottom:0">
-            <p>© Team MARS 2020<br>
-                <a href="mailto:hege@example.com">hege@example.com</a></p>
-        </div>
+        <!-- <div class="footer text-center" style="margin-top: 40vh">
+                <p style="margin: 0;">© Team MARS 2020</p>
+            </div> -->
+
+
+
     </div>
+
 
 </body>
 
