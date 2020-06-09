@@ -1,31 +1,36 @@
 .navbar {
-    background-color: transparent;
+    /* background-color: transparent; */
 }
-
 body {
-    padding: 0;
-    height: 100%;
-
-    /* position: fixed; */
-}
-
-a {
-    color: darkblue;
-    /* font-weight: 500; */
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(6, 35, 232)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
-
-.container-fluid {
     padding: 0%;
-    background-image: url(../images/backgroundimg.jpg);
+    background-image: url(../images/interior-design.jpg);
     height: 100vh;
     background-repeat: no-repeat, repeat;
     /* background-attachment: fixed; */
     background-size: cover;
+    /* background-position: center; */
+    
+    
+}
 
+a {
+    color: orangered;
+    font-weight: 600;
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 769px) and (max-width: 1000px) {
+  body {height: 200vh;}
+}
+
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+    /* font-weight: 600; */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
 .form-row {
