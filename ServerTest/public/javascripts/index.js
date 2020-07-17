@@ -2,8 +2,8 @@
 
 //Nasconde le funzioni del proprietario se non autenticato
 function hiddenButton(flag) {
-    var setVisibility = "none"
-    if (!flag) setVisibility = "initial"
+    var setVisibility = "initial"
+    if (!flag) setVisibility = "none"
 
     var arrayBottoni = document.getElementsByName("BottoniProprietario")
     for (e of arrayBottoni) e.style.display = setVisibility

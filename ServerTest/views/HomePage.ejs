@@ -11,11 +11,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="/javascripts/index.js"></script>
 
+
     <title>HomePage - Team Mars</title>
 </head>
 
 <body>
-
+    <% var flagLogin = true%>
     <% include partials/navbar.ejs %>
 
     <!-- aggiungo card con data-picker-->
@@ -74,10 +75,13 @@
 
     <% include Login.ejs %>
 
+    <% include SignUp.ejs %>
+
     <% include partials/footer.ejs %>
 
 </body>
-
-<script>hiddenButton(false)</script>
+<script>
+    hiddenButton("<%=flagLogin %>");
+</script>
 
 </html>

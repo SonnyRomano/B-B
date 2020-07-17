@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='/stylesheets/gestioneAnnunci.css'>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <title>Inserisci Annuncio - Team Mars</title>
+</head>
+
+<body>
+
+    <% include partials/navbar.ejs %>
+
+    <div class="container justify-content-center">
+        <div class="col-md-8 py-5" style="margin-left: 15%;">
+            <div class="card" style="padding:2rem">
+
+                <h1 class="h3">Inserisci nuovo annuncio</h1>
+                <p class="card-text">Compila i campi con i dati dell'annuncio da inserire</p>
+
+                <form method="POST" action="/gestioneAnnunci/inserisciAnnuncio">
+                    <div class="container">
+                        <div class="form-group">
+                            <label>Città</label>
+                            <input class="form-control" name="citta" placeholder="Inserire città" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Indirizzo</label>
+                            <input class="form-control" name="indirizzo" placeholder="Inserire indirizzo" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-6">
+                                <label>Numero bagni</label>
+                                <input class="form-control" name="n_bagni" type="number" required>
+                            </div>
+                            <div class="col-6">
+                                <label>Numero Posti Letto</label>
+                                <input class="form-control" name="n_posti" type="number" required>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-danger btn-block mt-5" type="submit">Inserisci Annuncio</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <% include partials/footer.ejs %>
+
+</body>
+
+</html>

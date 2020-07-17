@@ -7,13 +7,8 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET login page. */
-router.get('/accedi', function (req, res, next) {
-  res.render('Login');
-});
-
-/* GET registration page. */
-router.get('/registrati', function (req, res, next) {
-  res.render('registration', { title: 'Registrazione' });
+router.get('/inserisciAnnuncio', function (req, res, next) {
+  res.render('InserisciAnnuncio');
 });
 
 module.exports = router;
