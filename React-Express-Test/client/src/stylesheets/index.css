@@ -1,0 +1,12 @@
+body {
+    padding: 0%;
+    background-image: url(../images/HomePage.jpg);
+    height: 100vh;
+    background-repeat: no-repeat, repeat;
+    background-attachment: fixed;
+    background-size: cover;  
+}
+
+.form-row {
+    margin-bottom: 1rem;
+}
