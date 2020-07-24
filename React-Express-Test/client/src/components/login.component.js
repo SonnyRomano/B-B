@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import '../stylesheets/login.css'
 import axios from 'axios'
 
-
 export default class Login extends Component {
 
+    // Nasconde o mostra i bottoni degli utenti loggati
     static displayLogin(flag) {
         if (document.getElementById('LoginBox') == null) return;
         if (flag) document.getElementById('LoginBox').style.display = 'block';
@@ -28,15 +28,30 @@ export default class Login extends Component {
 
         const user = {
             email: this.state.email,
-            pass: this.state.pass
+            password: this.state.pass
         };
 
+        // Crea un body fittizio da passare con post
+        let body = new URLSearchParams();
+        // Aggiunge email e password al body
+        body.append('email', user.email);
+        body.append('password', user.password);
+
+        console.log(body);
         console.log(user);
 
-        axios.post(`http://127.0.0.1:9000/users/login`, { user })
+        axios.post(`http://127.0.0.1:9000/users/login`, body.toString())
             .then(res => {
                 console.log(res);
                 console.log(res.data);
+
+                // Set dell'id utente nella sessione corrente
+                sessionStorage.clear();
+                sessionStorage.setItem('id', res.data.passport.user);
+                console.log(sessionStorage.getItem('id'));
+
+                // Chiude la schermata di Login
+                Login.displayLogin(false);
             })
     }
 

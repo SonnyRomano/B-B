@@ -39,6 +39,7 @@ class App extends Component {
                         <Route exact path="/" component={HomePage} />
                     </div>
                     <div className="container">
+                        <Route exact path="/logged" component={HomePage} />
                         <Route exact path="/gestioneAnnunci/inserisciAnnuncio" component={InserisciAnnuncio} />
                         <Route exact path="/gestioneAnnunci/paginaRicerca" component={PaginaRicerca} />
                     </div>
