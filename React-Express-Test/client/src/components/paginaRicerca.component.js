@@ -12,6 +12,10 @@ export default class PaginaRicerca extends Component {
         n_bagni: ''
     }
 
+    /*componentWillMount() {
+        this.setState(this.state, this.props.location.state);
+    }*/
+
 
     render() {
         this.state = this.props.location.state; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push

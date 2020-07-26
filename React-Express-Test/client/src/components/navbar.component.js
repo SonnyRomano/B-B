@@ -6,6 +6,50 @@ import SignUp from "./signUp.component";
 
 export default class Navbar extends Component {
 
+    state = { loginString: "Accedi", signUpString: "Registrati" };
+
+    // Nasconde le funzioni del proprietario se non autenticato
+    hiddenButton(flag) {
+        var setVisibility = "initial"
+        if (!flag) setVisibility = "none"
+
+        var arrayBottoni = document.getElementsByName("BottoniProprietario")
+        for (let e of arrayBottoni) e.style.display = setVisibility
+        console.log("hiddenButton pressed")
+        return true
+    }
+
+    // Cambia il testo dei bottoni di autenticazione
+    autenticationString() {
+        console.log(sessionStorage.getItem('id'));
+        let id_utente = sessionStorage.getItem('id');
+        if (id_utente !== null) {
+            this.hiddenButton(true)
+            this.setState({ loginString: "Logout", signUpString: "" });
+        }
+        else {
+            this.hiddenButton(false)
+            this.setState({ loginString: "Accedi", signUpString: "Registrati" });
+        }
+    }
+
+    autenticationControl() {
+        let id_utente = sessionStorage.getItem('id');
+        if (id_utente !== null) {
+            //Effettua il LogOut, eliminando l'id salvato
+            sessionStorage.clear();
+            this.autenticationString();
+        }
+        else {
+            // Mostra la schermata di Login
+            Login.displayLogin(true);
+        }
+    }
+
+    componentDidMount() {
+        this.autenticationString();
+    }
+
     render() {
         return (
             <nav className="navbar navbar-expand-md  ">
@@ -45,11 +89,10 @@ export default class Navbar extends Component {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link"
-                                onClick={() => Login.displayLogin(true)}>Accedi</a>
+                                onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" onClick={() => SignUp.displaySignUp(true)}
-                            >Registrati</a>
+                            <a className="nav-link" onClick={() => SignUp.displaySignUp(true)}>{this.state.signUpString}</a>
                         </li>
                     </ul>
                 </div>
