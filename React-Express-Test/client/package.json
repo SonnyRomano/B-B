@@ -5,11 +5,16 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "fs": "0.0.1-security",
+    "image-to-base64": "^2.1.1",
     "jquery": "^3.5.1",
+    "list-files": "^1.1.4",
+    "list-react-files": "^0.2.0",
     "popper.js": "^1.16.1",
     "react": "^16.8.0",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.8.0",
+    "react-file-base64": "^1.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "1.1.5"
   },

@@ -1,6 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+var dirImage = '../images/';
+var multer = require('multer');
 
 const { config } = require('../db/config');
 const { makeDb, withTransaction } = require('../db/dbmiddleware');
@@ -10,15 +13,40 @@ router.get('/', function (req, res, next) {
     next(createError(403));
 });
 
-/*router.get('/inserisciAnnuncio', function (req, res, next) {
-    res.send("Ciao");
-});*/
+// Opzioni di salvataggio per Multer
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        let path = dirImage + 'ID' + req.body.idAnnuncio
+        fs.mkdirSync(path, { recursive: true })
+        return cb(null, path)
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+var upload = multer({ storage: storage })
+
+
+/* Inserimento Immagini Annuncio */
+router.post('/uploadImmaginiAnnuncio', upload.array('file', 12), async (req, res, next) => {
+    const files = req.files
+    console.log(files)
+    console.log("Immagini Inserite!")
+    if (!files) {
+        const error = new Error('Please upload a file')
+        error.httpStatusCode = 400
+        return next(error)
+    }
+    res.send("Immagini Inserite!")
+});
+
+/* Ricerca Annunci */
+router.post('/ricercaAnnunci', ricercaAnnunci);
 
 /* Inserimento Annuncio */
 router.post('/inserisciAnnuncio', inserisciAnnuncio);
 
-/* Ricerca Annunci */
-router.post('/ricercaAnnunci', ricercaAnnunci);
 
 // middleware di Inserimento Annuncio
 async function inserisciAnnuncio(req, res, next) {
@@ -26,11 +54,11 @@ async function inserisciAnnuncio(req, res, next) {
     const db = await makeDb(config);
     let results = {};
     try {
-
         results = await db.query('INSERT INTO `annunci` \
-          (citta, indirizzo, n_bagni, n_posti) VALUES ?', [
+          (idProprietario, citta, indirizzo, n_bagni, n_posti) VALUES ?', [
             [
                 [
+                    req.body.annuncio.idProprietario,
                     req.body.annuncio.citta,
                     req.body.annuncio.indirizzo,
                     req.body.annuncio.n_bagni,
@@ -42,9 +70,10 @@ async function inserisciAnnuncio(req, res, next) {
                 throw err;
             });
 
+        console.log(results.insertId);
         console.log(results);
         console.log(`Annuncio inserito!`);
-        res.send("Annuncio inserito");
+        res.send(results);
     } catch (err) {
         console.log(err);
         next(createError(500));

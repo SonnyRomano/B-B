@@ -15,13 +15,13 @@ export default class Navbar extends Component {
 
         var arrayBottoni = document.getElementsByName("BottoniProprietario")
         for (let e of arrayBottoni) e.style.display = setVisibility
-        console.log("hiddenButton pressed")
+        //console.log("hiddenButton pressed")
         return true
     }
 
     // Cambia il testo dei bottoni di autenticazione
     autenticationString() {
-        console.log(sessionStorage.getItem('id'));
+        console.log('IDUtente: ' + sessionStorage.getItem('id'));
         let id_utente = sessionStorage.getItem('id');
         if (id_utente !== null) {
             this.hiddenButton(true)
@@ -52,10 +52,10 @@ export default class Navbar extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-md  ">
+            <nav className="navbar navbar-expand-md">
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon" ></span>
                 </button>
 
 

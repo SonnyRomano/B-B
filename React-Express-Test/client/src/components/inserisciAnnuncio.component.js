@@ -3,7 +3,10 @@ import axios from 'axios';
 import '../stylesheets/gestioneAnnunci.css';
 
 
+
 export default class InserisciAnnuncio extends Component {
+
+    Image = []
 
     state = {
         citta: '',
@@ -18,22 +21,35 @@ export default class InserisciAnnuncio extends Component {
         });
     }
 
+    onImageChange = (event) => {
+        this.Image = event.target.files
+    }
+
     handleSubmit = event => {
         event.preventDefault();
 
-        const annuncio = {
+        let annuncio = {
+            idProprietario: sessionStorage.getItem('id'),
             citta: this.state.citta,
             indirizzo: this.state.indirizzo,
             n_posti: this.state.n_posti,
-            n_bagni: this.state.n_bagni
-        };
-
-        console.log(annuncio);
+            n_bagni: this.state.n_bagni,
+        }
 
         axios.post(`http://127.0.0.1:9000/gestioneAnnunci/inserisciAnnuncio`, { annuncio })
             .then(res => {
                 console.log(res);
-                console.log(res.data);
+
+                let formData = new FormData();
+                formData.append('idAnnuncio', res.data.insertId)
+                for (const file of this.Image) {
+                    formData.append('file', file, file.name);
+                }
+
+                axios.post(`http://127.0.0.1:9000/gestioneAnnunci/uploadImmaginiAnnuncio`, formData)
+                    .then(res => {
+                        console.log(res);
+                    })
             })
     }
 
@@ -67,6 +83,12 @@ export default class InserisciAnnuncio extends Component {
                                         <label>Numero Posti Letto</label>
                                         <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} required />
                                     </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="img">Seleziona immagini:</label>
+                                    <br></br>
+                                    <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} required />
                                 </div>
 
                                 <button className="btn btn-danger btn-block mt-5" type="submit">Inserisci Annuncio</button>
