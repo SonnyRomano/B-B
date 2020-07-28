@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const { config } = require('../db/config');
 const { makeDb, withTransaction } = require('../db/dbmiddleware');
 
+/*
 // Libreria Passport
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
@@ -76,19 +77,22 @@ passport.use(new LocalStrategy({
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
   res.send(req.session);
-});
+});*/
 
 
-/* La rotta /users è vietata */
+// La rotta /users è vietata
 router.get('/', function (req, res, next) {
   next(createError(403));
 });
 
-/* Registrazione Utente */
+// Registrazione Utente
 router.post('/signUp', registrazione);
 
-/* Login Utente */
-//router.post('/login', autenticazione);
+// Login Utente
+router.post('/login', autenticazione);
+
+// Diventa Host
+router.post('/diventaHost', diventaHost)
 
 
 // middleware di registrazione
@@ -115,7 +119,8 @@ async function registrazione(req, res, next) {
         [
           id_utente,
           req.body.user.email,
-          encpwd
+          encpwd,
+          false
         ]
       ]
     ])
@@ -133,7 +138,7 @@ async function registrazione(req, res, next) {
 }
 
 // middleware di autenticazione
-/*async function autenticazione(req, res, next) {
+async function autenticazione(req, res, next) {
   // istanziamo il middleware
   const db = await makeDb(config);
   let results = {};
@@ -154,7 +159,7 @@ async function registrazione(req, res, next) {
         next(createError(404, 'Utente non trovato'));
       } else {
         let pwdhash = crypto.createHash('sha512'); // istanziamo l'algoritmo di hashing
-        pwdhash.update(req.body.user.pass); // cifriamo la password
+        pwdhash.update(req.body.user.password); // cifriamo la password
         let encpwd = pwdhash.digest('hex'); // otteniamo la stringa esadecimale
 
         if (encpwd != results[0].password) {
@@ -163,13 +168,12 @@ async function registrazione(req, res, next) {
           next(createError(403, 'Password errata'));
         } else {
           console.log('Utente autenticato');
-          console.log(results);
-          // recupero dello user id
-          let id_utente = results[0].id;
-
           console.log('Dati utente:');
           console.log(results[0]);
-          res.send("Utente Autenticato");
+
+          let datiUtente = { id: results[0].id, host: results[0].host }
+
+          res.send(datiUtente);
         }
       }
     });
@@ -177,7 +181,42 @@ async function registrazione(req, res, next) {
     console.log(err);
     next(createError(500));
   }
-}*/
+}
 
+async function diventaHost(req, res, next) {
+
+  // istanziamo il middleware
+  const db = await makeDb(config);
+  let results = {};
+  try {
+
+    await withTransaction(db, async () => {
+      // inserimento utente
+      results = await db.query('UPDATE utenti SET host = ?\
+        WHERE id = ?', [
+        1,
+        req.body.id
+      ])
+        .catch(err => {
+          throw err;
+        });
+
+      if (results.length == 0) {
+        console.log('Utente non trovato!');
+        next(createError(404, 'Utente non trovato'));
+      } else {
+
+        console.log('Utente è diventato Host');
+        console.log('Results:');
+        console.log(results);
+
+        res.send('Utente è diventato Host');
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    next(createError(500));
+  }
+}
 
 module.exports = router;

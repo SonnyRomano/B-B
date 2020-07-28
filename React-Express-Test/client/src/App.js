@@ -6,35 +6,33 @@ import HomePage from './components/homePage.component'
 import InserisciAnnuncio from './components/inserisciAnnuncio.component'
 import Login from './components/login.component'
 import SignUp from './components/signUp.component';
+import DiventaHost from './components/diventaHost.component'
 import Footer from './components/footer.component';
 import PaginaRicerca from './components/paginaRicerca.component';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { apiResponse: "" };
+        this.state = { apiResponse: "", isLogged: false };
     }
 
-    callAPI() {
-        fetch("http://localhost:9000/")
-            .then(res => res.text())
-            .then(res => this.setState({ apiResponse: res }))
-            .catch(err => err);
+    isLogged() {
+        let userId = sessionStorage.getItem('id')
+        if (userId !== null) return true
+        else return false
     }
-
-    componentDidMount() {
-        this.callAPI();
-    }
-
 
     render() {
         return (
             <div>
-                <Login />
-                <SignUp />
-                <Navbar />
+
 
                 <Router>
+                    <Login />
+                    <SignUp />
+                    <DiventaHost />
+                    <Navbar />
+
                     <div className="App">
                         <Route exact path="/" component={HomePage} />
                     </div>

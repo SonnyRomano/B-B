@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import '../stylesheets/login.css';
+import displayComponent from '../utility/displayComponent'
 
 
 export default class SignUp extends Component {
-
-    static displaySignUp(flag) {
-        if (document.getElementById('SignUpBox') == null) return;
-        if (flag) document.getElementById('SignUpBox').style.display = 'block';
-        else document.getElementById('SignUpBox').style.display = 'none';
-    }
 
     checkPassword() {
         var password = document.getElementById("pass");
@@ -54,7 +49,7 @@ export default class SignUp extends Component {
 
                 <form className="modal-content animate was-validated col-sm-8 mt-3" onSubmit={this.handleSubmit}>
                     <div className="imgcontainer">
-                        <span onClick={() => SignUp.displaySignUp(false)} className="close"
+                        <span onClick={() => displayComponent("SignUp", false)} className="close"
                             title="Close Modal">&times;</span>
                     </div>
 

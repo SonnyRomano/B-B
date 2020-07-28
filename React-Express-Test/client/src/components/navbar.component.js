@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import "../stylesheets/navbar.css"
-import Login from './login.component'
-import SignUp from "./signUp.component";
+import displayComponent from '../utility/displayComponent'
 
 
 export default class Navbar extends Component {
 
-    state = { loginString: "Accedi", signUpString: "Registrati" };
+    state = { loginString: "Accedi", signUpString: "Registrati", diventaHost: "Diventa Host" };
 
     // Nasconde le funzioni del proprietario se non autenticato
     hiddenButton(flag) {
@@ -21,28 +20,36 @@ export default class Navbar extends Component {
 
     // Cambia il testo dei bottoni di autenticazione
     autenticationString() {
-        console.log('IDUtente: ' + sessionStorage.getItem('id'));
+        console.log('IDUtente: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
         let id_utente = sessionStorage.getItem('id');
         if (id_utente !== null) {
-            this.hiddenButton(true)
-            this.setState({ loginString: "Logout", signUpString: "" });
+            this.setState({ loginString: "Logout", signUpString: "", diventaHost: "Diventa Host" });
+            if (Number(sessionStorage.getItem('isHost')) === 1) {
+                this.hiddenButton(true)
+                this.setState({ diventaHost: "" })
+            }
+            else this.hiddenButton(false)
         }
         else {
             this.hiddenButton(false)
-            this.setState({ loginString: "Accedi", signUpString: "Registrati" });
+            this.setState({ loginString: "Accedi", signUpString: "Registrati", diventaHost: "" });
         }
     }
 
+    // Gestisce le azioni per il Login e il Logout
     autenticationControl() {
         let id_utente = sessionStorage.getItem('id');
         if (id_utente !== null) {
-            //Effettua il LogOut, eliminando l'id salvato
-            sessionStorage.clear();
-            this.autenticationString();
+
+            if (window.confirm("Vuoi effettuare il Logout?")) {
+                //Effettua il LogOut, eliminando l'id salvato
+                sessionStorage.clear();
+                this.autenticationString();
+            }
         }
         else {
             // Mostra la schermata di Login
-            Login.displayLogin(true);
+            displayComponent("Login", true)
         }
     }
 
@@ -85,14 +92,14 @@ export default class Navbar extends Component {
                         </li>
 
                         <li className="nav-item">
-                            <a className="nav-link">Diventa host</a>
+                            <a className="nav-link" onClick={() => displayComponent("DiventaHost", true)}>{this.state.diventaHost}</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link"
                                 onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" onClick={() => SignUp.displaySignUp(true)}>{this.state.signUpString}</a>
+                            <a className="nav-link" onClick={() => displayComponent("SignUp", true)}>{this.state.signUpString}</a>
                         </li>
                     </ul>
                 </div>

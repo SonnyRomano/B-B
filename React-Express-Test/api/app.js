@@ -12,7 +12,6 @@ var app = express();
 // Routing
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var testAPIRouter = require("./routes/testAPI");
 var gestioneAnnunciRouter = require("./routes/gestioneAnnunci");
 
 
@@ -33,7 +32,6 @@ app.use(passport.session());
 // App use Routing
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/testAPI", testAPIRouter);
 app.use("/gestioneAnnunci", gestioneAnnunciRouter);
 
 

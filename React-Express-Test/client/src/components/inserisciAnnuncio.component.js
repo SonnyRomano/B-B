@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import '../stylesheets/gestioneAnnunci.css';
-
+import checkRoutingAccess from '../utility/checkRoutingAccess';
 
 
 export default class InserisciAnnuncio extends Component {
 
-    Image = []
+    imageFiles = []
 
     state = {
         citta: '',
@@ -22,7 +22,7 @@ export default class InserisciAnnuncio extends Component {
     }
 
     onImageChange = (event) => {
-        this.Image = event.target.files
+        this.imageFiles = event.target.files
     }
 
     handleSubmit = event => {
@@ -42,7 +42,7 @@ export default class InserisciAnnuncio extends Component {
 
                 let formData = new FormData();
                 formData.append('idAnnuncio', res.data.insertId)
-                for (const file of this.Image) {
+                for (const file of this.imageFiles) {
                     formData.append('file', file, file.name);
                 }
 
@@ -51,6 +51,10 @@ export default class InserisciAnnuncio extends Component {
                         console.log(res);
                     })
             })
+    }
+
+    componentDidMount() {
+        checkRoutingAccess(this.props)
     }
 
     render() {
