@@ -7,6 +7,7 @@ import checkRoutingAccess from '../utility/checkRoutingAccess';
 export default class InserisciAnnuncio extends Component {
 
     imageFiles = []
+    coverFile = []
 
     state = {
         citta: '',
@@ -23,6 +24,10 @@ export default class InserisciAnnuncio extends Component {
 
     onImageChange = (event) => {
         this.imageFiles = event.target.files
+    }
+
+    onCoverChange = (event) => {
+        this.coverFile = event.target.files
     }
 
     handleSubmit = event => {
@@ -42,9 +47,10 @@ export default class InserisciAnnuncio extends Component {
 
                 let formData = new FormData();
                 formData.append('idAnnuncio', res.data.insertId)
-                for (const file of this.imageFiles) {
-                    formData.append('file', file, file.name);
+                for (let i = 0; i < this.imageFiles.length; i++) {
+                    formData.append('file', this.imageFiles[i], 'img' + i + '.png');
                 }
+                formData.append('file', this.coverFile[0], 'Cover.png')
 
                 axios.post(`http://127.0.0.1:9000/gestioneAnnunci/uploadImmaginiAnnuncio`, formData)
                     .then(res => {
@@ -87,6 +93,12 @@ export default class InserisciAnnuncio extends Component {
                                         <label>Numero Posti Letto</label>
                                         <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} required />
                                     </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="img">Seleziona Cover Annuncio:</label>
+                                    <br></br>
+                                    <input type="file" id="cover" name="cover" accept="image/*" multiple onChange={this.onCoverChange} required />
                                 </div>
 
                                 <div className="form-group">
