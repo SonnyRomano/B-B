@@ -38,7 +38,15 @@ export default class SignUp extends Component {
         axios.post(`http://127.0.0.1:9000/users/signUp`, { user })
             .then(res => {
                 console.log(res);
-                console.log(res.data);
+
+                // Set dell'id utente nella sessione corrente
+                sessionStorage.clear();
+                sessionStorage.setItem('id', res.data.insertId);
+                sessionStorage.setItem('isHost', false);
+                console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
+
+                // Chiude la schermata di Registrazione
+                displayComponent("SignUp", false)
             })
     }
 

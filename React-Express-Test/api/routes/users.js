@@ -114,7 +114,7 @@ async function registrazione(req, res, next) {
     let id_utente = results.insertId;
 
     results = await db.query('INSERT INTO `utenti` \
-        (id, email, password) VALUES ?', [
+        (id, email, password, host) VALUES ?', [
       [
         [
           id_utente,
@@ -130,7 +130,7 @@ async function registrazione(req, res, next) {
 
     console.log(results);
     console.log(`Utente ${req.body.user.email} inserito!`);
-    res.send("Registrazione Effettuata");
+    res.send(id_utente);
   } catch (err) {
     console.log(err);
     next(createError(500));
