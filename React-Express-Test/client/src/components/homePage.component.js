@@ -43,6 +43,10 @@ export default class HomePage extends Component {
                 //Indirizza la pagina alla ricerca e gli passa i dati della risposta contenente gli annunci
                 this.props.history.push('/gestioneAnnunci/paginaRicerca', res.data);
             })
+            .catch(err => {
+                console.log("Error = ", err.response.data);
+                alert(err.response.data);
+            })
     }
 
     render() {

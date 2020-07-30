@@ -48,6 +48,10 @@ export default class SignUp extends Component {
                 // Chiude la schermata di Registrazione
                 displayComponent("SignUp", false)
             })
+            .catch(err => {
+                console.log("Error = ", err.response.data);
+                alert(err.response.data);
+            })
     }
 
 

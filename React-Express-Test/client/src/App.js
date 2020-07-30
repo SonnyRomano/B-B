@@ -10,6 +10,7 @@ import DiventaHost from './components/diventaHost.component'
 import Footer from './components/footer.component';
 import PaginaRicerca from './components/paginaRicerca.component';
 
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +26,6 @@ class App extends Component {
     render() {
         return (
             <div>
-
-
                 <Router>
                     <Login />
                     <SignUp />

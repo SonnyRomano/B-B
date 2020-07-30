@@ -99,8 +99,8 @@ async function ricercaAnnunci(req, res, next) {
                 });
 
             if (results.length == 0) {
-                console.log(`Annunci a ${req.body.citta_r} non trovati!`);
-                next(createError(404, `Annunci a ${req.body.citta_r} non trovati!`));
+                console.log(`Annunci a ${req.body.ricerca.citta} non trovati!`);
+                res.status(403).send(`Annunci a ${req.body.ricerca.citta} non trovati!`);
             } else {
                 console.log('Annunci Trovati');
                 console.log(results);

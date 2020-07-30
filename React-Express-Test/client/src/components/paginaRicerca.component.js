@@ -20,7 +20,7 @@ export default class PaginaRicerca extends Component {
         //Crea un oggetto che contiene il mapping dei dati come componenti <li>
         const listItems = this.state.map((d) =>
             <div key={'div' + d.idAnnuncio} style={{ marginBottom: '4rem' }}>
-                <img key={'img' + d.idAnnuncio} style={{ width: '60%', marginLeft: '20%', marginBottom: '2rem' }} src={require('../../../images/ID' + d.idAnnuncio + '/Cover.jpg')} alt="CoverImage"  ></img>
+                <img key={'img' + d.idAnnuncio} style={{ width: '60%', marginLeft: '20%', marginBottom: '2rem' }} src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage"  ></img>
                 <h5 key={'li' + d.idAnnuncio}>IDAnnuncio: {d.idAnnuncio} - Citta: {d.citta} - Indirizzo: {d.indirizzo} - Num_Bagni: {d.n_bagni}</h5>
             </div>);
         return (

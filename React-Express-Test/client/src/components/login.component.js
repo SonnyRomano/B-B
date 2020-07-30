@@ -5,6 +5,8 @@ import displayComponent from '../utility/displayComponent'
 
 export default class Login extends Component {
 
+
+
     state = {
         email: '',
         pass: ''
@@ -31,7 +33,6 @@ export default class Login extends Component {
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-
                 // Set dell'id utente nella sessione corrente
                 sessionStorage.clear();
                 sessionStorage.setItem('id', res.data.id);
@@ -40,6 +41,11 @@ export default class Login extends Component {
 
                 // Chiude la schermata di Login
                 displayComponent("Login", false)
+
+            })
+            .catch(err => {
+                console.log("Error = ", err.response.data);
+                alert(err.response.data);
             })
     }
 
