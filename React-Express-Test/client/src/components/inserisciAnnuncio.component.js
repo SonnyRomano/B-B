@@ -66,47 +66,95 @@ export default class InserisciAnnuncio extends Component {
     render() {
         return (
             <div className="container justify-content-center">
-                <div className="col-md-8 py-5" style={{ marginLeft: '15%' }}>
-                    <div className="card" style={{ padding: '2rem' }}>
+                <div className="col-md-10 py-5">
+                    <div className="card" style={{ padding: '2rem',background: '#FFFACD'}}>
 
                         <h1 className="h3">Inserisci nuovo annuncio</h1>
                         <p className="card-text">Compila i campi con i dati dell'annuncio da inserire</p>
 
                         <form onSubmit={this.handleSubmit}>
                             <div className="container">
-                                <div className="form-group">
-                                    <label>Città</label>
-                                    <input className="form-control" name="citta" placeholder="Inserire città" onChange={this.handleChange} required />
+                                <div className="form-row">
+                                    <div className="col-4">
+                                        <label>Città</label>
+                                        <input className="form-control" name="citta" placeholder="Inserire città" onChange={this.handleChange} required />
+                                    </div>
+                                    <div className="col-2">
+                                        <label>Cap</label>
+                                        <input className="form-control" name="cap" placeholder="CAP" required />
+                                    </div>
+                                    <div className="col-5">
+                                        <label>Indirizzo</label>
+                                        <input className="form-control" name="indirizzo" placeholder="Inserire indirizzo" onChange={this.handleChange} required />
+                                    </div>
+                                    <div className="col-1">
+                                        <label>Civico</label>
+                                        <input className="form-control" name="Civico" placeholder="n"  required />
+                                    </div>
                                 </div>
 
-                                <div className="form-group">
-                                    <label>Indirizzo</label>
-                                    <input className="form-control" name="indirizzo" placeholder="Inserire indirizzo" onChange={this.handleChange} required />
+                                <div className="form-row">
+                                    <div className="col-3">
+                                        <label>Inizio disponibilità</label>
+                                        <input id="availabilityFrom" type="date" className="form-control" onInput={this.dataControl}
+                                        name="availabilityFrom_r" />
+                                    </div>
+                                    <div className="col-3">
+                                        <label>Termine disponibilità</label>
+                                        <input id="aivalabilityTo" type="date" className="form-control" onInput={this.dataControl}
+                                            name="aivalabilityTo_r" />
+                                    </div>
+                                    <div className="col-3">
+                                        <label>Numero Posti Letto</label>
+                                        <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} required />
+                                    </div>
+                                    <div className="col-3">
+                                        <label>Numero bagni</label>
+                                        <input className="form-control" name="n_bagni" type="number" min="1" onChange={this.handleChange} required />
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="col-3">
+                                        <input type="checkbox" id="wifi" name="wifi" value="wifi"/>
+                                        <label for="wifi">Presenza Wi-fi</label>
+                                    </div>
+                                    <div className="col-3">
+                                        <input type="checkbox" id="ascensore" name="ascensore" value="ascensore"/>
+                                        <label for="ascensore">Presenza ascensore</label>
+                                    </div>
+                                    <div className="col-3">
+                                        <input type="checkbox" id="garage" name="garage" value="garage"/>
+                                        <label for="garage">Presenza garage</label>
+                                    </div>
+                                    <div className="col-3">
+                                        <input type="checkbox" id="terrazzo" name="terrazzo" value="terrazzo"/>
+                                        <label for="terrazzo">Presenza terrazzo</label>
+                                    </div>
                                 </div>
 
                                 <div className="form-row">
                                     <div className="col-6">
-                                        <label>Numero bagni</label>
-                                        <input className="form-control" name="n_bagni" type="number" min="1" onChange={this.handleChange} required />
+                                        <label>Costo giornaliero</label>
+                                        <input className="form-control" name="costoGiornaliero" placeholder="Inserire costo giornaliero" required />
                                     </div>
                                     <div className="col-6">
-                                        <label>Numero Posti Letto</label>
-                                        <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} required />
+                                        <label>Recapito telefonico</label>
+                                        <input className="form-control" name="num_telefono" placeholder="Inserire numero telefono" required />
                                     </div>
                                 </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="img">Seleziona Cover Annuncio:</label>
-                                    <br></br>
-                                    <input type="file" id="cover" name="cover" accept="image/*" multiple onChange={this.onCoverChange} required />
+                                <div className="form-row">
+                                    <div className="col-6">
+                                        <label htmlFor="img">Seleziona Cover Annuncio:</label>
+                                        <input type="file" id="cover" name="cover" accept="image/*" multiple onChange={this.onCoverChange} required />
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="img">Seleziona immagini:</label>
+                                        <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} required />
+                                    </div>
                                 </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="img">Seleziona immagini:</label>
-                                    <br></br>
-                                    <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} required />
-                                </div>
-
+                                <textarea rows="4" cols='70' name="descrizione">...inserire una breve descrizione dell'annuncio...</textarea>
                                 <button className="btn btn-danger btn-block mt-5" type="submit">Inserisci Annuncio</button>
                             </div>
                         </form>
