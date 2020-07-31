@@ -38,7 +38,7 @@ export default class Login extends Component {
                 sessionStorage.setItem('id', res.data.id);
                 sessionStorage.setItem('isHost', res.data.host);
                 console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
-
+                window.location.reload(false);
                 // Chiude la schermata di Login
                 displayComponent("Login", false)
 
@@ -62,7 +62,7 @@ export default class Login extends Component {
 
                     <div className="container">
                         <label htmlFor="email"><b>Email</b></label>
-                        <input type="text" placeholder="Enter Username" name="email" onChange={this.handleChange} required />
+                        <input type="text" placeholder="Enter Email" name="email" onChange={this.handleChange} required />
 
                         <label htmlFor="pass"><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="pass" onChange={this.handleChange} required />

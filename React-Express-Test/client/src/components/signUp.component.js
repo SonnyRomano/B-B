@@ -45,6 +45,7 @@ export default class SignUp extends Component {
                 sessionStorage.setItem('isHost', false);
                 console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
 
+                window.location.reload(false);
                 // Chiude la schermata di Registrazione
                 displayComponent("SignUp", false)
             })

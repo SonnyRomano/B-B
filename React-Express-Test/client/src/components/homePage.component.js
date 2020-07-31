@@ -7,10 +7,8 @@ export default class HomePage extends Component {
 
     //Controlla inserimento date Check-in e Check-out
     dataControl() {
-
         var dataFrom = document.getElementById("dateFrom")
         var dataTo = document.getElementById("dateTo")
-
         if (dataFrom.value > dataTo.value) dataTo.value = null
     }
 
