@@ -121,18 +121,14 @@ async function registrazione(req, res, next) {
         .catch(err => {
           throw err;
         });
-
       let encpwd = results[0].encpwd;
       console.log('Password cifrata');
       console.log(results);
 
-      let id_utente = results.insertId;
-
       results = await db.query('INSERT INTO `utenti` \
-        (id, email, password, host) VALUES ?', [
+        (email, password, host) VALUES ?', [
         [
           [
-            id_utente,
             req.body.user.email,
             encpwd,
             false
@@ -142,10 +138,11 @@ async function registrazione(req, res, next) {
         .catch(err => {
           throw err;
         });
-
+      let id_utente = results.insertId;
       console.log(results);
       console.log(`Utente ${req.body.user.email} inserito!`);
-      res.send(id_utente);
+
+      res.status(200).send(id_utente.toString());
     }
   } catch (err) {
     console.log(err);
