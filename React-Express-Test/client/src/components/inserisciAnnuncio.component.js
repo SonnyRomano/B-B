@@ -66,8 +66,8 @@ export default class InserisciAnnuncio extends Component {
             garage: this.state.garage,
             terrazzo: this.state.terrazzo,
             descrizione: this.state.descrizione,
-            telefono: this.state.telefono,
-            costo: this.state.costo
+            costo: this.state.costo,
+            telefono: this.state.telefono
         }
 
         axios.post(`http://127.0.0.1:9000/gestioneAnnunci/inserisciAnnuncio`, { annuncio })
@@ -84,6 +84,9 @@ export default class InserisciAnnuncio extends Component {
                 axios.post(`http://127.0.0.1:9000/gestioneAnnunci/uploadImmaginiAnnuncio`, formData)
                     .then(res => {
                         console.log(res);
+
+                        window.confirm('Annuncio Inserito');
+                        this.props.history.push('/')
                     })
             })
     }
