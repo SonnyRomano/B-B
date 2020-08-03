@@ -55,7 +55,7 @@ async function inserisciAnnuncio(req, res, next) {
     let results = {};
     try {
         results = await db.query('INSERT INTO `annunci` \
-          (idProprietario, citta, cap, indirizzo, civico, dateFrom, dateTo, n_bagni, n_posti, wifi, ascensore, garage, terrazzo, descrizione) VALUES ?', [
+          (idProprietario, citta, cap, indirizzo, civico, dateFrom, dateTo, n_bagni, n_posti, wifi, ascensore, garage, terrazzo, descrizione, telefono, costo) VALUES ?', [
             [
                 [
                     req.body.annuncio.idProprietario,
@@ -71,7 +71,9 @@ async function inserisciAnnuncio(req, res, next) {
                     req.body.annuncio.ascensore,
                     req.body.annuncio.garage,
                     req.body.annuncio.terrazzo,
-                    req.body.annuncio.descrizione
+                    req.body.annuncio.descrizione,
+                    req.body.annuncio.telefono,
+                    req.body.annuncio.costo
                 ]
             ]
         ])

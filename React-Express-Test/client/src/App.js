@@ -10,6 +10,9 @@ import DiventaHost from './components/diventaHost.component'
 import Footer from './components/footer.component';
 import PaginaRicerca from './components/paginaRicerca.component';
 
+import DettaglioAnnuncio from './components/dettaglioAnnuncio.component';
+
+
 
 class App extends Component {
     constructor(props) {
@@ -36,6 +39,7 @@ class App extends Component {
                         <Route exact path="/" component={HomePage} />
                     </div>
                     <div className="container">
+                        <Route exact path="/gestioneAnnunci/dettaglioAnnuncio" component={DettaglioAnnuncio} /> 
                         <Route exact path="/gestioneAnnunci/inserisciAnnuncio" component={InserisciAnnuncio} />
                         <Route exact path="/gestioneAnnunci/paginaRicerca" component={PaginaRicerca} />
                     </div>

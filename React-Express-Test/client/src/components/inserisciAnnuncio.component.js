@@ -22,7 +22,9 @@ export default class InserisciAnnuncio extends Component {
         ascensore: 0,
         garage: 0,
         terrazzo: 0,
-        descrizione: ''
+        descrizione: '',
+        telefono: '',
+        costo: ''
     }
 
     //Controlla inserimento date Check-in e Check-out
@@ -63,7 +65,9 @@ export default class InserisciAnnuncio extends Component {
             ascensore: this.state.ascensore,
             garage: this.state.garage,
             terrazzo: this.state.terrazzo,
-            descrizione: this.state.descrizione
+            descrizione: this.state.descrizione,
+            telefono: this.state.telefono,
+            costo: this.state.costo
         }
 
         axios.post(`http://127.0.0.1:9000/gestioneAnnunci/inserisciAnnuncio`, { annuncio })
@@ -161,11 +165,11 @@ export default class InserisciAnnuncio extends Component {
                                 <div className="form-row">
                                     <div className="col-6">
                                         <label>Costo giornaliero</label>
-                                        <input className="form-control" name="costoGiornaliero" placeholder="Inserire costo giornaliero" type='number' onChange={this.handleChange} required />
+                                        <input className="form-control" name="costo" placeholder="Inserire costo giornaliero" type='number' onChange={this.handleChange} required />
                                     </div>
                                     <div className="col-6">
                                         <label>Recapito telefonico</label>
-                                        <input className="form-control" name="num_telefono" placeholder="Inserire numero telefono" type='text' pattern='[0-9]{10}' maxLength="10" onChange={this.handleChange} required />
+                                        <input className="form-control" name="telefono" placeholder="Inserire numero telefono" type='text' pattern='[0-9]{10}' maxLength="10" onChange={this.handleChange} required />
                                     </div>
                                 </div>
 
@@ -186,7 +190,6 @@ export default class InserisciAnnuncio extends Component {
                     </div>
                 </div>
             </div >
-
         );
     }
 }
