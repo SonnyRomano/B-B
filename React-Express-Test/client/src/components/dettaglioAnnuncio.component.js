@@ -3,7 +3,7 @@ import '../stylesheets/index.css';
 
 export default class DettaglioAnnuncio extends Component {
     state = {
-        id: '',
+        idAnnuncio: '',
         citta: '',
         cap: '',
         indirizzo: '',
@@ -89,25 +89,19 @@ export default class DettaglioAnnuncio extends Component {
                             <h4 className="my-4">Galleria immagini:</h4>
                             <div className="row">
                                 <div className="col-md-3 col-sm-6 mb-4">
-                                    <a href="#">
-                                        <img className="img-fluid" src="http://placehold.it/500x300" alt="" />
-                                    </a>
+                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img0.png')} alt="" />
+                                </div>
+                                {/*
+                                <div className="col-md-3 col-sm-6 mb-4">
+                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img1.png')} alt="" />
+
                                 </div>
                                 <div className="col-md-3 col-sm-6 mb-4">
-                                    <a href="#">
-                                        <img className="img-fluid" src="http://placehold.it/500x300" alt="" />
-                                    </a>
+                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img2.png')} alt="" />
                                 </div>
                                 <div className="col-md-3 col-sm-6 mb-4">
-                                    <a href="#">
-                                        <img className="img-fluid" src="http://placehold.it/500x300" alt="" />
-                                    </a>
-                                </div>
-                                <div className="col-md-3 col-sm-6 mb-4">
-                                    <a href="#">
-                                        <img className="img-fluid" src="http://placehold.it/500x300" alt="" />
-                                    </a>
-                                </div>
+                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img3.png')} alt="" />
+                                </div>*/}
                             </div>
                         </div>
                     </div>

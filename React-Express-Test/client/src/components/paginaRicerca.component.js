@@ -4,7 +4,7 @@ import '../stylesheets/index.css';
 export default class PaginaRicerca extends Component {
 
     state = {
-        id: '',
+        idAnnuncio: '',
         citta: '',
         cap: '',
         indirizzo: '',
@@ -23,7 +23,7 @@ export default class PaginaRicerca extends Component {
     }
 
     handleClick(info) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
-        this.props.history.push('/gestioneAnnunci/dettaglioAnnuncio', info) ;
+        this.props.history.push('/gestioneAnnunci/dettaglioAnnuncio', info);
     }
 
     render() {
@@ -33,18 +33,18 @@ export default class PaginaRicerca extends Component {
         console.log(this.state)
         //Crea un oggetto che contiene il mapping dei dati come componenti <li>
         const listItems = this.state.map((d) =>
-        <li className="list-group-item" style={{ marginBottom: '4rem',  backgroundColor: 'grey'}}>
-            <a onClick={() => this.handleClick(d)} key={'a' + d.idAnnuncio} className="list-group-item list-group-item-action border border-primary " style={{ marginTop: '1rem', marginBottom: '1rem', background: '#E6E6FA' }}>
-                <div className='row' >
-                    <div className='col-6' key={'div' + d.idAnnuncio} style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-                        <img key={'img' + d.idAnnuncio} style={{ width: '100%' }} src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage"  ></img>
+            <li key={'li' + d.idAnnuncio} className="list-group-item" style={{ marginBottom: '4rem', backgroundColor: 'grey' }}>
+                <a onClick={() => this.handleClick(d)} key={'a' + d.idAnnuncio} className="list-group-item list-group-item-action border border-primary " style={{ marginTop: '1rem', marginBottom: '1rem', background: '#E6E6FA' }}>
+                    <div className='row' >
+                        <div className='col-6' key={'div' + d.idAnnuncio} style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+                            <img key={'img' + d.idAnnuncio} style={{ width: '100%' }} src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage"  ></img>
+                        </div>
+                        <div className='col-6' style={{ marginTop: '2rem' }}>
+                            <h5>{d.citta}<br></br> - Indirizzo: {d.indirizzo}<br></br> - Numero Posti Letto: {d.n_posti}<br></br> - Costo Giornaliero: {d.costo} € </h5>
+                        </div>
                     </div>
-                    <div className='col-6' style={{ marginTop: '2rem' }}>
-                        <h5 key={'li' + d.idAnnuncio}><h4>{d.citta}</h4><br></br> -indirizzo: {d.indirizzo}<br></br> -numero posti letto: {d.n_posti}<br></br> -costo giornaliero: {d.costo} € </h5>
-                    </div>
-                </div>
-            </a>
-        </li> );
+                </a>
+            </li>);
 
         return (
             <div className="container justify-content-center">
