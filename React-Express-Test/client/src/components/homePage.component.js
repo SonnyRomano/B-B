@@ -42,8 +42,7 @@ export default class HomePage extends Component {
                 this.props.history.push('/gestioneAnnunci/paginaRicerca', res.data);
             })
             .catch(err => {
-                console.log("Error = ", err.response.data);
-                alert(err.response.data);
+                console.log("Error = ", err);
             })
     }
 

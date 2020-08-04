@@ -179,7 +179,7 @@ export default class InserisciAnnuncio extends Component {
                                 <div className="form-row">
                                     <div className="col-6">
                                         <label htmlFor="img">Seleziona Cover Annuncio:</label>
-                                        <input type="file" id="cover" name="cover" accept="image/*" multiple onChange={this.onCoverChange} required />
+                                        <input type="file" id="cover" name="cover" accept="image/*" onChange={this.onCoverChange} required />
                                     </div>
                                     <div className="col-6">
                                         <label htmlFor="img">Seleziona immagini:</label>

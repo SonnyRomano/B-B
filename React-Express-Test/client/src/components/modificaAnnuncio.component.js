@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import '../stylesheets/gestioneAnnunci.css';
 import checkRoutingAccess from '../utility/checkRoutingAccess';
+import dateFormat from 'dateformat'
 
 
 export default class ModificaAnnuncio extends Component {
@@ -24,7 +25,7 @@ export default class ModificaAnnuncio extends Component {
         terrazzo: 0,
         descrizione: '',
         telefono: '',
-        costo: '',
+        costo: 0,
         idAnnuncio: ''
     }
 
@@ -58,8 +59,8 @@ export default class ModificaAnnuncio extends Component {
             cap: this.state.cap,
             indirizzo: this.state.indirizzo,
             civico: this.state.civico,
-            dateFrom: this.state.dateFrom,
-            dateTo: this.state.dateTo,
+            dateFrom: dateFormat(this.state.dateFrom, 'yyyy-mm-dd'),
+            dateTo: dateFormat(this.state.dateTo, 'yyyy-mm-dd'),
             n_posti: this.state.n_posti,
             n_bagni: this.state.n_bagni,
             wifi: this.state.wifi,
@@ -71,25 +72,11 @@ export default class ModificaAnnuncio extends Component {
             telefono: this.state.telefono,
             idAnnuncio: this.state.idAnnuncio
         }
+        console.log(annuncio)
 
         axios.post(`http://127.0.0.1:9000/gestioneAnnunci/aggiornaAnnuncio`, { annuncio })
             .then(res => {
                 console.log(res);
-
-                let formData = new FormData();
-                formData.append('idAnnuncio', res.data.insertId)
-                for (let i = 0; i < this.imageFiles.length; i++) {
-                    formData.append('file', this.imageFiles[i], 'img' + i + '.png');
-                }
-                formData.append('file', this.coverFile[0], 'Cover.png')
-
-                axios.post(`http://127.0.0.1:9000/gestioneAnnunci/uploadImmaginiAnnuncio`, formData)
-                    .then(res => {
-                        console.log(res);
-
-                        window.confirm('Annuncio Inserito');
-                        this.props.history.push('/')
-                    })
             })
     }
 
@@ -98,10 +85,12 @@ export default class ModificaAnnuncio extends Component {
     }
 
     componentWillMount() {
-        this.state = this.props.location.state; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
+        this.setState(this.props.location.state); //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
     }
 
     render() {
+
+
         return (
             <div className="container justify-content-center">
                 <div className="col-md-10 py-5">
@@ -135,12 +124,12 @@ export default class ModificaAnnuncio extends Component {
                                     <div className="col-3">
                                         <label>Inizio disponibilità</label>
                                         <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl}
-                                            name="dateFrom" onChange={this.handleChange} value={this.state.dateFrom} required />
+                                            name="dateFrom" onChange={this.handleChange} value={dateFormat(this.state.dateFrom, "yyyy-mm-dd")} required />
                                     </div>
                                     <div className="col-3">
                                         <label>Termine disponibilità</label>
                                         <input id="dateTo" type="date" className="form-control" onInput={this.dataControl}
-                                            name="dateTo" onChange={this.handleChange} value={this.state.dateTo} required />
+                                            name="dateTo" onChange={this.handleChange} value={dateFormat(this.state.dateTo, "yyyy-mm-dd")} required />
                                     </div>
                                     <div className="col-3">
                                         <label>Numero Posti Letto</label>
@@ -154,19 +143,19 @@ export default class ModificaAnnuncio extends Component {
 
                                 <div className="form-row">
                                     <div className="col-3">
-                                        <input type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} checked={Boolean(this.state.wifi)}/>
+                                        <input type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} checked={Boolean(this.state.wifi)} />
                                         <label htmlFor="wifi">Presenza Wi-fi</label>
                                     </div>
                                     <div className="col-3">
-                                        <input type="checkbox" id="ascensore" name="ascensore" value="1" onChange={this.handleChange} checked={Boolean(this.state.ascensore)}/>
+                                        <input type="checkbox" id="ascensore" name="ascensore" value="1" onChange={this.handleChange} checked={Boolean(this.state.ascensore)} />
                                         <label htmlFor="ascensore">Presenza ascensore</label>
                                     </div>
                                     <div className="col-3">
-                                        <input type="checkbox" id="garage" name="garage" value="1" onChange={this.handleChange} checked={Boolean(this.state.garage)}/>
+                                        <input type="checkbox" id="garage" name="garage" value="1" onChange={this.handleChange} checked={Boolean(this.state.garage)} />
                                         <label htmlFor="garage">Presenza garage</label>
                                     </div>
                                     <div className="col-3">
-                                        <input type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)}/>
+                                        <input type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
                                         <label htmlFor="terrazzo">Presenza terrazzo</label>
                                     </div>
                                 </div>
@@ -181,17 +170,17 @@ export default class ModificaAnnuncio extends Component {
                                         <input className="form-control" name="telefono" value={this.state.telefono} type='text' pattern='[0-9]{10}' maxLength="10" onChange={this.handleChange} required />
                                     </div>
                                 </div>
-
+                                {/*
                                 <div className="form-row">
                                     <div className="col-6">
-                                        <label htmlFor="img">Seleziona Cover Annuncio:</label>  
-                                        <input type="file" id="cover" name="cover" accept="image/*" multiple onChange={this.onCoverChange} required />
+                                        <label htmlFor="img">Seleziona Cover Annuncio:</label>
+                                        <input type="file" id="cover" name="cover" accept="image/*" value='' onChange={this.onCoverChange} />
                                     </div>
                                     <div className="col-6">
                                         <label htmlFor="img">Seleziona immagini:</label>
-                                        <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} required />
+                                        <input type="file" id="img" name="img" accept="image/*" value='' multiple onChange={this.onImageChange} />
                                     </div>
-                                </div>
+                                </div>*/}
                                 <textarea rows="4" cols='70' name="descrizione" onChange={this.handleChange} value={this.state.descrizione}></textarea>
                                 <button className="btn btn-success btn-block mt-5" type="submit">Aggiorna Annuncio</button>
                             </div>
