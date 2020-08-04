@@ -106,7 +106,7 @@ async function aggiornaAnnuncio(req, res, next) {
     try {
         results = await db.query('UPDATE annunci \
                             SET idProprietario=?,citta=?,cap=?,indirizzo=?,civico=?,dateFrom=?,dateTo=?,n_bagni=?,n_posti=?,\
-                            wifi=?,ascensore=?,garage=?,terrazzo=?,descrizione=?,telefono=?,costo=? WHERE idAnnuncio = 13 ',
+                            wifi=?,ascensore=?,garage=?,terrazzo=?,descrizione=?,telefono=?,costo=? WHERE idAnnuncio = ? ',
             [
                 [req.body.annuncio.idProprietario],
                 [req.body.annuncio.citta],
@@ -123,7 +123,8 @@ async function aggiornaAnnuncio(req, res, next) {
                 [req.body.annuncio.terrazzo],
                 [req.body.annuncio.descrizione],
                 [req.body.annuncio.telefono],
-                [req.body.annuncio.costo]
+                [req.body.annuncio.costo],
+                [req.body.annuncio.idAnnuncio]
             ])
             .catch(err => {
                 throw err;
