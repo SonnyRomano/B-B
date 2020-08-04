@@ -145,6 +145,7 @@ async function registrazione(req, res, next) {
 
       console.log(results);
       console.log(`Utente ${req.body.user.email} inserito!`);
+      console.log(id_utente);
       res.send(id_utente);
     }
   } catch (err) {
