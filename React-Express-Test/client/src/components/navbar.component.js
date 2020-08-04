@@ -45,6 +45,7 @@ export default class Navbar extends Component {
                 //Effettua il LogOut, eliminando l'id salvato
                 sessionStorage.clear();
                 this.autenticationString();
+                window.location.reload(false);
             }
         }
         else {

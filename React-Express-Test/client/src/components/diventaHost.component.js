@@ -20,6 +20,7 @@ export default class DiventaHost extends Component {
                 sessionStorage.setItem('isHost', 1);
                 console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
 
+                window.location.reload(false);
                 // Chiude la schermata di Login
                 displayComponent("DiventaHost", false)
             })

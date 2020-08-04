@@ -7,10 +7,8 @@ export default class HomePage extends Component {
 
     //Controlla inserimento date Check-in e Check-out
     dataControl() {
-
         var dataFrom = document.getElementById("dateFrom")
         var dataTo = document.getElementById("dateTo")
-
         if (dataFrom.value > dataTo.value) dataTo.value = null
     }
 
@@ -57,10 +55,8 @@ export default class HomePage extends Component {
                     <div className="card">
                         <div className="card-body" style={{ padding: '2rem' }}>
 
-
                             <h1 className="h3">Prenota Case Vacanza e B&B sul nostro sito</h1>
-                            <p className="card-text">Seleziona la località desiderata, le date di check in, check-out e il
-                        numero di ospiti</p>
+                            <p className="card-text">Seleziona la località desiderata, le date di check in, check-out e il numero di ospiti</p>
 
                             <form onSubmit={this.handleSubmit}>
 
@@ -90,16 +86,13 @@ export default class HomePage extends Component {
                                         <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} required />
                                     </div>
                                 </div>
+
                                 <button className="btn btn-danger btn-block mt-5" type="submit">Cerca</button>
                             </form>
-
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
         );
     }
 }

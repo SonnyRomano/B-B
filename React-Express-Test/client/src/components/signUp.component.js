@@ -41,10 +41,11 @@ export default class SignUp extends Component {
 
                 // Set dell'id utente nella sessione corrente
                 sessionStorage.clear();
-                sessionStorage.setItem('id', res.data.insertId);
+                sessionStorage.setItem('id', res.data);
                 sessionStorage.setItem('isHost', false);
                 console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
 
+                window.location.reload(false);
                 // Chiude la schermata di Registrazione
                 displayComponent("SignUp", false)
             })
