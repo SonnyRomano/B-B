@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         let path = dirImage + 'ID' + req.body.idAnnuncio
-        fs.mkdirSync(path, { recursive: true })
+        fs.mkdirSync(path, { recursive: true }) //recursive,permette di creare cartelle una dentro l'altra
         return cb(null, path)
     },
     filename: function (req, file, cb) {

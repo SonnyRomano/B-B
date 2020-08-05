@@ -5,7 +5,7 @@
  */
 
 
-// carichiamo il modulo mysql
+// carichiamo il modulo mysql,che poi viene richiamato nei routes in cui serve.
 // e il modulo util per generare Promise
 // da funzioni che non generano promise
 const mysql = require('mysql');
