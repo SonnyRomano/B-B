@@ -141,13 +141,9 @@ async function registrazione(req, res, next) {
       let id_utente = results.insertId;
       console.log(results);
       console.log(`Utente ${req.body.user.email} inserito!`);
-<<<<<<< HEAD
       console.log(id_utente);
-      res.send(id_utente);
-=======
-
+      res.send(id_utente)
       res.status(200).send(id_utente.toString());
->>>>>>> a1e78f55342617f67db3671e39e58aba64d9bc3c
     }
   } catch (err) {
     console.log(err);

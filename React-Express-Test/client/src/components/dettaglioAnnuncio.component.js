@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import '../stylesheets/index.css';
+import displayComponent from '../utility/displayComponent'
+import dateFormat from 'dateformat'
 
 export default class DettaglioAnnuncio extends Component {
     state = {
@@ -21,9 +23,30 @@ export default class DettaglioAnnuncio extends Component {
         telefono: ''
     }
 
+    listOfImages = []
+
+    componentDidMount() {
+        displayComponent('wifi', Boolean(this.state.wifi))
+        displayComponent('ascensore', Boolean(this.state.ascensore))
+        displayComponent('garage', Boolean(this.state.garage))
+        displayComponent('terrazzo', Boolean(this.state.terrazzo))
+    }
+
     render() {
         // eslint-disable-next-line
-        this.state = this.props.location.state; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push        
+        this.state = this.props.location.state; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push     
+
+        // Carica le immagini dell'annuncio dentro listOfImages
+        const path = require.context('../../../images', true)
+        for (let i = 0; i < 5; i++) {
+            try {
+                this.listOfImages.push(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'))
+            }
+            catch (err) {
+                console.log("Immagini finite")
+                break
+            }
+        }
 
         return (
             <div className="container justify-content-center">
@@ -51,18 +74,18 @@ export default class DettaglioAnnuncio extends Component {
                                             <li className="list-group-item" key="cap"><strong>CAP: </strong>{this.state.cap}</li>
                                             <li className="list-group-item" key="indirizzo"><strong>Indirizzo: </strong>{this.state.indirizzo}</li>
                                             <li className="list-group-item" key="num_civico"><strong>Numero Civico: </strong>{this.state.civico}</li>
-                                            <li className="list-group-item" key="dateFrom"><strong>Disponibile a partire da: </strong>{this.state.dateFrom}</li>
-                                            <li className="list-group-item" key="dateTo"><strong>Disponibile fino a: </strong>{this.state.dateTo}</li>
+                                            <li className="list-group-item" key="dateFrom"><strong>Disponibile a partire da: </strong>{dateFormat(this.state.dateFrom, "dd/mm/yyyy")}</li>
+                                            <li className="list-group-item" key="dateTo"><strong>Disponibile fino a: </strong>{dateFormat(this.state.dateTo, "dd/mm/yyyy")}</li>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="list-group">
                                             <li className="list-group-item" key="num_posti"><strong>Posti Letto Disponibili: </strong>{this.state.n_posti}</li>
                                             <li className="list-group-item" key="num_bagni"><strong>Numero Bagni: </strong>{this.state.n_bagni}</li>
-                                            <li className="list-group-item" key="wifi"><strong>Wi-fi: </strong>{this.state.wifi}</li>
-                                            <li className="list-group-item" key="ascensore"><strong>Ascensore: </strong>{this.state.ascensore}</li>
-                                            <li className="list-group-item" key="garage"><strong>Garage: </strong>{this.state.garage}</li>
-                                            <li className="list-group-item" key="terrazzo"><strong>Terrazzo: </strong>{this.state.terrazzo}</li>
+                                            <li className="list-group-item" key="wifi" id='wifi'><strong>Presenza Wi-fi</strong></li>
+                                            <li className="list-group-item" key="ascensore" id='ascensore'><strong>Presenza Ascensore</strong></li>
+                                            <li className="list-group-item" key="garage" id='garage'><strong>Presenza Garage</strong></li>
+                                            <li className="list-group-item" key="terrazzo" id='terrazzo'><strong>Presenza Terrazzo</strong></li>
                                         </div>
                                     </div>
                                 </div>
@@ -88,20 +111,10 @@ export default class DettaglioAnnuncio extends Component {
                             </div>
                             <h4 className="my-4">Galleria immagini:</h4>
                             <div className="row">
-                                <div className="col-md-3 col-sm-6 mb-4">
-                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img0.png')} alt="" />
-                                </div>
-                                {/*
-                                <div className="col-md-3 col-sm-6 mb-4">
-                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img1.png')} alt="" />
-
-                                </div>
-                                <div className="col-md-3 col-sm-6 mb-4">
-                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img2.png')} alt="" />
-                                </div>
-                                <div className="col-md-3 col-sm-6 mb-4">
-                                    <img className="img-fluid" src={require('../../../images/ID' + this.state.idAnnuncio + '/img3.png')} alt="" />
-                                </div>*/}
+                                {
+                                    this.listOfImages.map((img, index) =>
+                                        <img key={'img' + index} src={img} alt={index}></img>)
+                                }
                             </div>
                         </div>
                     </div>

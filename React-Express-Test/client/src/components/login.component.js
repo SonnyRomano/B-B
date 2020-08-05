@@ -52,7 +52,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div id="LoginBox" className="modal">
+            <div id="Login" className="modal">
 
                 <form className="modal-content animate was-validated col-sm-8 mt-3" onSubmit={this.handleSubmit}>
                     <div className="imgcontainer">

@@ -29,7 +29,7 @@ export default class DiventaHost extends Component {
 
     render() {
         return (
-            <div id="DiventaHostBox" className="modal">
+            <div id="DiventaHost" className="modal">
 
                 <form className="modal-content animate was-validated col-sm-8 mt-3" onSubmit={this.handleSubmit}>
                     <div className="imgcontainer">

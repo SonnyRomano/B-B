@@ -2,7 +2,7 @@
 // componentName impostato come id
 
 export default function displayComponent(componentName, flag) {
-    if (document.getElementById(componentName + 'Box') == null) return;
-    if (flag) document.getElementById(componentName + 'Box').style.display = 'block';
-    else document.getElementById(componentName + 'Box').style.display = 'none';
+    if (document.getElementById(componentName) == null) return;
+    if (flag) document.getElementById(componentName).style.display = 'block';
+    else document.getElementById(componentName).style.display = 'none';
 }
