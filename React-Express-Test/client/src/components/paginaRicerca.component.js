@@ -3,36 +3,28 @@ import '../stylesheets/index.css';
 
 export default class PaginaRicerca extends Component {
 
-    state = {
-        idAnnuncio: '',
-        citta: '',
-        cap: '',
-        indirizzo: '',
-        civico: '',
-        dateFrom: '',
-        dateTo: '',
-        n_posti: '',
-        n_bagni: '',
-        wifi: 0,
-        ascensore: 0,
-        garage: 0,
-        terrazzo: 0,
-        descrizione: '',
-        costo: '',
-        telefono: ''
-    }
+    datiPrenotazione = []
 
     handleClick(info) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
-        this.props.history.push('/gestioneAnnunci/dettaglioAnnuncio', info);
+        let datiAnnuncio = []
+        datiAnnuncio.push(info)
+        datiAnnuncio.push(this.datiPrenotazione)
+
+        this.props.history.push('/gestioneAnnunci/dettaglioAnnuncio', datiAnnuncio);
     }
 
     render() {
         // eslint-disable-next-line
-        this.state = this.props.location.state; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
-        console.log("Annuncio Trovato");
-        console.log(this.state)
+        let risultatiRicerca = this.props.location.state[0]; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
+        this.datiPrenotazione = this.props.location.state[1];
+
+        console.log("Risultati Ricerca: ");
+        console.log(risultatiRicerca)
+        console.log("Dati Prenotazione: ");
+        console.log(this.datiPrenotazione)
+
         //Crea un oggetto che contiene il mapping dei dati come componenti <li>
-        const listItems = this.state.map((d) =>
+        const listItems = risultatiRicerca.map((d) =>
             <li key={'li' + d.idAnnuncio} className="list-group-item" style={{ marginBottom: '4rem', backgroundColor: 'grey' }}>
                 <a onClick={() => this.handleClick(d)} key={'a' + d.idAnnuncio} className="list-group-item list-group-item-action border border-primary " style={{ marginTop: '1rem', marginBottom: '1rem', background: '#E6E6FA' }}>
                     <div className='row' >

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import '../stylesheets/index.css';
+import axios from 'axios';
 import displayComponent from '../utility/displayComponent'
 import dateFormat from 'dateformat'
 
 export default class DettaglioAnnuncio extends Component {
     state = {
         idAnnuncio: '',
+        idProprietario: '',
         citta: '',
         cap: '',
         indirizzo: '',
@@ -23,6 +25,8 @@ export default class DettaglioAnnuncio extends Component {
         telefono: ''
     }
 
+    costoTotale
+    datiPrenotazione = []
     listOfImages = []
 
     componentDidMount() {
@@ -32,9 +36,37 @@ export default class DettaglioAnnuncio extends Component {
         displayComponent('terrazzo', Boolean(this.state.terrazzo))
     }
 
+    effettuaPrenotazione() {
+        const prenotazione = {
+            idAnnuncio: this.state.idAnnuncio,
+            idProprietario: this.state.idProprietario,
+            idCliente: sessionStorage.getItem('id'),
+            dateFrom: dateFormat(this.datiPrenotazione.dateFrom, "yyyy-mm-dd"),
+            dateTo: dateFormat(this.datiPrenotazione.dateTo, "yyyy-mm-dd"),
+            costoTotale: this.costoTotale
+        };
+
+        console.log(prenotazione);
+
+        //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/effettuaPrenotazione`, { prenotazione })
+            .then(res => {
+                console.log(res);
+
+                alert("Prenotazione Effettuata con Successo")
+
+                this.props.history.push("/")
+            })
+            .catch(err => {
+                console.log("Error = ", err);
+            })
+    }
+
+
     render() {
         // eslint-disable-next-line
-        this.state = this.props.location.state; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push     
+        this.state = this.props.location.state[0]; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push     
+        this.datiPrenotazione = this.props.location.state[1];
 
         // Carica le immagini dell'annuncio dentro listOfImages
         const path = require.context('../../../images', true)
@@ -47,6 +79,15 @@ export default class DettaglioAnnuncio extends Component {
                 break
             }
         }
+
+        // Calcola Prezzo
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        let firstDate = new Date(this.datiPrenotazione.dateTo);
+        let secondDate = new Date(this.datiPrenotazione.dateFrom);
+
+        let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+        this.costoTotale = this.state.costo * diffDays * this.datiPrenotazione.n_ospiti
+        console.log('CostoTotale: ' + this.costoTotale)
 
         return (
             <div className="container justify-content-center">
@@ -103,9 +144,16 @@ export default class DettaglioAnnuncio extends Component {
                                             <li className="list-group-item" key="cellulare"><strong>Cellulare: </strong>{this.state.telefono}</li>
                                         </div>
                                     </div>
+                                </div>
+                                <div className="row" style={{ marginTop: '1rem' }}>
                                     <div className="col-md-4">
-                                        <button type="button" className="btn btn-info btn-lg">Invia mail!</button>
-                                        <button type="button" style={{ marginTop: '0.3rem' }} className="btn btn-success btn-lg">Paga e affitta!</button>
+                                        <div className="list-group" style={{ backgroundColor: 'white', textAlign: 'right' }}>
+                                            <label><strong>Costo Complessivo:</strong></label>
+                                            <div>Costo:{this.state.costo} X<br /> Numero Giorni: {diffDays} X <br></br> Numero Ospiti: {this.datiPrenotazione.n_ospiti} <br></br> ------- <br></br>{this.costoTotale} €</div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-5">
+                                        <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
                                     </div>
                                 </div>
                             </div>

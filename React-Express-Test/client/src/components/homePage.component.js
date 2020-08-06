@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import '../stylesheets/index.css';
+import dateFormat from 'dateformat'
 
 
 export default class HomePage extends Component {
@@ -14,6 +15,8 @@ export default class HomePage extends Component {
 
     state = {
         citta: '',
+        dateFrom: '',
+        dateTo: '',
         n_ospiti: ''
     }
 
@@ -28,6 +31,8 @@ export default class HomePage extends Component {
 
         const ricerca = {
             citta: this.state.citta,
+            dateFrom: dateFormat(this.state.dateFrom, "yyyy-mm-dd"),
+            dateTo: dateFormat(this.state.dateTo, "yyyy-mm-dd"),
             n_ospiti: this.state.n_ospiti
         };
 
@@ -38,11 +43,17 @@ export default class HomePage extends Component {
             .then(res => {
                 console.log(res);
                 console.log(res.data);
+
+                let datiRicerca = []
+                datiRicerca.push(res.data)
+                datiRicerca.push(ricerca)
+
                 //Indirizza la pagina alla ricerca e gli passa i dati della risposta contenente gli annunci
-                this.props.history.push('/gestioneAnnunci/paginaRicerca', res.data);
+                this.props.history.push('/gestioneAnnunci/paginaRicerca', datiRicerca);
             })
             .catch(err => {
                 console.log("Error = ", err);
+                alert("Annunci non Trovati")
             })
     }
 
@@ -68,13 +79,13 @@ export default class HomePage extends Component {
                                     <div className="form-row">
                                         <div className="col-6">
                                             <label>Check In</label>
-                                            <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl}
-                                                name="dateFrom_r" />
+                                            <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                                                name="dateFrom" />
                                         </div>
                                         <div className="col-6">
                                             <label>Check Out</label>
-                                            <input id="dateTo" type="date" className="form-control" onInput={this.dataControl}
-                                                name="dateTo_r" />
+                                            <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                                                name="dateTo" />
                                         </div>
                                     </div>
                                 </div>
