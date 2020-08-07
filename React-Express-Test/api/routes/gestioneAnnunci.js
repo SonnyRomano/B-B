@@ -50,6 +50,9 @@ router.post('/inserisciAnnuncio', inserisciAnnuncio);
 /* Aggiorna Annuncio dopo che il proprietario lo abbia modificato */
 router.post('/aggiornaAnnuncio', aggiornaAnnuncio);
 
+/* Elimina annuncio selezionato dal proprietario */
+router.post('/eliminaAnnuncio', eliminaAnnuncio);
+
 /* Ricerca Annunci proprietario */
 router.post('/ricercaAnnunciProprietario', ricercaAnnunciProprietario);
 
@@ -91,6 +94,30 @@ async function inserisciAnnuncio(req, res, next) {
         console.log(results.insertId);
         console.log(results);
         console.log(`Annuncio inserito!`);
+        res.send(results);
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+}
+
+// middleware di elimina annuncio
+async function eliminaAnnuncio(req, res, next) {
+    // istanziamo il middleware
+    const db = await makeDb(config);
+    let results = {};
+    try {
+        results = await db.query('DELETE FROM annunci \
+                                  WHERE idAnnuncio = ? ',
+            [
+                req.body.idAnnuncio
+            ])
+            .catch(err => {
+                throw err;
+            });
+
+        console.log(results);
+        console.log(`Annuncio eliminato!`);
         res.send(results);
     } catch (err) {
         console.log(err);

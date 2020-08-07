@@ -11,6 +11,7 @@ import Footer from './components/footer.component';
 import PaginaRicerca from './components/paginaRicerca.component';
 
 import DettaglioAnnuncio from './components/dettaglioAnnuncio.component';
+import EliminaAnnuncio from './components/eliminaAnnuncio.component';
 import ModificaAnnuncio from './components/modificaAnnuncio.component';
 import PaginaRicercaProprietario from './components/paginaRicercaProprietario.component';
 
@@ -42,6 +43,7 @@ class App extends Component {
                     </div>
                     <div className="container">
                         <Route exact path="/gestioneAnnunci/dettaglioAnnuncio" component={DettaglioAnnuncio} /> 
+                        <Route exact path="/gestioneAnnunci/eliminaAnnuncio" component={EliminaAnnuncio} /> 
                         <Route exact path="/gestioneAnnunci/inserisciAnnuncio" component={InserisciAnnuncio} />
                         <Route exact path="/gestioneAnnunci/modificaAnnuncio" component={ModificaAnnuncio} />
                         <Route exact path="/gestioneAnnunci/paginaRicerca" component={PaginaRicerca} />

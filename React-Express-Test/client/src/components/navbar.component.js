@@ -86,7 +86,7 @@ export default class Navbar extends Component {
                             <div className="dropdown-menu">
                                 <a className="dropdown-item" href="/gestioneAnnunci/inserisciAnnuncio">Inserisci Annuncio</a>
                                 <a className="dropdown-item" href="/gestioneAnnunci/paginaRicercaProprietario">Modifica Annuncio</a>
-                                <a className="dropdown-item">Elimina Annuncio</a>
+                                <a className="dropdown-item" href="/gestioneAnnunci/eliminaAnnuncio">Elimina Annuncio</a>
                                 <a className="dropdown-item">Visualizza Prenotazioni</a>
                                 <a className="dropdown-item">Visualizza Guadagni</a>
                             </div>
