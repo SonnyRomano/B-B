@@ -153,7 +153,7 @@ export default class DettaglioAnnuncio extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-5">
-                                        <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
+                                        <button type="button" className="btn btn-success btn-lg" onClick={() => this.props.history.push('/moduloPagamento')}>Paga e affitta!</button>
                                     </div>
                                 </div>
                             </div>
