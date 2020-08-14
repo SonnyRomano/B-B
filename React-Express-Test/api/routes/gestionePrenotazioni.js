@@ -10,8 +10,11 @@ router.get('/', function (req, res, next) {
     next(createError(403));
 });
 
-/* Ricerca Annunci */
+/* clienti prenotano annunci */
 router.post('/effettuaPrenotazione', effettuaPrenotazione);
+
+/* proprietario visualiza lista prenotazioni pendenti */
+router.post('/visualizzaPrenotazioniProprietario', visualizzaPrenotazioniProprietario);
 
 
 // middleware di Inserimento Annuncio
@@ -48,104 +51,28 @@ async function effettuaPrenotazione(req, res, next) {
     }
 }
 
-// middleware di aggiornamento annuncio
-async function aggiornaAnnuncio(req, res, next) {
+// middleware di Inserimento Annuncio
+async function visualizzaPrenotazioniProprietario(req, res, next) {
     // istanziamo il middleware
     const db = await makeDb(config);
     let results = {};
     try {
-        results = await db.query('UPDATE annunci \
-                            SET idProprietario=?,citta=?,cap=?,indirizzo=?,civico=?,dateFrom=?,dateTo=?,n_bagni=?,n_posti=?,\
-                            wifi=?,ascensore=?,garage=?,terrazzo=?,descrizione=?,telefono=?,costo=? WHERE idAnnuncio = ? ',
-            [
-                [req.body.annuncio.idProprietario],
-                [req.body.annuncio.citta],
-                [req.body.annuncio.cap],
-                [req.body.annuncio.indirizzo],
-                [req.body.annuncio.civico],
-                [req.body.annuncio.dateFrom],
-                [req.body.annuncio.dateTo],
-                [req.body.annuncio.n_bagni],
-                [req.body.annuncio.n_posti],
-                [req.body.annuncio.wifi],
-                [req.body.annuncio.ascensore],
-                [req.body.annuncio.garage],
-                [req.body.annuncio.terrazzo],
-                [req.body.annuncio.descrizione],
-                [req.body.annuncio.telefono],
-                [req.body.annuncio.costo],
-                [req.body.annuncio.idAnnuncio]
+
+        await withTransaction(db, async () => {
+            // inserimento utente
+            results = await db.query('SELECT * FROM `prenotazioni`\
+            WHERE idProprietario = ?', [
+                req.body.idProprietario
             ])
             .catch(err => {
                 throw err;
             });
 
-        console.log(results);
-        console.log(`Annuncio modificato!`);
-        res.send(results);
-    } catch (err) {
-        console.log(err);
-        next(createError(500));
-    }
-}
-
-// middleware di ricerca
-async function ricercaAnnunci(req, res, next) {
-    // istanziamo il middleware
-    const db = await makeDb(config);
-    let results = {};
-    try {
-        console.log(req.body.ricerca.dateFrom)
-        await withTransaction(db, async () => {
-            // inserimento utente
-            results = await db.query('SELECT * FROM `annunci`\
-            WHERE citta = ? AND n_posti >= ? AND dateFrom <= ? AND dateTo >= ?', [
-                req.body.ricerca.citta,
-                req.body.ricerca.n_ospiti,
-                req.body.ricerca.dateFrom,
-                req.body.ricerca.dateTo
-            ])
-                .catch(err => {
-                    throw err;
-                });
-
             if (results.length == 0) {
-                console.log(`Annunci a ${req.body.ricerca.citta} non trovati!`);
-                res.status(403).send(`Annunci a ${req.body.ricerca.citta} non trovati!`);
+                console.log(`Prenotazioni relative all' ID ${req.body.idProprietario} non trovate!`);
+                res.status(403).send(`Spiacenti, non ha richieste pendenti da visualizzare!`);
             } else {
-                console.log('Annunci Trovati');
-                console.log(results);
-
-                res.status(200).send(results);
-            }
-        });
-    } catch (err) {
-        console.log(err);
-        next(createError(500));
-    }
-}
-
-async function ricercaAnnunciProprietario(req, res, next) {
-    // istanziamo il middleware
-    const db = await makeDb(config);
-    let results = {};
-    try {
-
-        await withTransaction(db, async () => {
-            // inserimento utente
-            results = await db.query('SELECT * FROM `annunci`\
-            WHERE idProprietario = ?', [
-                req.body.idProprietario
-            ])
-                .catch(err => {
-                    throw err;
-                });
-
-            if (results.length == 0) {
-                console.log(`Annunci relativi all' ID ${req.body.idProprietario} non trovati!`);
-                res.status(403).send(`Spiacenti, non ha annunci da modificare!`);
-            } else {
-                console.log('Annunci Trovati');
+                console.log('Richieste trovate');
                 console.log(results);
                 res.status(200).send(results);
             }
