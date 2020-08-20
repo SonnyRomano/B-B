@@ -1,40 +1,32 @@
 import React from 'react';
 import '../stylesheets/moduloPagamento.css'
 import axios from 'axios'
-// var express = require('express')
-// var router = express.Router()
 
-class moduloPagamento extends React.Component {
+export default class moduloPagamento extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      fname: '',
-      email: '',
-      adr: '',
-      city: '',
-      prov: '',
-      cap: '',
-      cardname: '',
-      cardnumber: '',
-      expmonth: '',
-      expyear: '',
-      cvv: ''
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  state = {
+    fname: '',
+    email: '',
+    adr: '',
+    city: '',
+    prov: '',
+    cap: '',
+    cardname: '',
+    cardnumber: '',
+    expmonth: '',
+    expyear: '',
+    cvv: ''
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
-    // console.log(this.state);
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
   }
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
 
-    // console.log(this.state);
     const pagamento = {
       fname: this.state.fname,
       email: this.state.email,
@@ -50,10 +42,6 @@ class moduloPagamento extends React.Component {
     }
 
     console.log(pagamento);
-
-    // router.post('/insPagamento', (req, res) => {
-    //   res.send('Got a POST request')
-    // })
 
     axios.post('http://127.0.0.1:9000/gestionePagamenti/insPagamento', { pagamento })
       .then(res => {
@@ -73,30 +61,30 @@ class moduloPagamento extends React.Component {
 
               <div className="form-group m-2">
                 <label htmlFor="fname"><i className="fa fa-user"></i> Nome e cognome</label>
-                <input type="text" value={this.state.fname} onChange={this.handleChange} className="form-control" id="fname" placeholder="John M. Doe" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="fname" placeholder="John M. Doe" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="email"><i className="fa fa-envelope"></i> Email</label>
-                <input type="text" value={this.state.email} onChange={this.handleChange} className="form-control" id="email" placeholder="john@example.com" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="email" placeholder="john@example.com" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="adr"><i className="fa fa-address-card-o"></i> Via e numero civico</label>
-                <input type="text" value={this.state.adr} onChange={this.handleChange} className="form-control" id="adr" placeholder="542 W. 15th Street" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="adr" placeholder="542 W. 15th Street" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="city"><i className="fa fa-institution"></i> Città</label>
-                <input type="text" value={this.state.city} onChange={this.handleChange} className="form-control" id="city" placeholder="New York" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="city" placeholder="New York" />
               </div>
 
 
               <div className="row m-2">
                 <div style={{ paddingLeft: 0 }} className="col">
                   <label htmlFor="prov">Provincia</label>
-                  <input type="text" value={this.state.prov} onChange={this.handleChange} className="form-control" id="prov" placeholder="NY" />
+                  <input type="text" onChange={this.handleChange} className="form-control" name="prov" placeholder="NY" />
                 </div>
                 <div style={{ padding: 0 }} className="col">
                   <label htmlFor="cap">CAP</label>
-                  <input type="text" value={this.state.cap} onChange={this.handleChange} className="form-control" id="cap" placeholder="10001" />
+                  <input type="text" onChange={this.handleChange} className="form-control" name="cap" placeholder="10001" />
                 </div>
               </div>
 
@@ -117,26 +105,26 @@ class moduloPagamento extends React.Component {
 
               <div className="form-group m-2">
                 <label htmlFor="cname">Nome sulla carta</label>
-                <input type="text" className="form-control" id="cardname" placeholder="John More Doe" />
+                <input type="text" className="form-control" name="cardname" placeholder="John More Doe" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="ccnum">Numero della carta</label>
-                <input type="text" className="form-control" id="cardnumber" placeholder="1111-2222-3333-4444" />
+                <input type="text" className="form-control" name="cardnumber" placeholder="1111-2222-3333-4444" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="expmonth">Exp Month</label>
-                <input type="text" className="form-control" id="expmonth" placeholder="September" />
+                <input type="text" className="form-control" name="expmonth" placeholder="September" />
               </div>
 
 
               <div className="row m-2">
                 <div style={{ paddingLeft: 0 }} className="col">
                   <label htmlFor="expyear">Exp Year</label>
-                  <input type="text" className="form-control" id="expyear" placeholder="2018" />
+                  <input type="text" className="form-control" name="expyear" placeholder="2018" />
                 </div>
                 <div style={{ padding: 0 }} className="col">
                   <label htmlFor="cvv">CVV</label>
-                  <input type="text" className="form-control" id="cvv" placeholder="352" />
+                  <input type="text" className="form-control" name="cvv" placeholder="352" />
                 </div>
               </div>
 
@@ -149,5 +137,3 @@ class moduloPagamento extends React.Component {
     )
   }
 }
-
-export default moduloPagamento
