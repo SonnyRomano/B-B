@@ -15,8 +15,8 @@ router.get('/paginaRicerca', function (req, res, next) {
   res.render('PaginaRicerca');
 });
 
-router.get('/moduloPagamento', function (req, res, next) {
-  res.render('moduloPagamento')
-})
+// router.get('/moduloPagamento', function (req, res, next) {
+//   res.render('moduloPagamento')
+// })
 
 module.exports = router;
