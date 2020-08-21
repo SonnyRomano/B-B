@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import '../stylesheets/index.css';
 import displayComponent from '../utility/displayComponent'
 import dateFormat from 'dateformat'
+import queryString from 'query-string'
 
 export default class DettaglioAnnuncio extends Component {
   state = {
@@ -21,22 +23,110 @@ export default class DettaglioAnnuncio extends Component {
     terrazzo: 0,
     descrizione: '',
     costo: '',
-    telefono: ''
+    telefono: '',
+    listOfImages: [],
+    CoverImg: ''
   }
 
   costoTotale
   datiPrenotazione = []
-  listOfImages = []
 
-  componentDidMount() {
+  componentDidUpdate() {
     displayComponent('wifi', Boolean(this.state.wifi))
     displayComponent('ascensore', Boolean(this.state.ascensore))
     displayComponent('garage', Boolean(this.state.garage))
     displayComponent('terrazzo', Boolean(this.state.terrazzo))
+  }
 
-    //Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
+  componentWillMount() {
+    console.log(this.props.history.action)
     if (this.props.history.action === 'POP') {
-      this.props.history.push('/')
+      let values = queryString.parse(this.props.location.search)
+      console.log(values.id)
+
+      let id = values.id
+
+      axios.post(`http://127.0.0.1:9000/gestioneAnnunci/recuperaAnnuncio`, { id })
+        .then(res => {
+
+          this.setState({
+            idAnnuncio: res.data[0].idAnnuncio,
+            idProprietario: res.data[0].idProprietario,
+            citta: res.data[0].citta,
+            cap: res.data[0].cap,
+            indirizzo: res.data[0].indirizzo,
+            civico: res.data[0].civico,
+            dateFrom: res.data[0].dateFrom,
+            dateTo: res.data[0].dateTo,
+            n_posti: res.data[0].n_posti,
+            n_bagni: res.data[0].n_bagni,
+            wifi: res.data[0].wifi,
+            ascensore: res.data[0].ascensore,
+            garage: res.data[0].garage,
+            terrazzo: res.data[0].terrazzo,
+            descrizione: res.data[0].descrizione,
+            costo: res.data[0].costo,
+            telefono: res.data[0].telefono
+          })
+          console.log(this.state)
+
+          // Carica le immagini dell'annuncio dentro listOfImages
+          const path = require.context('../../../images', true)
+          for (let i = 0; i < 5; i++) {
+            try {
+              var joined = this.state.listOfImages.concat(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'));
+              this.setState({ listOfImages: joined })
+            }
+            catch (err) {
+              console.log("Immagini finite")
+              break
+            }
+          }
+
+          this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
+        })
+        .catch(err => {
+          console.log("Error = ", err);
+          alert("Annuncio non Trovato")
+        })
+    }
+    else {
+      //Copia i dati dei risultati della ricerca nello state della pagina passati dal push  
+      this.setState({
+        idAnnuncio: this.props.location.state[0].idAnnuncio,
+        idProprietario: this.props.location.state[0].idProprietario,
+        citta: this.props.location.state[0].citta,
+        cap: this.props.location.state[0].cap,
+        indirizzo: this.props.location.state[0].indirizzo,
+        civico: this.props.location.state[0].civico,
+        dateFrom: this.props.location.state[0].dateFrom,
+        dateTo: this.props.location.state[0].dateTo,
+        n_posti: this.props.location.state[0].n_posti,
+        n_bagni: this.props.location.state[0].n_bagni,
+        wifi: this.props.location.state[0].wifi,
+        ascensore: this.props.location.state[0].ascensore,
+        garage: this.props.location.state[0].garage,
+        terrazzo: this.props.location.state[0].terrazzo,
+        descrizione: this.props.location.state[0].descrizione,
+        costo: this.props.location.state[0].costo,
+        telefono: this.props.location.state[0].telefono
+      }, () => {      // Carica le immagini dell'annuncio dentro listOfImages
+        const path = require.context('../../../images', true)
+        for (let i = 0; i < 5; i++) {
+          try {
+            var joined = this.state.listOfImages.concat(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'));
+            this.setState({ listOfImages: joined })
+          }
+          catch (err) {
+            console.log("Immagini finite")
+            break
+          }
+        }
+
+        this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
+      })
+
+      this.datiPrenotazione = this.props.location.state[1];
     }
   }
 
@@ -63,21 +153,6 @@ export default class DettaglioAnnuncio extends Component {
 
 
   render() {
-    // eslint-disable-next-line
-    this.state = this.props.location.state[0]; //Copia i dati dei risultati della ricerca nello state della pagina passati dal push     
-    this.datiPrenotazione = this.props.location.state[1];
-
-    // Carica le immagini dell'annuncio dentro listOfImages
-    const path = require.context('../../../images', true)
-    for (let i = 0; i < 5; i++) {
-      try {
-        this.listOfImages.push(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'))
-      }
-      catch (err) {
-        console.log("Immagini finite")
-        break
-      }
-    }
 
     // Calcola Prezzo
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
@@ -88,6 +163,7 @@ export default class DettaglioAnnuncio extends Component {
     this.costoTotale = this.state.costo * diffDays * this.datiPrenotazione.n_ospiti
     console.log('CostoTotale: ' + this.costoTotale)
 
+
     return (
       <div className="container justify-content-center">
         <div className="col-md-9 py-5 " style={{ marginLeft: '12.5%' }}>
@@ -97,7 +173,7 @@ export default class DettaglioAnnuncio extends Component {
               <div className="container">
                 <div className="row">
                   <div className="col-md-7">
-                    <img className="img-fluid" style={{ width: '100%', padding: '1.3rem' }} key={'img' + this.state.idAnnuncio} src={require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png')} alt="CoverImage" ></img>
+                    <img className="img-fluid" style={{ width: '100%', padding: '1.3rem' }} key={'img' + this.state.idAnnuncio} src={this.state.CoverImg} alt="CoverImage" ></img>
                   </div>
                   <div className="col-md-5">
                     <h4 className="my-3">Descrizione:</h4>
@@ -159,7 +235,7 @@ export default class DettaglioAnnuncio extends Component {
               <h4 className="my-4">Galleria immagini:</h4>
               <div className="row">
                 {
-                  this.listOfImages.map((img, index) =>
+                  this.state.listOfImages.map((img, index) =>
                     <img key={'img' + index} src={img} alt={index}></img>)
                 }
               </div>

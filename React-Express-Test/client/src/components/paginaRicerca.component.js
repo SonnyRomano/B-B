@@ -10,7 +10,7 @@ export default class PaginaRicerca extends Component {
         datiAnnuncio.push(info)
         datiAnnuncio.push(this.datiPrenotazione)
 
-        this.props.history.push('/gestioneAnnunci/dettaglioAnnuncio', datiAnnuncio);
+        this.props.history.push('/gestioneAnnunci/dettaglioAnnuncio?id=' + info.idAnnuncio, datiAnnuncio);
     }
 
     render() {
