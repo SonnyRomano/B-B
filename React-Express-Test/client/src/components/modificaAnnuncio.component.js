@@ -77,6 +77,8 @@ export default class ModificaAnnuncio extends Component {
         axios.post(`http://127.0.0.1:9000/gestioneAnnunci/aggiornaAnnuncio`, { annuncio })
             .then(res => {
                 console.log(res);
+                alert('Annuncio aggiornato con successo!')
+                this.props.history.push('/gestioneAnnunci/paginaRicercaProprietario');
             })
     }
 

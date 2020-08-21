@@ -16,6 +16,7 @@ import ModificaAnnuncio from './components/modificaAnnuncio.component';
 import PaginaRicercaProprietario from './components/paginaRicercaProprietario.component';
 import moduloPagamento from './components/moduloPagamento';
 import VisualizzaPrenotazioni from './components/visualizzaPrenotazioni.component';
+import RiepilogoPrenotazione from "./components/riepilogoPrenotazione";
 
 
 
@@ -50,7 +51,8 @@ class App extends Component {
                         <Route exact path="/gestioneAnnunci/modificaAnnuncio" component={ModificaAnnuncio} />
                         <Route exact path="/gestioneAnnunci/paginaRicerca" component={PaginaRicerca} />
                         <Route exact path="/gestioneAnnunci/paginaRicercaProprietario" component={PaginaRicercaProprietario} />
-                        <Route exact path="/moduloPagamento" component={moduloPagamento} />
+                        <Route exact path="/prenotazione/moduloPagamento" component={moduloPagamento} />
+                        <Route exact path="/prenotazione/riepilogoPrenotazione" component={RiepilogoPrenotazione} />
                         <Route exact path="/gestioneAnnunci/visualizzaPrenotazioni" component={VisualizzaPrenotazioni} />
                     </div>
                 </Router>
