@@ -1,6 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
 var router = express.Router();
+var nodemailer = require('nodemailer');
+
 
 const { config } = require('../db/config');
 const { makeDb, withTransaction } = require('../db/dbmiddleware');
@@ -12,6 +14,9 @@ router.get('/', function (req, res, next) {
 
 /* clienti prenotano annunci */
 router.post('/effettuaPrenotazione', effettuaPrenotazione);
+
+/* clienti prenotano annunci */
+router.post('/annullaPrenotazione', annullaPrenotazione);
 
 /* proprietario visualiza lista prenotazioni pendenti */
 router.post('/visualizzaPrenotazioniProprietario', visualizzaPrenotazioniProprietario);
@@ -44,6 +49,75 @@ async function effettuaPrenotazione(req, res, next) {
         console.log(results.insertId);
         console.log(results);
         console.log(`Prenotazione inserita!`);
+        res.send(results);
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+}
+
+// middleware di annulla prenotazione
+async function annullaPrenotazione(req, res, next) {
+    const destinatario = '';
+
+    // istanziamo il middleware per accedere al dbms e recuperare la mail del destinatario 
+    const db = await makeDb(config);
+    let results = {};
+    try {
+        results = await db.query('SElECT FROM `clienti`\
+                    WHERE idCliente = ?', 
+                    [
+                        req.body.annullaP.idCliente,
+                    ]
+        )
+        .catch(err => {
+            throw err;
+        });
+
+        console.log(results);
+        console.log(`Email destinatario recuperata!`);
+        destinatario = results[0].email;
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+
+    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di node. 
+        service: 'gmail',
+        auth: {
+          user: 'teamMars@gmail.com',
+          pass: 'marspwd'
+        }
+    });
+      
+    var mailOptions = {
+        from: 'teamMars@gmail.com',
+        to: destinatario,   //Destinatario da sistemare
+        subject: 'Richiesta declinata!',
+        text: 'Spiacente, il proprietario ha declinato la tua richiesta!'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+
+    try {
+        results = await db.query('DELETE FROM `prenotazioni`\
+                    WHERE idPrenotazione = ?', 
+                    [
+                        req.body.annullaP.idPrenotazione,
+                    ]
+        )
+        .catch(err => {
+            throw err;
+        });
+
+        console.log(results);
+        console.log(`Prenotazione eliminata!`);
         res.send(results);
     } catch (err) {
         console.log(err);
