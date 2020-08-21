@@ -32,12 +32,12 @@ async function effettuaPrenotazione(req, res, next) {
           (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, attiva) VALUES ?', [
             [
                 [
-                    req.body.prenotazione.idAnnuncio,
-                    req.body.prenotazione.idProprietario,
-                    req.body.prenotazione.idCliente,
-                    req.body.prenotazione.dateFrom,
-                    req.body.prenotazione.dateTo,
-                    req.body.prenotazione.costoTotale,
+                    req.body.datiPrenotazione.idAnnuncio,
+                    req.body.datiPrenotazione.idProprietario,
+                    req.body.datiPrenotazione.idCliente,
+                    req.body.datiPrenotazione.dateFrom,
+                    req.body.datiPrenotazione.dateTo,
+                    req.body.datiPrenotazione.costoTotale,
                     req.body.datiPrenotazione.idPagamento,
                     false
                 ]
