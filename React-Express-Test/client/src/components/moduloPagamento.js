@@ -18,6 +18,8 @@ export default class moduloPagamento extends React.Component {
     cvv: ''
   }
 
+  datiPrenotazione = []
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -27,7 +29,8 @@ export default class moduloPagamento extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const pagamento = {
+    let pagamento = {
+      idPagamento: '',
       fname: this.state.fname,
       email: this.state.email,
       adr: this.state.adr,
@@ -46,10 +49,29 @@ export default class moduloPagamento extends React.Component {
     axios.post('http://127.0.0.1:9000/gestionePagamenti/insPagamento', { pagamento })
       .then(res => {
         console.log(res);
+
+        let datiRiepilogo = []
+        datiRiepilogo.push(this.datiPrenotazione)
+        pagamento.idPagamento = res.data
+        datiRiepilogo.push(pagamento)
+
+        console.log(datiRiepilogo)
+
+        this.props.history.push("/prenotazione/riepilogoPrenotazione", datiRiepilogo)
       })
   }
 
+  componentDidMount() {
+    //Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
+    if (this.props.history.action === 'POP') {
+      this.props.history.push('/')
+    }
+  }
+
   render() {
+
+    this.datiPrenotazione = this.props.location.state;
+
     return (
       <div className="container" id="bg1">
         <div className="display-4">Checkout Form</div>
@@ -105,26 +127,26 @@ export default class moduloPagamento extends React.Component {
 
               <div className="form-group m-2">
                 <label htmlFor="cname">Nome sulla carta</label>
-                <input type="text" className="form-control" name="cardname" placeholder="John More Doe" />
+                <input type="text" className="form-control" name="cardname" onChange={this.handleChange} placeholder="John More" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="ccnum">Numero della carta</label>
-                <input type="text" className="form-control" name="cardnumber" placeholder="1111-2222-3333-4444" />
+                <input type="text" className="form-control" name="cardnumber" onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="expmonth">Exp Month</label>
-                <input type="text" className="form-control" name="expmonth" placeholder="September" />
+                <input type="text" className="form-control" name="expmonth" onChange={this.handleChange} />
               </div>
 
 
               <div className="row m-2">
                 <div style={{ paddingLeft: 0 }} className="col">
                   <label htmlFor="expyear">Exp Year</label>
-                  <input type="text" className="form-control" name="expyear" placeholder="2018" />
+                  <input type="text" className="form-control" name="expyear" onChange={this.handleChange} />
                 </div>
                 <div style={{ padding: 0 }} className="col">
                   <label htmlFor="cvv">CVV</label>
-                  <input type="text" className="form-control" name="cvv" placeholder="352" />
+                  <input type="text" className="form-control" name="cvv" onChange={this.handleChange} />
                 </div>
               </div>
 

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import '../stylesheets/index.css';
-import axios from 'axios';
 import displayComponent from '../utility/displayComponent'
 import dateFormat from 'dateformat'
 
@@ -34,32 +33,32 @@ export default class DettaglioAnnuncio extends Component {
     displayComponent('ascensore', Boolean(this.state.ascensore))
     displayComponent('garage', Boolean(this.state.garage))
     displayComponent('terrazzo', Boolean(this.state.terrazzo))
+
+    //Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
+    if (this.props.history.action === 'POP') {
+      this.props.history.push('/')
+    }
   }
 
   effettuaPrenotazione() {
-    const prenotazione = {
-      idAnnuncio: this.state.idAnnuncio,
-      idProprietario: this.state.idProprietario,
-      idCliente: sessionStorage.getItem('id'),
-      dateFrom: dateFormat(this.datiPrenotazione.dateFrom, "yyyy-mm-dd"),
-      dateTo: dateFormat(this.datiPrenotazione.dateTo, "yyyy-mm-dd"),
-      costoTotale: this.costoTotale
-    };
 
-    console.log(prenotazione);
+    if (sessionStorage.getItem('id') == null) {
+      alert("Devi Effettuare il Login per Poter Prenotare")
+    }
+    else {
+      const prenotazione = {
+        idAnnuncio: this.state.idAnnuncio,
+        idProprietario: this.state.idProprietario,
+        idCliente: sessionStorage.getItem('id'),
+        dateFrom: dateFormat(this.datiPrenotazione.dateFrom, "yyyy-mm-dd"),
+        dateTo: dateFormat(this.datiPrenotazione.dateTo, "yyyy-mm-dd"),
+        costoTotale: this.costoTotale
+      };
 
-    //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
-    axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/effettuaPrenotazione`, { prenotazione })
-      .then(res => {
-        console.log(res);
+      console.log(prenotazione);
 
-        alert("Prenotazione Effettuata con Successo")
-
-        this.props.history.push("/")
-      })
-      .catch(err => {
-        console.log("Error = ", err);
-      })
+      this.props.history.push('/prenotazione/moduloPagamento', prenotazione)
+    }
   }
 
 
@@ -153,7 +152,7 @@ export default class DettaglioAnnuncio extends Component {
                     </div>
                   </div>
                   <div className="col-md-5">
-                    <button type="button" className="btn btn-success btn-lg" onClick={() => this.props.history.push('/moduloPagamento')}>Paga e affitta!</button>
+                    <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
                   </div>
                 </div>
               </div>

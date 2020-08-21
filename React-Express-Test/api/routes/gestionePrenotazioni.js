@@ -29,7 +29,7 @@ async function effettuaPrenotazione(req, res, next) {
     let results = {};
     try {
         results = await db.query('INSERT INTO `prenotazioni` \
-          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, attiva) VALUES ?', [
+          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, attiva) VALUES ?', [
             [
                 [
                     req.body.prenotazione.idAnnuncio,
@@ -38,6 +38,7 @@ async function effettuaPrenotazione(req, res, next) {
                     req.body.prenotazione.dateFrom,
                     req.body.prenotazione.dateTo,
                     req.body.prenotazione.costoTotale,
+                    req.body.datiPrenotazione.idPagamento,
                     false
                 ]
             ]
@@ -65,14 +66,14 @@ async function annullaPrenotazione(req, res, next) {
     let results = {};
     try {
         results = await db.query('SElECT FROM `clienti`\
-                    WHERE idCliente = ?', 
-                    [
-                        req.body.annullaP.idCliente,
-                    ]
+                    WHERE idCliente = ?',
+            [
+                req.body.annullaP.idCliente,
+            ]
         )
-        .catch(err => {
-            throw err;
-        });
+            .catch(err => {
+                throw err;
+            });
 
         console.log(results);
         console.log(`Email destinatario recuperata!`);
@@ -85,11 +86,11 @@ async function annullaPrenotazione(req, res, next) {
     var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di node. 
         service: 'gmail',
         auth: {
-          user: 'teamMars@gmail.com',
-          pass: 'marspwd'
+            user: 'teamMars@gmail.com',
+            pass: 'marspwd'
         }
     });
-      
+
     var mailOptions = {
         from: 'teamMars@gmail.com',
         to: destinatario,   //Destinatario da sistemare
@@ -97,24 +98,24 @@ async function annullaPrenotazione(req, res, next) {
         text: 'Spiacente, il proprietario ha declinato la tua richiesta!'
     };
 
-    transporter.sendMail(mailOptions, function(error, info){    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
+    transporter.sendMail(mailOptions, function (error, info) {    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
         if (error) {
-          console.log(error);
+            console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+            console.log('Email sent: ' + info.response);
         }
     });
 
     try {
         results = await db.query('DELETE FROM `prenotazioni`\
-                    WHERE idPrenotazione = ?', 
-                    [
-                        req.body.annullaP.idPrenotazione,
-                    ]
+                    WHERE idPrenotazione = ?',
+            [
+                req.body.annullaP.idPrenotazione,
+            ]
         )
-        .catch(err => {
-            throw err;
-        });
+            .catch(err => {
+                throw err;
+            });
 
         console.log(results);
         console.log(`Prenotazione eliminata!`);
@@ -138,9 +139,9 @@ async function visualizzaPrenotazioniProprietario(req, res, next) {
             WHERE idProprietario = ?', [
                 req.body.idProprietario
             ])
-            .catch(err => {
-                throw err;
-            });
+                .catch(err => {
+                    throw err;
+                });
 
             if (results.length == 0) {
                 console.log(`Prenotazioni relative all' ID ${req.body.idProprietario} non trovate!`);
