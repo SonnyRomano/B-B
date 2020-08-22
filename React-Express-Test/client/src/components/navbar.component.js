@@ -61,15 +61,14 @@ export default class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           <img src={logo} width="30" height="30" className="d-inline-block align-top mr-2" />Bootstrap</a>
 
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <button className="navbar-toggler" style={{ width: 60 }} type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse " id="collapsibleNavbar">
-
+        <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown" name="BottoniProprietario">
               <a className="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Gestione Legale</a>
@@ -93,11 +92,11 @@ export default class Navbar extends Component {
               <a className="nav-link" onClick={() => displayComponent("DiventaHost", true)}>{this.state.diventaHost}</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link"
-                onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
+              <button className="nav-link btn btn-outline-info"
+                onClick={() => this.autenticationControl()}>{this.state.loginString}</button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" onClick={() => displayComponent("SignUp", true)}>{this.state.signUpString}</a>
+              <button className="nav-link btn btn-outline-info " onClick={() => displayComponent("SignUp", true)}>{this.state.signUpString}</button>
             </li>
           </ul>
         </div>

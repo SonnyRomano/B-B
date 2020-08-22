@@ -59,50 +59,50 @@ export default class HomePage extends Component {
 
   render() {
     return (
-      <div className="container justify-content-center" id="page-container">
-
-        <div className="col-md-8 py-5 ">
+      <div className="container" id="page-container">
+        <div className="col-md-8 mb-5 p-0">
           <div className="card">
-            <div className="card-body" style={{ padding: '2rem' }}>
-
-              <h1 className="h3">Prenota Case Vacanza e B&B sul nostro sito</h1>
+            <div className="card-body p-4" style={{ padding: '2rem' }}>
+              <h3>Prenota Case Vacanza e B&B sul nostro sito</h3>
               <p className="card-text">Seleziona la località desiderata, le date di check in, check-out e il numero di ospiti</p>
-
               <form onSubmit={this.handleSubmit}>
 
                 <div className="form-group">
+                  <i class="fas fa-city mr-2"></i>
                   <label>Dove</label>
-                  <input className="form-control" placeholder="Località" name="citta" onChange={this.handleChange} required />
+                  <input className="form-control" placeholder="Dove vuoi andare?" name="citta" onChange={this.handleChange} required />
                 </div>
 
-                <div className="form-group">
-                  <div className="form-row">
-                    <div className="col-sm-6">
-                      <label>Check-in</label>
-                      <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                        name="dateFrom" />
-                    </div>
-                    <div className="col-sm-6">
-                      <label>Check-out</label>
-                      <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                        name="dateTo" />
-                    </div>
+                <div className="form-row mb-0">
+                  <div className="form-group col-md-6">
+                    <i class="far fa-calendar-check mr-2"></i>
+                    <label>Check-in</label>
+                    <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                      name="dateFrom" />
+                  </div>
+                  <div className="form-group col-md-6">
+                    <i class="far fa-calendar mr-2"></i>
+                    <label>Check-out</label>
+                    <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                      name="dateTo" />
                   </div>
                 </div>
 
-                <div className="form-row">
-                  <div className="col-6">
+                <div className="mb-5">
+                  <div className="form-group col-md-6 px-0">
+                    <i class="fas fa-male mr-2"></i>
                     <label>Ospiti</label>
-                    <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} required />
+                    <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} placeholder="Aggiungi ospiti" required />
                   </div>
                 </div>
-
-                <button className="btn btn-danger btn-block mt-5" type="submit">Cerca</button>
+                <button className="btn btn-danger btn-block" type="submit">
+                  <i class="fas fa-search mr-2"></i>Cerca
+               </button>
               </form>
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

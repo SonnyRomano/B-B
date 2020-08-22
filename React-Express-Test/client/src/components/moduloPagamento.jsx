@@ -107,10 +107,10 @@ class moduloPagamento extends React.Component {
               <div style={{ height: 101 }} className="m-2">
                 <label>Accepted Cards</label>
                 <div className="icon-container">
-                  <i className="fa fa-cc-visa mr-2"></i>
-                  <i className="fa fa-cc-amex mr-2"></i>
-                  <i className="fa fa-cc-mastercard mr-2"></i>
-                  <i className="fa fa-cc-discover mr-2"></i>
+                  <i className="fab fa-cc-visa mr-2"></i>
+                  <i className="fab fa-cc-amex mr-2"></i>
+                  <i className="fab fa-cc-mastercard mr-2"></i>
+                  <i className="fab fa-cc-discover mr-2"></i>
                 </div>
               </div>
 

@@ -11,7 +11,7 @@ export default class Footer extends Component {
             // </div >
             <footer>
                 <div className="container" style={{}}>
-                    <div className="col text-center py-4">
+                    <div className="col text-center">
                         <h3 style={{ color: '#f2f2f2' }}>Team MARS</h3>
                         <p style={{ color: '#f2f2f2' }}>&copy; 2020</p>
                     </div>
