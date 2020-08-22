@@ -44,6 +44,9 @@ router.post('/uploadImmaginiAnnuncio', upload.array('file', 12), async (req, res
 /* Ricerca Annunci */
 router.post('/ricercaAnnunci', ricercaAnnunci);
 
+/* Recupera Annuncio */
+router.post('/recuperaAnnuncio', recuperaAnnuncio);
+
 /* Inserimento Annuncio */
 router.post('/inserisciAnnuncio', inserisciAnnuncio);
 
@@ -100,6 +103,40 @@ async function inserisciAnnuncio(req, res, next) {
         next(createError(500));
     }
 }
+
+
+// middleware di recuperaAnnuncio
+async function recuperaAnnuncio(req, res, next) {
+    // istanziamo il middleware
+    const db = await makeDb(config);
+    let results = {};
+    try {
+        await withTransaction(db, async () => {
+            // inserimento utente
+            results = await db.query('SELECT * FROM `annunci`\
+            WHERE idAnnuncio = ?', [
+                req.body.id
+            ])
+                .catch(err => {
+                    throw err;
+                });
+
+            if (results.length == 0) {
+                console.log(`Annuncio non trovato!`);
+                res.status(403).send(`Annuncio non trovato!`);
+            } else {
+                console.log('Annuncio Trovato');
+                console.log(results);
+
+                res.status(200).send(results);
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+}
+
 
 // middleware di elimina annuncio
 async function eliminaAnnuncio(req, res, next) {

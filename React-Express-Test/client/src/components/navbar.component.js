@@ -62,7 +62,7 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
         <a className="navbar-brand" href="/">
-          <img src={logo} width="30" height="30" className="d-inline-block align-top mr-2" />Bootstrap</a>
+          <img src={logo} width="30" height="30" alt='HomePageImg' className="d-inline-block align-top mr-2" />Bootstrap</a>
 
         <button className="navbar-toggler" style={{ width: 60 }} type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <span className="navbar-toggler-icon"></span>

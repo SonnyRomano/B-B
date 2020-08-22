@@ -41,10 +41,12 @@ async function insPagamento(req, res, next) {
             throw err;
         });
 
-        console.log(results.insertId);
+        let idPagamento = results.insertId.toString()
+
+        console.log(idPagamento);
         console.log(results);
         console.log(`Pagamento inserito!`);
-        res.send(results);
+        res.send(idPagamento);
     } catch (err) {
         console.log(err);
         next(createError(500));

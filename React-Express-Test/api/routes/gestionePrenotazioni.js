@@ -1,6 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
 var router = express.Router();
+var nodemailer = require('nodemailer');
+
 
 const { config } = require('../db/config');
 const { makeDb, withTransaction } = require('../db/dbmiddleware');
@@ -13,6 +15,9 @@ router.get('/', function (req, res, next) {
 /* clienti prenotano annunci */
 router.post('/effettuaPrenotazione', effettuaPrenotazione);
 
+/* clienti prenotano annunci */
+router.post('/annullaPrenotazione', annullaPrenotazione);
+
 /* proprietario visualiza lista prenotazioni pendenti */
 router.post('/visualizzaPrenotazioniProprietario', visualizzaPrenotazioniProprietario);
 
@@ -24,15 +29,16 @@ async function effettuaPrenotazione(req, res, next) {
     let results = {};
     try {
         results = await db.query('INSERT INTO `prenotazioni` \
-          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, attiva) VALUES ?', [
+          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, attiva) VALUES ?', [
             [
                 [
-                    req.body.prenotazione.idAnnuncio,
-                    req.body.prenotazione.idProprietario,
-                    req.body.prenotazione.idCliente,
-                    req.body.prenotazione.dateFrom,
-                    req.body.prenotazione.dateTo,
-                    req.body.prenotazione.costoTotale,
+                    req.body.datiPrenotazione.idAnnuncio,
+                    req.body.datiPrenotazione.idProprietario,
+                    req.body.datiPrenotazione.idCliente,
+                    req.body.datiPrenotazione.dateFrom,
+                    req.body.datiPrenotazione.dateTo,
+                    req.body.datiPrenotazione.costoTotale,
+                    req.body.datiPrenotazione.idPagamento,
                     false
                 ]
             ]
@@ -44,6 +50,75 @@ async function effettuaPrenotazione(req, res, next) {
         console.log(results.insertId);
         console.log(results);
         console.log(`Prenotazione inserita!`);
+        res.send(results);
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+}
+
+// middleware di annulla prenotazione
+async function annullaPrenotazione(req, res, next) {
+    let destinatario = '';
+    console.log(req.body)
+    // istanziamo il middleware per accedere al dbms e recuperare la mail del destinatario 
+    const db = await makeDb(config);
+    let results = {};
+    try {
+        results = await db.query('SELECT FROM `clienti`\
+                    WHERE idCliente = ?',
+            [
+                req.body.annullaP.idCliente,
+            ]
+        )
+            .catch(err => {
+                throw err;
+            });
+
+        console.log(results);
+        console.log(`Email destinatario recuperata!`);
+        destinatario = results[0].email;
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+
+    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
+        service: 'gmail',
+        auth: {
+            user: 'teammars44@gmail.com',
+            pass: 'marspwd34'
+        }
+    });
+
+    var mailOptions = {
+        from: 'teammars44@gmail.com',
+        to: destinatario,   //Destinatario da sistemare
+        subject: 'Richiesta declinata!',
+        text: 'Spiacente, il proprietario ha rifiutato la tua richiesta di prenotazione!'
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+    try {   //Mi ricollego nuovamente al dbms per eliminare la prenotazione dalla rispettiva tabella
+        results = await db.query('DELETE FROM `prenotazioni`\
+                    WHERE idPrenotazione = ?',
+            [
+                req.body.annullaP.idPrenotazione,
+            ]
+        )
+            .catch(err => {
+                throw err;
+            });
+
+        console.log(results);
+        console.log(`Prenotazione eliminata!`);
         res.send(results);
     } catch (err) {
         console.log(err);
@@ -64,9 +139,9 @@ async function visualizzaPrenotazioniProprietario(req, res, next) {
             WHERE idProprietario = ?', [
                 req.body.idProprietario
             ])
-            .catch(err => {
-                throw err;
-            });
+                .catch(err => {
+                    throw err;
+                });
 
             if (results.length == 0) {
                 console.log(`Prenotazioni relative all' ID ${req.body.idProprietario} non trovate!`);
