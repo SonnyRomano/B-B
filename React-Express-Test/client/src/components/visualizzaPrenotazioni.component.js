@@ -26,8 +26,14 @@ export default class VisualizzaPrenotazioni extends Component {
                                 </div>
                                 <div className='col-6' style={{ marginTop: '2rem' }}>
                                     <h5>- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- idCliente: {d.idCliente}<br></br> - Inizio Prenotazione: {d.dateFrom}<br></br> - Fine Prenotazione: {d.dateTo}<br></br>- Prezzo Pagato: {d.costo} € </h5>
-                                    <button onClick={() => this.handleConfirm(d)} type="button" className="btn btn-lg btn-danger">Accetta Prenotazione</button><br/>
-                                    <button onClick={() => this.handleRejection(d)} type="button" className="btn btn-lg btn-danger">Declina Prenotazione</button>
+                                </div>
+                            </div>
+                            <div className='row' style={{ marginTop: '2rem' }}>
+                                <div className='col-6' style={{ marginTop: '2rem' }}>
+                                    <button onClick={() => this.handleConfirm(d)} type="button" className="btn btn-lg btn-primary">Accetta Prenotazione</button><br/>
+                                </div>
+                                <div className='col-6' style={{ marginTop: '2rem' }}>
+                                    <button onClick={() => this.handleRejection(d)} type="button" className="btn btn-lg btn-primary">Declina Prenotazione</button>
                                 </div>
                             </div>
                         </div>
