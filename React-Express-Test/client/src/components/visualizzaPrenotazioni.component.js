@@ -42,19 +42,18 @@ export default class VisualizzaPrenotazioni extends Component {
             })
     }
 
-    handleConfirm(idP, idC) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
+    handleConfirm(d) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
         const annullaP = {
-            idPrenotazione: idP,
-            idCliente: idC,
+            idPrenotazione: d.idPrenotazione,
+            idCliente: d.idCliente,
         };
-  
-        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/confermaPrenotazione`, annullaP)
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/confermaPrenotazione`, {annullaP})
             .then(res => {
                 console.log(res);
 
-                alert("Prenotazione confermata con Successo")
+                alert("Prenotazione confermata con Successo. Mail inviata!")
 
-                this.props.history.push("/visualizzaPrenotazioni")
+                window.location.reload(false);
         })
         .catch(err => {
             console.log("Error = ", err);
@@ -66,13 +65,14 @@ export default class VisualizzaPrenotazioni extends Component {
             idPrenotazione: d.idPrenotazione,
             idCliente: d.idCliente,
         };
-        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/annullaPrenotazione`, annullaP)
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/annullaPrenotazione`, {annullaP})
             .then(res => {
                 console.log(res);
 
                 alert("Prenotazione annullata con Successo. Mail inviata!")
 
-                this.props.history.push("/visualizzaPrenotazioni")
+                window.location.reload(false);
+
         })
         .catch(err => {
             console.log("Error = ", err);
