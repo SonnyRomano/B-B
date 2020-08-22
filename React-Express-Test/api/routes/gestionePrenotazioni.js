@@ -59,13 +59,13 @@ async function effettuaPrenotazione(req, res, next) {
 
 // middleware di annulla prenotazione
 async function annullaPrenotazione(req, res, next) {
-    const destinatario = '';
-
+    let destinatario = '';
+    console.log(req.body)
     // istanziamo il middleware per accedere al dbms e recuperare la mail del destinatario 
     const db = await makeDb(config);
     let results = {};
     try {
-        results = await db.query('SElECT FROM `clienti`\
+        results = await db.query('SELECT FROM `clienti`\
                     WHERE idCliente = ?',
             [
                 req.body.annullaP.idCliente,
@@ -83,19 +83,19 @@ async function annullaPrenotazione(req, res, next) {
         next(createError(500));
     }
 
-    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di node. 
+    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
         service: 'gmail',
         auth: {
-            user: 'teamMars@gmail.com',
-            pass: 'marspwd'
+            user: 'teammars44@gmail.com',
+            pass: 'marspwd34'
         }
     });
 
     var mailOptions = {
-        from: 'teamMars@gmail.com',
+        from: 'teammars44@gmail.com',
         to: destinatario,   //Destinatario da sistemare
         subject: 'Richiesta declinata!',
-        text: 'Spiacente, il proprietario ha declinato la tua richiesta!'
+        text: 'Spiacente, il proprietario ha rifiutato la tua richiesta di prenotazione!'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
@@ -106,7 +106,7 @@ async function annullaPrenotazione(req, res, next) {
         }
     });
 
-    try {
+    try {   //Mi ricollego nuovamente al dbms per eliminare la prenotazione dalla rispettiva tabella
         results = await db.query('DELETE FROM `prenotazioni`\
                     WHERE idPrenotazione = ?',
             [
