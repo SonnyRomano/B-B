@@ -24,12 +24,13 @@ export default class DettaglioAnnuncio extends Component {
     descrizione: '',
     costo: '',
     telefono: '',
-    listOfImages: [],
-    CoverImg: ''
-  }
 
-  costoTotale
-  datiPrenotazione = []
+    listOfImages: [],
+    CoverImg: '',
+
+    datiPrenotazione: [],
+    costoTotale: ''
+  }
 
   componentDidUpdate() {
     displayComponent('wifi', Boolean(this.state.wifi))
@@ -38,12 +39,13 @@ export default class DettaglioAnnuncio extends Component {
     displayComponent('terrazzo', Boolean(this.state.terrazzo))
   }
 
+  // Carica i dati relativi all'annuncio
   componentWillMount() {
-    console.log(this.props.history.action)
-    if (this.props.history.action === 'POP') {
-      let values = queryString.parse(this.props.location.search)
-      console.log(values.id)
 
+    // Tramite inserimento manuale dell'URL o condivisione link
+    if (this.props.history.action === 'POP') {
+
+      let values = queryString.parse(this.props.location.search)
       let id = values.id
 
       axios.post(`http://127.0.0.1:9000/gestioneAnnunci/recuperaAnnuncio`, { id })
@@ -125,24 +127,27 @@ export default class DettaglioAnnuncio extends Component {
 
         this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
       })
-
-      this.datiPrenotazione = this.props.location.state[1];
+      this.setState({ datiPrenotazione: this.props.location.state[1] });
     }
   }
 
+  // Effettua Prenotazione - Reindirizza a Modulo Pagamento
   effettuaPrenotazione() {
-
+    console.log(this.state.costoTotale)
     if (sessionStorage.getItem('id') == null) {
       alert("Devi Effettuare il Login per Poter Prenotare")
+    }
+    else if (isNaN(this.state.costoTotale)) {
+      alert("Devi Inserire i Dati Relativi per Poter Prenotare")
     }
     else {
       const prenotazione = {
         idAnnuncio: this.state.idAnnuncio,
         idProprietario: this.state.idProprietario,
         idCliente: sessionStorage.getItem('id'),
-        dateFrom: dateFormat(this.datiPrenotazione.dateFrom, "yyyy-mm-dd"),
-        dateTo: dateFormat(this.datiPrenotazione.dateTo, "yyyy-mm-dd"),
-        costoTotale: this.costoTotale
+        dateFrom: dateFormat(this.state.datiPrenotazione.dateFrom, "yyyy-mm-dd"),
+        dateTo: dateFormat(this.state.datiPrenotazione.dateTo, "yyyy-mm-dd"),
+        costoTotale: this.state.costoTotale
       };
 
       console.log(prenotazione);
@@ -152,16 +157,50 @@ export default class DettaglioAnnuncio extends Component {
   }
 
 
+  //Controlla inserimento date Check-in e Check-out
+  dataControl() {
+    var dataFrom = document.getElementById("dateFrom")
+    var dataTo = document.getElementById("dateTo")
+    if (dataFrom.value > dataTo.value) dataTo.value = null
+  }
+
+  handleChange = event => {
+    let valueTemp = this.state.datiPrenotazione
+
+    switch (event.target.name) {
+      case 'n_ospiti':
+        valueTemp.n_ospiti = event.target.value
+        break
+
+      case 'dateFrom':
+        valueTemp.dateFrom = event.target.value
+        break
+
+      case 'dateTo':
+        valueTemp.dateTo = event.target.value
+        break
+
+      default:
+        console.log('handleChange Error')
+        break
+    }
+
+
+    this.setState({
+      datiPrenotazione: valueTemp
+    });
+  }
+
   render() {
 
     // Calcola Prezzo
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-    let firstDate = new Date(this.datiPrenotazione.dateTo);
-    let secondDate = new Date(this.datiPrenotazione.dateFrom);
+    let firstDate = new Date(this.state.datiPrenotazione.dateTo);
+    let secondDate = new Date(this.state.datiPrenotazione.dateFrom);
 
     let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
-    this.costoTotale = this.state.costo * diffDays * this.datiPrenotazione.n_ospiti
-    console.log('CostoTotale: ' + this.costoTotale)
+    // eslint-disable-next-line
+    this.state.costoTotale = this.state.costo * diffDays * this.state.datiPrenotazione.n_ospiti
 
 
     return (
@@ -224,7 +263,7 @@ export default class DettaglioAnnuncio extends Component {
                   <div className="col-md-4">
                     <div className="list-group" style={{ backgroundColor: 'white', textAlign: 'right' }}>
                       <label><strong>Costo Complessivo:</strong></label>
-                      <div>Costo:{this.state.costo} X<br /> Numero Giorni: {diffDays} X <br></br> Numero Ospiti: {this.datiPrenotazione.n_ospiti} <br></br> ------- <br></br>{this.costoTotale} €</div>
+                      <div>Costo:{this.state.costo} X<br /> Numero Giorni: {diffDays} X <br></br> Numero Ospiti: {this.state.datiPrenotazione.n_ospiti} <br></br> ------- <br></br>{this.state.costoTotale} €</div>
                     </div>
                   </div>
                   <div className="col-md-5">
@@ -232,6 +271,30 @@ export default class DettaglioAnnuncio extends Component {
                   </div>
                 </div>
               </div>
+
+              <div className="form-group">
+                <div className="form-row">
+                  <div className="col-sm-6">
+                    <label>Check-in</label>
+                    <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                      name="dateFrom" value={this.state.datiPrenotazione.dateFrom || ''} />
+                  </div>
+                  <div className="col-sm-6">
+                    <label>Check-out</label>
+                    <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                      name="dateTo" value={this.state.datiPrenotazione.dateTo || ''} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="col-6">
+                  <label>Ospiti</label>
+                  <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
+                </div>
+              </div>
+
+
               <h4 className="my-4">Galleria immagini:</h4>
               <div className="row">
                 {
