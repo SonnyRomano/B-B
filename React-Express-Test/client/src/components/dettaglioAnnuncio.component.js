@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import '../stylesheets/index.css';
+// import '../stylesheets/index.css';
 import displayComponent from '../utility/displayComponent'
 import dateFormat from 'dateformat'
 import '../stylesheets/dettaglioAnnuncio.css'
@@ -202,112 +202,145 @@ export default class DettaglioAnnuncio extends Component {
     let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     // eslint-disable-next-line
     this.state.costoTotale = this.state.costo * diffDays * this.state.datiPrenotazione.n_ospiti
-
-
     return (
-      <div className="container rounded p-3 mb-5" style={{ background: '#f2f2f2', opacity: 0.95 }}>
-        <div className="container">
-          <div className="row mb-4" id="pics">
-            <div className="col-md-6 px-0">
-              <img className="pic" key={'img' + this.state.idAnnuncio} src={this.state.CoverImg} alt="CoverImage" id="coverImg"></img>
-            </div>
+      <div className="container shadow p-3 bg-white mb-5 rounded" style={{ background: '#f2f2f2' }}>
+        <p className="text-muted" style={{ fontWeight: 600, textDecoration: 'underline' }}>{this.state.citta}</p>
 
-            <div className="col-md-3 p-0">
-              {
-                this.state.listOfImages.filter((img, index) => (index < 2)).map((img, index) =>
-                  <img className="pic" key={'img' + index} src={img} alt={index} id={'img' + index} style={{ 'object-fit': 'cover' }} ></img>
-                )
-              }
-            </div>
-            <div className="col-md-3 p-0">
-              {
-                this.state.listOfImages.filter((img, index) => (index >= 2)).map((img, index) =>
-                  <img className="pic" key={'img' + index} src={img} alt={index} id={'img' + index} style={{ 'object-fit': 'cover' }}></img>
-                )
-              }
-            </div>
+        <div className="row mb-5 m-0" id="pics">
+          <div className="col-md-6 px-0">
+            <img className="pic" key={'img' + this.state.idAnnuncio} src={this.state.CoverImg} alt="CoverImage" id="coverImg"></img>
+          </div>
 
+          <div className="col-md-3 p-0">
+            {
+              this.state.listOfImages.map((img, index) =>
+                <img className="pic" key={'img' + index} src={img} alt={index} id={'img' + index} style={{ objectFit: 'cover' }} ></img>
+              ).filter((img, index) => (index < 2))
+            }
           </div>
-          <h1 class="display-4">{this.state.descrizione}</h1>
-          <div className="row">
-            <h4 className="my-12">Dettagli:</h4>
+          <div className="col-md-3 p-0">
+            {
+              this.state.listOfImages.map((img, index) =>
+                <img className="pic" key={'img' + index} src={img} alt={index} id={'img' + index} style={{ objectFit: 'cover' }}></img>
+              ).filter((img, index) => (index >= 2))
+            }
           </div>
-          <div className="row" style={{ marginTop: '0.3rem' }}>
-            <div className="col-md-6">
-              <div className="list-group">
-                <li className="list-group-item" key="citta">Città: {this.state.citta}</li>
-                <li className="list-group-item" key="cap">CAP: {this.state.cap}</li>
-                <li className="list-group-item" key="indirizzo">Indirizzo: {this.state.indirizzo}, {this.state.civico}</li>
-                {/* <li className="list-group-item" key="num_civico">Numero Civico:</li> */}
-                <li className="list-group-item" key="dateFrom">Disponibilità {dateFormat(this.state.dateFrom, "dd/mm/yyyy")} - {dateFormat(this.state.dateTo, "dd/mm/yyyy")}</li>
-                {/* <li className="list-group-item" key="dateTo">Disponibile fino a: </li> */}
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="list-group">
-                <li className="list-group-item" key="num_posti">
-                  <i class="fas fa-bed mr-2"></i>Camere da letto: {this.state.n_posti}
-                </li>
-                <li className="list-group-item" key="num_bagni">
-                  <i className="fas fa-bath mr-2"></i>Bagni: {this.state.n_bagni}
-                </li>
-                <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="ascensore" id='ascensore'><strong>Presenza Ascensore</strong></li>
-                <li className="list-group-item" key="garage" id='garage'><strong>Presenza Garage</strong></li>
-                <li className="list-group-item" key="terrazzo" id='terrazzo'><strong>Presenza Terrazzo</strong></li>
-              </div>
-            </div>
+
+        </div>
+        <div className="row">
+          <div className="col-md-7 p-0 ml-3">
+            <h1 className="display-4">{this.state.descrizione}</h1>
+            <p class="lead">{this.state.n_posti} ospiti · 1 camera da letto · 2 letti · 1 bagno</p>
+            <hr className="m-0" />
+            <ul class="list-group list-group-flush mb-4">
+              <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+              <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+              <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+              <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+              <hr className="m-0" />
+            </ul>
+
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!</p>
           </div>
-          <div className="row" style={{ marginTop: '0.7rem' }}>
-            <h4 className="my-12">Prezzo & Contatti:</h4>
-          </div>
-          <div className="row" style={{ marginTop: '0.3rem' }}>
-            <div className="col-md-4">
-              <div className="list-group">
-                <li className="list-group-item" key="costo"><strong>Costo: </strong>{this.state.costo}€</li>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="list-group">
-                <li className="list-group-item" key="cellulare"><strong>Cellulare: </strong>{this.state.telefono}</li>
-              </div>
-              <div className="row" style={{ marginTop: '1rem' }}>
-                <div className="col-md-4">
-                  <div className="list-group" style={{ backgroundColor: 'white', textAlign: 'right' }}>
-                    <label><strong>Costo Complessivo:</strong></label>
-                    <div>Costo:{this.state.costo} X<br /> Numero Giorni: {diffDays} X <br></br> Numero Ospiti: {this.state.datiPrenotazione.n_ospiti} <br></br> ------- <br></br>{this.state.costoTotale} €</div>
+
+          <div className="col-md-4 p-0 ml-auto" id="sqr">
+            <div className="border border-dark rounded shadow p-3">
+              <h3 className="mb-4">Aggiungi le date per conoscere i prezzi</h3>
+              <div className="form-group">
+                <div className="form-row">
+                  <div className="col-6">
+                    <label>Check-in</label>
+                    <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                      name="dateFrom" value={this.state.datiPrenotazione.dateFrom || ''} />
+                  </div>
+                  <div className="col-6">
+                    <label>Check-out</label>
+                    <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
+                      name="dateTo" value={this.state.datiPrenotazione.dateTo || ''} />
                   </div>
                 </div>
-                <div className="col-md-5">
-                  <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
-                </div>
               </div>
-            </div>
 
-            <div className="form-group">
               <div className="form-row">
-                <div className="col-sm-6">
-                  <label>Check-in</label>
-                  <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                    name="dateFrom" value={this.state.datiPrenotazione.dateFrom || ''} />
-                </div>
-                <div className="col-sm-6">
-                  <label>Check-out</label>
-                  <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                    name="dateTo" value={this.state.datiPrenotazione.dateTo || ''} />
+                <div className="col-6">
+                  <label>Ospiti</label>
+                  <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
                 </div>
               </div>
-            </div>
 
-            <div className="form-row">
-              <div className="col-6">
-                <label>Ospiti</label>
-                <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
-              </div>
+              <br />
+
+              <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
+
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div className="row" style={{ marginTop: '0.3rem' }}>
+          <div className="col-md-6">
+            <div className="list-group">
+              <li className="list-group-item" key="citta">Città: {this.state.citta}</li>
+              <li className="list-group-item" key="cap">CAP: {this.state.cap}</li>
+              <li className="list-group-item" key="indirizzo">Indirizzo: {this.state.indirizzo}, {this.state.civico}</li>
+              {/* <li className="list-group-item" key="num_civico">Numero Civico:</li> */}
+              <li className="list-group-item" key="dateFrom">Disponibilità {dateFormat(this.state.dateFrom, "dd/mm/yyyy")} - {dateFormat(this.state.dateTo, "dd/mm/yyyy")}</li>
+              {/* <li className="list-group-item" key="dateTo">Disponibile fino a: </li> */}
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="list-group">
+              <li className="list-group-item" key="num_posti">
+                <i className="fas fa-bed mr-2"></i>Camere da letto: {this.state.n_posti}
+              </li>
+              <li className="list-group-item" key="num_bagni">
+                <i className="fas fa-bath mr-2"></i>Bagni: {this.state.n_bagni}
+              </li>
+              <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+              <li className="list-group-item" key="ascensore" id='ascensore'><strong>Presenza Ascensore</strong></li>
+              <li className="list-group-item" key="garage" id='garage'><strong>Presenza Garage</strong></li>
+              <li className="list-group-item" key="terrazzo" id='terrazzo'><strong>Presenza Terrazzo</strong></li>
             </div>
           </div>
         </div>
-      </div>
+        {/* <div className="row" style={{ marginTop: '0.7rem' }}>
+          <h4 className="my-12">Prezzo & Contatti:</h4>
+        </div> */}
+        <div className="row" style={{ marginTop: '0.3rem' }}>
+          <div className="col-md-4">
+            {/* <div className="list-group">
+              <li className="list-group-item" key="costo"><strong>Costo: </strong>{this.state.costo}€</li>
+            </div> */}
+          </div>
+          <div className="col-md-4">
+            <div className="list-group">
+              {/* <li className="list-group-item" key="cellulare"><strong>Cellulare: </strong>{this.state.telefono}</li> */}
+            </div>
+            <div className="row" style={{ marginTop: '1rem' }}>
+              <div className="col-md-4">
+                <div className="list-group" style={{ backgroundColor: 'white', textAlign: 'right' }}>
+                  <label><strong>Costo Complessivo:</strong></label>
+                  <div>Costo:{this.state.costo} X<br /> Numero Giorni: {diffDays} X <br></br> Numero Ospiti: {this.state.datiPrenotazione.n_ospiti} <br></br> ------- <br></br>{this.state.costoTotale} €</div>
+                </div>
+              </div>
+              <div className="col-md-5">
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+      </div >
+
     );
   }
 }

@@ -34,17 +34,16 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <Router>
                     <Login />
                     <SignUp />
                     <DiventaHost />
                     <Navbar />
 
-                    <div className="App">
+
+                    <React.Fragment>
                         <Route exact path="/" component={HomePage} />
-                    </div>
-                    <div className="container">
                         <Route exact path="/gestioneAnnunci/dettaglioAnnuncio" component={DettaglioAnnuncio} />
                         <Route exact path="/gestioneAnnunci/eliminaAnnuncio" component={EliminaAnnuncio} />
                         <Route exact path="/gestioneAnnunci/inserisciAnnuncio" component={InserisciAnnuncio} />
@@ -54,11 +53,11 @@ class App extends Component {
                         <Route exact path="/prenotazione/moduloPagamento" component={moduloPagamento} />
                         <Route exact path="/prenotazione/riepilogoPrenotazione" component={RiepilogoPrenotazione} />
                         <Route exact path="/gestioneAnnunci/visualizzaPrenotazioni" component={VisualizzaPrenotazioni} />
-                    </div>
+                    </React.Fragment>
                 </Router>
 
                 <Footer />
-            </div>
+            </React.Fragment>
         );
     }
 }

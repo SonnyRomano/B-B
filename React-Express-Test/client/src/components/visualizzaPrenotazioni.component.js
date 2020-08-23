@@ -26,7 +26,7 @@ export default class VisualizzaPrenotazioni extends Component {
                                 </div>
                                 <div className='col-6' style={{ marginTop: '2rem' }}>
                                     <h5>- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- idCliente: {d.idCliente}<br></br> - Inizio Prenotazione: {d.dateFrom}<br></br> - Fine Prenotazione: {d.dateTo}<br></br>- Prezzo Pagato: {d.costo} € </h5>
-                                    <button onClick={() => this.handleConfirm(d)} type="button" className="btn btn-lg btn-danger">Accetta Prenotazione</button><br/>
+                                    <button onClick={() => this.handleConfirm(d)} type="button" className="btn btn-lg btn-danger">Accetta Prenotazione</button><br />
                                     <button onClick={() => this.handleRejection(d)} type="button" className="btn btn-lg btn-danger">Declina Prenotazione</button>
                                 </div>
                             </div>
@@ -47,18 +47,18 @@ export default class VisualizzaPrenotazioni extends Component {
             idPrenotazione: idP,
             idCliente: idC,
         };
-  
-        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/confermaPrenotazione`, annullaP)
+
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/confermaPrenotazione`, { annullaP })
             .then(res => {
                 console.log(res);
 
                 alert("Prenotazione confermata con Successo")
 
                 this.props.history.push("/visualizzaPrenotazioni")
-        })
-        .catch(err => {
-            console.log("Error = ", err);
-        })
+            })
+            .catch(err => {
+                console.log("Error = ", err);
+            })
     }
 
     handleRejection(d) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
@@ -66,17 +66,17 @@ export default class VisualizzaPrenotazioni extends Component {
             idPrenotazione: d.idPrenotazione,
             idCliente: d.idCliente,
         };
-        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/annullaPrenotazione`, annullaP)
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/annullaPrenotazione`, { annullaP })
             .then(res => {
                 console.log(res);
 
                 alert("Prenotazione annullata con Successo. Mail inviata!")
 
                 this.props.history.push("/visualizzaPrenotazioni")
-        })
-        .catch(err => {
-            console.log("Error = ", err);
-        })
+            })
+            .catch(err => {
+                console.log("Error = ", err);
+            })
     }
 
     render() {
