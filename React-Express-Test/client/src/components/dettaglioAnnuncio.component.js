@@ -186,7 +186,6 @@ export default class DettaglioAnnuncio extends Component {
         break
     }
 
-
     this.setState({
       datiPrenotazione: valueTemp
     });

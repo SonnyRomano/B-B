@@ -15,8 +15,11 @@ router.get('/', function (req, res, next) {
 /* clienti prenotano annunci */
 router.post('/effettuaPrenotazione', effettuaPrenotazione);
 
-/* clienti prenotano annunci */
+/* proprietario annulla prenotazione */
 router.post('/annullaPrenotazione', annullaPrenotazione);
+
+/* proprietario rifiuta prenotazione */
+router.post('/confermaPrenotazione', confermaPrenotazione);
 
 /* proprietario visualiza lista prenotazioni pendenti */
 router.post('/visualizzaPrenotazioniProprietario', visualizzaPrenotazioniProprietario);
@@ -59,56 +62,13 @@ async function effettuaPrenotazione(req, res, next) {
 
 // middleware di annulla prenotazione
 async function annullaPrenotazione(req, res, next) {
-    let destinatario = '';
     console.log(req.body)
-    // istanziamo il middleware per accedere al dbms e recuperare la mail del destinatario 
     const db = await makeDb(config);
     let results = {};
+
+    //Accedo al dbms per eliminare la prenotazione dalla rispettiva tabella
     try {
-        results = await db.query('SELECT FROM `clienti`\
-                    WHERE idCliente = ?',
-            [
-                req.body.annullaP.idCliente,
-            ]
-        )
-            .catch(err => {
-                throw err;
-            });
-
-        console.log(results);
-        console.log(`Email destinatario recuperata!`);
-        destinatario = results[0].email;
-    } catch (err) {
-        console.log(err);
-        next(createError(500));
-    }
-
-    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
-        service: 'gmail',
-        auth: {
-            user: 'teammars44@gmail.com',
-            pass: 'marspwd34'
-        }
-    });
-
-    var mailOptions = {
-        from: 'teammars44@gmail.com',
-        to: destinatario,   //Destinatario da sistemare
-        subject: 'Richiesta declinata!',
-        text: 'Spiacente, il proprietario ha rifiutato la tua richiesta di prenotazione!'
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-    try {   //Mi ricollego nuovamente al dbms per eliminare la prenotazione dalla rispettiva tabella
-        results = await db.query('DELETE FROM `prenotazioni`\
-                    WHERE idPrenotazione = ?',
+        results = await db.query('DELETE FROM `prenotazioni` WHERE idPrenotazione = ?',
             [
                 req.body.annullaP.idPrenotazione,
             ]
@@ -124,6 +84,112 @@ async function annullaPrenotazione(req, res, next) {
         console.log(err);
         next(createError(500));
     }
+
+    //Accedo al dbms e recupero la mail del destinatario 
+    try {
+        results = await db.query('SELECT* FROM `utenti` WHERE id = ?;',
+            [
+                req.body.annullaP.idCliente,
+            ]
+        )
+            .catch(err => {
+                throw err;
+            });
+
+        console.log(results);
+        console.log(`Email destinatario recuperata!`);
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+
+    //Invio la mail al destinatario 
+    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
+        service: 'gmail',
+        auth: {
+            user: 'teammars44@gmail.com',  //Account gmail adhoc per inviare mail dal nostro sito
+            pass: 'marspwd34'
+        }
+    });
+    var mailOptions = {
+        from: 'teammars44@gmail.com',
+        to: results[0].email,   
+        subject: 'Richiesta declinata!',
+        text: 'Spiacente, il proprietario ha rifiutato la tua richiesta di prenotazione!'
+    };
+    transporter.sendMail(mailOptions, function (error, info) {    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email inviata: ' + info.response);
+        }
+    });
+}
+
+//Middleware conferma prenotazione
+async function confermaPrenotazione(req, res, next) {
+    console.log(req.body)
+    const db = await makeDb(config);
+    let results = {};
+
+    //Accedo al dbms per settare ad attiva la prenotazione dalla rispettiva tabella
+    try {
+        results = await db.query('UPDATE `prenotazioni` SET attiva = 1 WHERE idPrenotazione = ?;',
+            [
+                req.body.annullaP.idPrenotazione,
+            ]
+        )
+            .catch(err => {
+                throw err;
+            });
+
+        console.log(results);
+        console.log(`Prenotazione impostata con flag attivo!`);
+        res.send(results);
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+
+    //Accedo al dbms e recupero la mail del destinatario 
+    try {
+        results = await db.query('SELECT* FROM `utenti` WHERE id = ?;',
+            [
+                req.body.annullaP.idCliente,
+            ]
+        )
+            .catch(err => {
+                throw err;
+            });
+
+        console.log(results);
+        console.log(`Email destinatario recuperata!`);
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+
+    //Invio la mail al destinatario 
+    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
+        service: 'gmail',
+        auth: {
+            user: 'teammars44@gmail.com',  //Account gmail adhoc per inviare mail dal nostro sito
+            pass: 'marspwd34'
+        }
+    });
+    var mailOptions = {
+        from: 'teammars44@gmail.com',
+        to: results[0].email,   
+        subject: 'Richiesta accettata!',
+        text: 'Complimenti! Il proprietario ha accettato la tua prenotazione, procederemo con la transazione!'
+    };
+    transporter.sendMail(mailOptions, function (error, info) {    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email inviata: ' + info.response);
+        }
+    });
 }
 
 // middleware di Inserimento Annuncio
@@ -136,7 +202,7 @@ async function visualizzaPrenotazioniProprietario(req, res, next) {
         await withTransaction(db, async () => {
             // inserimento utente
             results = await db.query('SELECT * FROM `prenotazioni`\
-            WHERE idProprietario = ?', [
+            WHERE idProprietario = ? AND attiva = 0', [
                 req.body.idProprietario
             ])
                 .catch(err => {
