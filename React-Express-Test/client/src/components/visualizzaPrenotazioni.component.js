@@ -49,15 +49,17 @@ export default class VisualizzaPrenotazioni extends Component {
     }
 
     handleConfirm(d) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
-        const annullaP = {
+        const confermaP = {
             idPrenotazione: d.idPrenotazione,
             idCliente: d.idCliente,
+            idPagamento: d.idPagamento,
+            idProprietario: d.idProprietario
         };
-        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/confermaPrenotazione`, { annullaP })
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/confermaPrenotazione`, { confermaP })
             .then(res => {
                 console.log(res);
 
-                alert("Prenotazione confermata con Successo. Mail inviata!")
+                alert("Prenotazione confermata con Successo. Procederemo con il pagamento!")
 
                 window.location.reload(false);
             })
@@ -75,7 +77,7 @@ export default class VisualizzaPrenotazioni extends Component {
             .then(res => {
                 console.log(res);
 
-                alert("Prenotazione annullata con Successo. Mail inviata!")
+                alert("Prenotazione annullata con Successo. Mail inviata al destinatario!")
 
                 window.location.reload(false);
 

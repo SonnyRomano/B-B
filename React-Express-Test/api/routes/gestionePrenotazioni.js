@@ -25,11 +25,11 @@ router.post('/confermaPrenotazione', confermaPrenotazione);
 router.post('/visualizzaPrenotazioniProprietario', visualizzaPrenotazioniProprietario);
 
 
-// middleware di Inserimento Annuncio
+// middleware di effettua prenotazione
 async function effettuaPrenotazione(req, res, next) {
-    // istanziamo il middleware
     const db = await makeDb(config);
     let results = {};
+
     try {
         results = await db.query('INSERT INTO `prenotazioni` \
           (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, attiva) VALUES ?', [
@@ -54,6 +54,7 @@ async function effettuaPrenotazione(req, res, next) {
         console.log(results);
         console.log(`Prenotazione inserita!`);
         res.send(results);
+
     } catch (err) {
         console.log(err);
         next(createError(500));
@@ -62,7 +63,6 @@ async function effettuaPrenotazione(req, res, next) {
 
 // middleware di annulla prenotazione
 async function annullaPrenotazione(req, res, next) {
-    console.log(req.body)
     const db = await makeDb(config);
     let results = {};
 
@@ -103,7 +103,7 @@ async function annullaPrenotazione(req, res, next) {
         next(createError(500));
     }
 
-    //Invio la mail al destinatario 
+    //Invio la mail al destinatario per comunicare che il proprietario ha rifiutato 
     var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
         service: 'gmail',
         auth: {
@@ -128,34 +128,18 @@ async function annullaPrenotazione(req, res, next) {
 
 //Middleware conferma prenotazione
 async function confermaPrenotazione(req, res, next) {
-    console.log(req.body)
     const db = await makeDb(config);
-    let results = {};
+    let results = {}; //Variabile per memorizzare la mail del cliente destinatario
+    let mailProprietario = {} //Variabile per memorizzare mail del proprietario
+    let saldo = {};
+    let importo = {};
+    let nuovoSaldo;
 
-    //Accedo al dbms per settare ad attiva la prenotazione dalla rispettiva tabella
-    try {
-        results = await db.query('UPDATE `prenotazioni` SET attiva = 1 WHERE idPrenotazione = ?;',
-            [
-                req.body.annullaP.idPrenotazione,
-            ]
-        )
-            .catch(err => {
-                throw err;
-            });
-
-        console.log(results);
-        console.log(`Prenotazione impostata con flag attivo!`);
-        res.send(results);
-    } catch (err) {
-        console.log(err);
-        next(createError(500));
-    }
-
-    //Accedo al dbms e recupero la mail del destinatario 
+    //Recupero la mail del destinatario cui comunicherò l'esito della prenotazione
     try {
         results = await db.query('SELECT* FROM `utenti` WHERE id = ?;',
             [
-                req.body.annullaP.idCliente,
+                req.body.confermaP.idCliente,
             ]
         )
             .catch(err => {
@@ -168,31 +152,184 @@ async function confermaPrenotazione(req, res, next) {
         console.log(err);
         next(createError(500));
     }
+    //Recupero la mail del proprietario cui comunicherò l'esito della prenotazione 
+    try {
+        mailProprietario = await db.query('SELECT* FROM `utenti` WHERE id = ?;',
+            [
+                req.body.confermaP.idProprietario,
+            ]
+        )
+            .catch(err => {
+                throw err;
+            });
 
-    //Invio la mail al destinatario 
-    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
+        console.log(mailProprietario);
+        console.log(`Email proprietario recuperata!`);
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+    //Recupero il saldo corrente della carta specificata negli estremi di pagamento
+    try{
+        saldo = await db.query('SELECT* FROM `db_banca` WHERE idPagamento = ?;',
+                    [
+                        req.body.confermaP.idPagamento,
+                    ]
+                    ).catch(err => {
+                        throw err;
+                    });
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+    //Recupero l'importo da pagare per la prenotazione effettuata
+    try{
+        importo = await db.query('SELECT* FROM `prenotazioni` WHERE idPrenotazione = ?;',
+                    [
+                        req.body.confermaP.idPrenotazione,
+                    ]
+                    ).catch(err => {
+                        throw err;
+                    });
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }       
+
+    if(saldo[0].saldo >= importo[0].costo){ //SE IL SALDO NELLA CARTA E' SUFFICIENTE
+
+        nuovoSaldo = saldo[0].saldo - importo[0].costo; //NUOVO SALDO DA AGGIORNARE DOPO TRANSAZIONE
+        
+        //Accedo al dbms per settare ad attiva la prenotazione dalla rispettiva tabella
+        try {
+            db.query('UPDATE `prenotazioni` SET attiva = 1 WHERE idPrenotazione = ?;',
+                [
+                    req.body.confermaP.idPrenotazione,
+                ]
+            )
+                .catch(err => {
+                    throw err;
+                });
+
+            console.log(`Prenotazione impostata con flag attivo!`);
+        } catch (err) {
+            console.log(err);
+            next(createError(500));
+        }
+
+        //AGGIORNO IL SALDO DELLA CARTA DOPO LA TRANSAZIONE
+        try {
+            db.query('UPDATE `db_banca` SET saldo = ? WHERE idPagamento = ?;',
+                [
+                    nuovoSaldo,
+                    req.body.confermaP.idPagamento,
+                ]
+                )
+                .catch(err => {
+                    throw err;
+                });
+
+            console.log(`Saldo della carta aggiornato!`);
+            res.send(results);
+        } catch (err) {
+            console.log(err);
+            next(createError(500));
+        }
+
+        //Invio la mail sia al destinatario che al proprietario per comunicare l'esito positivo del pagamento della prenotazione 
+        var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
+            service: 'gmail',
+            auth: {
+                user: 'teammars44@gmail.com',  //Account gmail adhoc per inviare mail dal nostro sito
+                pass: 'marspwd34'
+            }
+        });
+        var mailOptionsCliente = {  //DESTINATARIO CLIENTE
+            from: 'teammars44@gmail.com',
+            to: results[0].email,   
+            subject: 'Richiesta accettata!',
+            text: 'Complimenti! Il pagamento è andato a buon fine, prenotazione completata!'
+        };
+        var mailOptionsProprietario = {  //DESTINATARIO PROPRIETARIO
+            from: 'teammars44@gmail.com',
+            to: mailProprietario[0].email,   
+            subject: 'Prenotazione andata a buon fine!',
+            text: 'La prenotazione è stata completata con successo!'
+        };
+        transporter.sendMail(mailOptionsCliente, function (error, info) { //Invio mail per notificare al cliente che tutto è andato a buon fine
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email inviata: ' + info.response);
+            }
+        });
+        transporter.sendMail(mailOptionsProprietario, function (error, info) { //Invio mail per notificare al proprietario che il proprietario ha declinato la sua richiesta
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email inviata: ' + info.response);
+            }
+        });
+    }
+    else //ALTRIMENTI SE IL SALDO NON E' SUFFICIENTE
+    {
+        //Accedo al dbms per eliminare la prenotazione dalla rispettiva tabella
+        try {
+            db.query('DELETE FROM `prenotazioni` WHERE idPrenotazione = ?',
+                [
+                    req.body.confermaP.idPrenotazione,
+                ]
+            )
+                .catch(err => {
+                    throw err;
+                });
+
+            console.log(`Prenotazione eliminata!`);
+            res.send(results);
+        } catch (err) {
+            console.log(err);
+            next(createError(500));
+        }
+
+        //Invio la mail al destinatario per comunicare che il proprietario ha accettato la prenotazione, ma il pagamento non è andato a buon fine
+        var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
         service: 'gmail',
         auth: {
             user: 'teammars44@gmail.com',  //Account gmail adhoc per inviare mail dal nostro sito
             pass: 'marspwd34'
         }
-    });
-    var mailOptions = {
-        from: 'teammars44@gmail.com',
-        to: results[0].email,   
-        subject: 'Richiesta accettata!',
-        text: 'Complimenti! Il proprietario ha accettato la tua prenotazione, procederemo con la transazione!'
-    };
-    transporter.sendMail(mailOptions, function (error, info) {    //Invio mail per notificare al cliente che il proprietario ha declinato la sua richiesta
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email inviata: ' + info.response);
-        }
-    });
+        });
+        var mailOptionsCliente = {
+            from: 'teammars44@gmail.com',
+            to: results[0].email,   
+            subject: 'Pagamento fallito!',
+            text: 'Spiacente, il proprietario ha accettato la tua prenotazione ma il pagamento non è andato a buon fine, la prenotazione è stata eliminata!'
+        };
+        var mailOptionsProprietario = {
+            from: 'teammars44@gmail.com',
+            to: mailProprietario[0].email,   
+            subject: 'Pagamento fallito!',
+            text: 'Spiacente, il pagamento non è andato a buon fine, la prenotazione è stata eliminata!'
+        };
+        transporter.sendMail(mailOptionsCliente, function (error, info) { //Invio mail per notificare al cliente che il pagamento non è andato a buon fine
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email inviata: ' + info.response);
+            }
+        });
+        transporter.sendMail(mailOptionsProprietario, function (error, info) { //Invio mail per notificare al proprietario che il pagamento non è andato a buon fine
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email inviata: ' + info.response);
+            }
+        });
+    }
 }
 
-// middleware di Inserimento Annuncio
+
+// middleware di visualiza prenotazioni proprietario
 async function visualizzaPrenotazioniProprietario(req, res, next) {
     // istanziamo il middleware
     const db = await makeDb(config);
