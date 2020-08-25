@@ -15,6 +15,7 @@ var usersRouter = require("./routes/users");
 var gestioneAnnunciRouter = require("./routes/gestioneAnnunci");
 var gestionePrenotazioniRouter = require("./routes/gestionePrenotazioni");
 var gestionePagamentiRouter = require("./routes/gestionePagamenti");
+var gestioneLegaleRouter = require("./routes/gestioneLegale");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -36,6 +37,7 @@ app.use("/users", usersRouter);
 app.use("/gestioneAnnunci", gestioneAnnunciRouter);
 app.use("/gestionePrenotazioni", gestionePrenotazioniRouter);
 app.use("/gestionePagamenti", gestionePagamentiRouter);
+app.use("/gestioneLegale", gestioneLegaleRouter);
 
 
 // middlewares

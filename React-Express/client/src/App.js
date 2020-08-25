@@ -3,20 +3,23 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Navbar from './components/navbar.component'
 import HomePage from './components/homePage.component'
-import InserisciAnnuncio from './components/inserisciAnnuncio.component'
 import Login from './components/login.component'
 import SignUp from './components/signUp.component';
 import DiventaHost from './components/diventaHost.component'
 import Footer from './components/footer.component';
 import PaginaRicerca from './components/paginaRicerca.component';
 
+import InserisciAnnuncio from './components/inserisciAnnuncio.component'
 import DettaglioAnnuncio from './components/dettaglioAnnuncio.component';
 import EliminaAnnuncio from './components/eliminaAnnuncio.component';
 import ModificaAnnuncio from './components/modificaAnnuncio.component';
 import PaginaRicercaProprietario from './components/paginaRicercaProprietario.component';
-import moduloPagamento from './components/moduloPagamento';
+import moduloPagamento from './components/moduloPagamento.component';
 import VisualizzaPrenotazioni from './components/visualizzaPrenotazioni.component';
 import RiepilogoPrenotazione from "./components/riepilogoPrenotazione";
+
+import VisualizzaPrenotazioniQuestura from './components/visualizzaPrenotazioniQuestura.component'
+import FormQuestura from './components/formQuestura.component'
 
 
 
@@ -44,15 +47,20 @@ class App extends Component {
 
                     <React.Fragment>
                         <Route exact path="/" component={HomePage} />
+
                         <Route exact path="/gestioneAnnunci/dettaglioAnnuncio" component={DettaglioAnnuncio} />
                         <Route exact path="/gestioneAnnunci/eliminaAnnuncio" component={EliminaAnnuncio} />
                         <Route exact path="/gestioneAnnunci/inserisciAnnuncio" component={InserisciAnnuncio} />
                         <Route exact path="/gestioneAnnunci/modificaAnnuncio" component={ModificaAnnuncio} />
                         <Route exact path="/gestioneAnnunci/paginaRicerca" component={PaginaRicerca} />
                         <Route exact path="/gestioneAnnunci/paginaRicercaProprietario" component={PaginaRicercaProprietario} />
+                        <Route exact path="/gestioneAnnunci/visualizzaPrenotazioni" component={VisualizzaPrenotazioni} />
+
                         <Route exact path="/prenotazione/moduloPagamento" component={moduloPagamento} />
                         <Route exact path="/prenotazione/riepilogoPrenotazione" component={RiepilogoPrenotazione} />
-                        <Route exact path="/gestioneAnnunci/visualizzaPrenotazioni" component={VisualizzaPrenotazioni} />
+
+                        <Route exact path="/gestioneLegale/visualizzaPrenotazioniQuestura" component={VisualizzaPrenotazioniQuestura} />
+                        <Route exact path="/gestioneLegale/formQuestura" component={FormQuestura} />
                     </React.Fragment>
                 </Router>
 
