@@ -20,7 +20,7 @@ export default class VisualizzaGuadagno extends Component {
                 console.log(res.data);
 
                 for (let i = 0; i < res.data.length; i++) {
-                    this.state.costoTotale += res.data[i].costo
+                    this.setState({ costoTotale: this.state.costoTotale + res.data[i].costo })
                 }
                 console.log(this.state.costoTotale)
 

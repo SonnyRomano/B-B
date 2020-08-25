@@ -230,7 +230,7 @@ export default class DettaglioAnnuncio extends Component {
       <div>
         <div id="myModal" className="modal">
           <span className="close" id="cls">&times;</span>
-          <img className="modal-content" id="img01" />
+          <img className="modal-content" id="img01" alt='ImgModal' />
         </div>
         <div className="container shadow p-3 bg-white mb-5 rounded" style={{ background: '#f2f2f2' }}>
           <p className="text-muted" style={{ fontWeight: 600, textDecoration: 'underline' }}>{this.state.citta}</p>
