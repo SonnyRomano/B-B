@@ -1,14 +1,14 @@
 .navbar {
   border-bottom: #563D7C 3px solid;
-  opacity: 0.8;
+  opacity: 0.85;
   margin-bottom: 2rem;
 }
-/* .nav-link {
-    color: black;
-    font-weight: 700;
+.nav-link {   
+    font-weight: 500;
     font-size: 1.3rem;
-    text-shadow: -1.2px 0 #FFF, 0 1.2px #FFF, 1.2px 0 #FFF, 0 -1.2px #FFF;
-} */
+    /*color: black;
+    text-shadow: -1.2px 0 #FFF, 0 1.2px #FFF, 1.2px 0 #FFF, 0 -1.2px #FFF;*/
+}
 /* .nav-link:hover{
     color: brown;
 } */

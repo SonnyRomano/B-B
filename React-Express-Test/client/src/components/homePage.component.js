@@ -2,16 +2,11 @@ import React, { Component } from "react";
 import axios from 'axios';
 import '../stylesheets/index.css';
 import dateFormat from 'dateformat'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
 
 export default class HomePage extends Component {
-
-  //Controlla inserimento date Check-in e Check-out
-  dataControl() {
-    var dataFrom = document.getElementById("dateFrom")
-    var dataTo = document.getElementById("dateTo")
-    if (dataFrom.value > dataTo.value) dataTo.value = null
-  }
 
   state = {
     citta: '',
@@ -26,35 +21,56 @@ export default class HomePage extends Component {
     });
   }
 
+  handleChangeDate(start, end) {
+    this.setState({
+      dateFrom: start,
+      dateTo: end
+    });
+  }
+
   handleSubmit = event => {
     event.preventDefault();
 
-    const ricerca = {
-      citta: this.state.citta,
-      dateFrom: dateFormat(this.state.dateFrom, "yyyy-mm-dd"),
-      dateTo: dateFormat(this.state.dateTo, "yyyy-mm-dd"),
-      n_ospiti: this.state.n_ospiti
-    };
+    // Differenza date
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    let firstDate = new Date(dateFormat(this.state.dateTo, "yyyy-mm-dd"));
+    let secondDate = new Date(dateFormat(this.state.dateFrom, "yyyy-mm-dd"));
+    let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+    console.log(diffDays)
 
-    console.log(ricerca);
+    // Controllo 28 Giorni
+    if (diffDays > 28) {
+      alert("Non puoi soggiornare per più di 28 giorni")
+    }
+    else {
 
-    //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
-    axios.post(`http://127.0.0.1:9000/gestioneAnnunci/ricercaAnnunci`, { ricerca })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
+      const ricerca = {
+        citta: this.state.citta,
+        dateFrom: dateFormat(this.state.dateFrom, "yyyy-mm-dd"),
+        dateTo: dateFormat(this.state.dateTo, "yyyy-mm-dd"),
+        n_ospiti: this.state.n_ospiti
+      };
 
-        let datiRicerca = []
-        datiRicerca.push(res.data)
-        datiRicerca.push(ricerca)
+      console.log(ricerca);
 
-        //Indirizza la pagina alla ricerca e gli passa i dati della risposta contenente gli annunci
-        this.props.history.push('/gestioneAnnunci/paginaRicerca', datiRicerca);
-      })
-      .catch(err => {
-        console.log("Error = ", err);
-        alert("Annunci non Trovati")
-      })
+      //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
+      axios.post(`http://127.0.0.1:9000/gestioneAnnunci/ricercaAnnunci`, { ricerca })
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+
+          let datiRicerca = []
+          datiRicerca.push(res.data)
+          datiRicerca.push(ricerca)
+
+          //Indirizza la pagina alla ricerca e gli passa i dati della risposta contenente gli annunci
+          this.props.history.push('/gestioneAnnunci/paginaRicerca', datiRicerca);
+        })
+        .catch(err => {
+          console.log("Error = ", err);
+          alert("Annunci non Trovati")
+        })
+    }
   }
 
   render() {
@@ -68,35 +84,36 @@ export default class HomePage extends Component {
               <form onSubmit={this.handleSubmit}>
 
                 <div className="form-group">
-                  <i class="fas fa-city mr-2"></i>
+                  <i className="fas fa-city mr-2"></i>
                   <label>Dove</label>
                   <input className="form-control" placeholder="Dove vuoi andare?" name="citta" onChange={this.handleChange} required />
                 </div>
 
                 <div className="form-row mb-0">
                   <div className="form-group col-md-6">
-                    <i class="far fa-calendar-check mr-2"></i>
-                    <label>Check-in</label>
-                    <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                      name="dateFrom" />
+                    <i className="far fa-calendar-check mr-2"></i>
+                    <label>Check-in e Check-out</label>
+                    <DatePicker
+                      id="dateFrom" type="date" className="form-control" name="dateFrom"
+                      selected={this.state.dateFrom}
+                      minDate={moment().toDate()}
+                      onChange={(dates) => this.handleChangeDate(dates[0], dates[1])}
+                      startDate={this.state.dateFrom}
+                      endDate={this.state.dateTo}
+                      selectsRange
+                      inline
+                    />
                   </div>
-                  <div className="form-group col-md-6">
-                    <i class="far fa-calendar mr-2"></i>
-                    <label>Check-out</label>
-                    <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                      name="dateTo" />
-                  </div>
-                </div>
 
-                <div className="mb-5">
                   <div className="form-group col-md-6 px-0">
-                    <i class="fas fa-male mr-2"></i>
+                    <i className="fas fa-male mr-2"></i>
                     <label>Ospiti</label>
                     <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} placeholder="Aggiungi ospiti" required />
                   </div>
                 </div>
+
                 <button className="btn btn-danger btn-block" type="submit">
-                  <i class="fas fa-search mr-2"></i>Cerca
+                  <i className="fas fa-search mr-2"></i>Cerca
                </button>
               </form>
             </div>

@@ -1,6 +1,6 @@
-const express = require('express')
-const router = express.Router()
-const mysql = require('mysql');
+var express = require('express')
+var router = express.Router()
+
 const { config } = require('../db/config');
 const { makeDb } = require('../db/dbmiddleware');
 
@@ -8,7 +8,7 @@ const { makeDb } = require('../db/dbmiddleware');
 async function insPagamento(req, res, next) {
     let query;
     let results = {};
-    const db = await makeDb(config);  
+    const db = await makeDb(config);
 
     try {
 
@@ -25,24 +25,24 @@ async function insPagamento(req, res, next) {
             if (err) throw err
             console.log(result);
         })
-    
+
         //INSERISCO RECORD DENTRO LA TABELLA estremi_pagamenti
         results = await db.query('INSERT INTO `estremi_pagamento` \
-          (fname, email, adr, city, prov, cap) VALUES ?', 
-        [
+          (fname, email, adr, city, prov, cap) VALUES ?',
             [
                 [
-                    req.body.pagamento.fname,
-                    req.body.pagamento.email,
-                    req.body.pagamento.adr,
-                    req.body.pagamento.city,
-                    req.body.pagamento.prov,
-                    req.body.pagamento.cap
+                    [
+                        req.body.pagamento.fname,
+                        req.body.pagamento.email,
+                        req.body.pagamento.adr,
+                        req.body.pagamento.city,
+                        req.body.pagamento.prov,
+                        req.body.pagamento.cap
+                    ]
                 ]
-            ]
-        ]).catch(err => {
-            throw err;
-        });
+            ]).catch(err => {
+                throw err;
+            });
 
         //RECUPERO L'idPagamento DEL RECORD APPENA INSERITO NELLA TABELLA estremi_pagamento
         let idPagamento = results.insertId.toString();
@@ -50,16 +50,16 @@ async function insPagamento(req, res, next) {
         //INSERISCO RECORD DENTRO LA TABELLA db_banca PER SIMULARE SALDO CARTA IN BANCA
         //DI DEFAULT IN db_banca OGNI CARTA HA UN CREDITO DI 500 EURO INIZIALE
         db.query('INSERT INTO `db_banca` \
-          (idPagamento) VALUES ?', 
-        [
+          (idPagamento) VALUES ?',
             [
                 [
-                    idPagamento,
+                    [
+                        idPagamento,
+                    ]
                 ]
-            ]
-        ]).catch(err => {
-            throw err;
-        });
+            ]).catch(err => {
+                throw err;
+            });
 
         console.log(idPagamento);
         console.log(results);

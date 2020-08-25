@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../stylesheets/navbar.css"
+import "../stylesheets/navbar.module.css"
 import displayComponent from '../utility/displayComponent'
 import logo from '../Bootstrap.svg'
 
@@ -60,7 +60,7 @@ export default class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-md navbar-dark bg-dark" style={{ zIndex: 999 }}>
         <a className="navbar-brand" href="/">
           <img src={logo} width="30" height="30" alt='HomePageImg' className="d-inline-block align-top mr-2" />Bootstrap</a>
 
@@ -74,7 +74,7 @@ export default class Navbar extends Component {
               <a className="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Gestione Legale</a>
               <div className="dropdown-menu">
                 <a className="dropdown-item">Rendiconta Tasse Soggiorno</a>
-                <a className="dropdown-item">Questura</a>
+                <a className="dropdown-item" href="/gestioneLegale/visualizzaPrenotazioniQuestura">Questura</a>
               </div>
             </li>
             <li className="nav-item dropdown" name="BottoniProprietario">
@@ -92,11 +92,11 @@ export default class Navbar extends Component {
               <a className="nav-link" onClick={() => displayComponent("DiventaHost", true)}>{this.state.diventaHost}</a>
             </li>
             <li className="nav-item">
-              <button className="nav-link btn btn-outline-info"
-                onClick={() => this.autenticationControl()}>{this.state.loginString}</button>
+              <a className="nav-link"
+                onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
             </li>
             <li className="nav-item">
-              <button className="nav-link btn btn-outline-info " onClick={() => displayComponent("SignUp", true)}>{this.state.signUpString}</button>
+              <a className="nav-link" onClick={() => displayComponent("SignUp", true)}>{this.state.signUpString}</a>
             </li>
           </ul>
         </div>
