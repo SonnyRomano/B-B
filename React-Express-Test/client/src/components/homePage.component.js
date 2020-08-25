@@ -60,7 +60,7 @@ export default class HomePage extends Component {
   render() {
     return (
       <div className="container" id="page-container">
-        <div className="col-md-8 mb-5 p-0">
+        <div className="col-md-7 mb-5 p-0">
           <div className="card">
             <div className="card-body p-4" style={{ padding: '2rem' }}>
               <h3>Prenota Case Vacanza e B&B sul nostro sito</h3>
