@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import axios from 'axios';
-// import '../stylesheets/index.css';
 import displayComponent from '../utility/displayComponent'
-import dateFormat from 'dateformat'
 import '../stylesheets/dettaglioAnnuncio.css'
 import queryString from 'query-string'
+
+import dateFormat from 'dateformat'
+import DatePicker from 'react-datepicker'
+import moment from "moment";
 
 export default class DettaglioAnnuncio extends Component {
   state = {
@@ -33,8 +35,15 @@ export default class DettaglioAnnuncio extends Component {
     costoTotale: ''
   }
 
-  componentDidMount() {
+  handleChangeDate(date, flag) {
+    let datiPrenotazioneTemp = this.state.datiPrenotazione
 
+    if (flag) datiPrenotazioneTemp.dateFrom = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD')
+    else datiPrenotazioneTemp.dateTo = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD')
+
+    this.setState({
+      datiPrenotazione: datiPrenotazioneTemp
+    });
   }
 
   componentDidUpdate() {
@@ -203,10 +212,8 @@ export default class DettaglioAnnuncio extends Component {
     var img = document.getElementById(event.target.id);
     var modalImg = document.getElementById("img01");
 
-    img.onclick = function () {
-      modal.style.display = "block";
-      modalImg.src = this.src;
-    }
+    modal.style.display = "block";
+    modalImg.src = img.src;
 
     // Get the <span> element that closes the modal
     var span = document.getElementById("cls");
@@ -226,6 +233,8 @@ export default class DettaglioAnnuncio extends Component {
     let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     // eslint-disable-next-line
     this.state.costoTotale = this.state.costo * diffDays * this.state.datiPrenotazione.n_ospiti
+
+
     return (
       <div>
         <div id="myModal" className="modal">
@@ -259,13 +268,13 @@ export default class DettaglioAnnuncio extends Component {
           <div className="row">
             <div className="col-md-7 p-0 ml-3">
               <h1 className="display-4">{this.state.descrizione}</h1>
-              <p class="lead">{this.state.n_posti} ospiti · 1 camera da letto · 2 letti · 1 bagno</p>
+              <p className="lead">{this.state.n_posti} ospiti · 1 camera da letto · 2 letti · 1 bagno</p>
               <hr className="m-0" />
-              <ul class="list-group list-group-flush mb-4">
-                <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+              <ul className="list-group list-group-flush mb-4">
+                <li className="list-group-item" key="wifi1" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+                <li className="list-group-item" key="wifi2" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+                <li className="list-group-item" key="wifi3" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+                <li className="list-group-item" key="wifi4" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
                 <hr className="m-0" />
               </ul>
 
@@ -280,13 +289,24 @@ export default class DettaglioAnnuncio extends Component {
                   <div className="form-row">
                     <div className="col-6">
                       <label>Check-in</label>
-                      <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                        name="dateFrom" value={this.state.datiPrenotazione.dateFrom || ''} />
+                      <DatePicker
+                        id="dateFrom" type="date" className="form-control" name="dateFrom"
+                        selected={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
+                        minDate={moment(this.state.dateFrom, 'YYYY-MM-DD').toDate()}
+                        maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
+                        onChange={(date) => this.handleChangeDate(date, true)}
+                      />
                     </div>
+
                     <div className="col-6">
                       <label>Check-out</label>
-                      <input id="dateTo" type="date" className="form-control" onInput={this.dataControl} onChange={this.handleChange}
-                        name="dateTo" value={this.state.datiPrenotazione.dateTo || ''} />
+                      <DatePicker
+                        id="dateTo" type="date" className="form-control" name="dateTo"
+                        selected={moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').toDate() : moment.now()}
+                        minDate={moment(this.state.dateFrom, 'YYYY-MM-DD').toDate()}
+                        maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
+                        onChange={(date) => this.handleChangeDate(date, false)}
+                      />
                     </div>
                   </div>
                 </div>
