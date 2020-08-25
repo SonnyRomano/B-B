@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import axios from 'axios';
 
-export default class visualizzaGuadagno extends Component {
+export default class VisualizzaGuadagno extends Component {
 
     state = {
         listItems: '',
+        costoTotale: 0
     }
 
 
-   componentWillMount() {
+    componentWillMount() {
 
         let idProprietario = sessionStorage.getItem('id')
 
@@ -17,14 +18,22 @@ export default class visualizzaGuadagno extends Component {
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-              
-             
+
+                for (let i = 0; i < res.data.length; i++) {
+                    this.state.costoTotale += res.data[i].costo
+                }
+                console.log(this.state.costoTotale)
+
             })
             .catch(err => {
                 console.log("Error = ", err)
             })
     }
 
-
+    render() {
+        return (
+            <div>{this.state.costoTotale}</div>
+        )
+    }
 
 }
