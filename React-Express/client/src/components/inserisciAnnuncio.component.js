@@ -33,7 +33,7 @@ export default class InserisciAnnuncio extends Component {
         var dataTo = document.getElementById("dateTo")
         if (dataFrom.value > dataTo.value) dataTo.value = null
     }
-
+//appena inserisco valori negli input,mi scatta questo evento che me li salva nello state,dopo che si è attivato l'evento handleSubmit
     handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
@@ -69,7 +69,7 @@ export default class InserisciAnnuncio extends Component {
             costo: this.state.costo,
             telefono: this.state.telefono
         }
-
+//faccio la richiesta ad express,passandogli i campi degli input riempiti tramite react,per poi inserirli nel dbms
         axios.post(`http://127.0.0.1:9000/gestioneAnnunci/inserisciAnnuncio`, { annuncio })
             .then(res => {
                 console.log(res);
