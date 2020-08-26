@@ -27,6 +27,9 @@ router.post('/visualizzaPrenotazioniProprietario', visualizzaPrenotazioniProprie
 /* proprietario visualiza visualizza Guadagno Proprietario */
 router.post('/visualizzaGuadagnoProprietario', visualizzaGuadagnoProprietario);
 
+/* recupera prenotazion */
+router.post('/recuperaPrenotazioni', recuperaPrenotazioni);
+
 
 
 // middleware di effettua prenotazione
@@ -392,6 +395,32 @@ async function visualizzaGuadagnoProprietario(req, res, next) {
 
                 res.status(200).send(results);
             }
+        });
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
+}
+
+
+// middleware di recuperaAnnuncio
+async function recuperaPrenotazioni(req, res, next) {
+    // istanziamo il middleware
+    const db = await makeDb(config);
+    let results = {};
+    try {
+        await withTransaction(db, async () => {
+            results = await db.query('SELECT * FROM `prenotazioni`\
+            WHERE idAnnuncio = ? AND confermata = 1', [
+                req.body.id
+            ])
+                .catch(err => {
+                    throw err;
+                });
+
+            console.log(results);
+
+            res.status(200).send(results);
         });
     } catch (err) {
         console.log(err);

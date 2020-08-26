@@ -112,7 +112,6 @@ async function recuperaAnnuncio(req, res, next) {
     let results = {};
     try {
         await withTransaction(db, async () => {
-            // inserimento utente
             results = await db.query('SELECT * FROM `annunci`\
             WHERE idAnnuncio = ?', [
                 req.body.id
@@ -211,7 +210,6 @@ async function ricercaAnnunci(req, res, next) {
     try {
         console.log(req.body.ricerca.dateFrom)
         await withTransaction(db, async () => {
-            // inserimento utente
             results = await db.query('SELECT * FROM `annunci`\
             WHERE citta = ? AND n_posti >= ? AND dateFrom <= ? AND dateTo >= ?', [
                 req.body.ricerca.citta,

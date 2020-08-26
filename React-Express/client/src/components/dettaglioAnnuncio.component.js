@@ -32,7 +32,9 @@ export default class DettaglioAnnuncio extends Component {
     CoverImg: '',
 
     datiPrenotazione: [],
-    costoTotale: ''
+    costoTotale: '',
+
+    dateOccupate: []
   }
 
   handleChangeDate(date, flag) {
@@ -100,6 +102,13 @@ export default class DettaglioAnnuncio extends Component {
           }
 
           this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
+
+
+          axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { id })
+            .then(res => {
+              this.setState({ dateOccupate: res.data })
+            })
+
         })
         .catch(err => {
           console.log("Error = ", err);
@@ -140,6 +149,13 @@ export default class DettaglioAnnuncio extends Component {
         }
 
         this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
+
+        let idAnnuncio = this.props.location.state[0].idAnnuncio
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { idAnnuncio })
+          .then(res => {
+            this.setState({ dateOccupate: res.data })
+          })
+
       })
       this.setState({ datiPrenotazione: this.props.location.state[1] });
     }
@@ -224,6 +240,17 @@ export default class DettaglioAnnuncio extends Component {
     }
   }
 
+  // Filtra Date Occupate
+  filtraDate(date) {
+    let flag = true;
+
+    for (let i = 0; i < this.state.dateOccupate.length; i++) {
+      if (date >= moment(this.state.dateOccupate[i].dateFrom, 'YYYY-MM-DD') && date <= moment(this.state.dateOccupate[i].dateTo, 'YYYY-MM-DD')) flag = false;
+    }
+
+    return flag
+  }
+
   render() {
     // Calcola Prezzo
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
@@ -233,7 +260,6 @@ export default class DettaglioAnnuncio extends Component {
     let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     // eslint-disable-next-line
     this.state.costoTotale = this.state.costo * diffDays * this.state.datiPrenotazione.n_ospiti
-
 
     return (
       <div>
@@ -292,9 +318,10 @@ export default class DettaglioAnnuncio extends Component {
                       <DatePicker
                         id="dateFrom" type="date" className="form-control" name="dateFrom"
                         selected={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
-                        minDate={moment(this.state.dateFrom, 'YYYY-MM-DD').toDate()}
+                        minDate={moment(this.state.dateFrom, 'YYYY-MM-DD') > moment.now() ? moment(this.state.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
                         maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
                         onChange={(date) => this.handleChangeDate(date, true)}
+                        filterDate={(date) => this.filtraDate(date)}
                       />
                     </div>
 
@@ -303,9 +330,10 @@ export default class DettaglioAnnuncio extends Component {
                       <DatePicker
                         id="dateTo" type="date" className="form-control" name="dateTo"
                         selected={moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').toDate() : moment.now()}
-                        minDate={moment(this.state.dateFrom, 'YYYY-MM-DD').toDate()}
+                        minDate={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
                         maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
                         onChange={(date) => this.handleChangeDate(date, false)}
+                        filterDate={(date) => this.filtraDate(date)}
                       />
                     </div>
                   </div>
