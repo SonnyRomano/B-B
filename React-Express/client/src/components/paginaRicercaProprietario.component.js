@@ -8,6 +8,7 @@ export default class PaginaRicercaProprietario extends Component {
     listItems: '',
   }
 
+  //Il metodo componentDidMount () viene chiamato dopo il rendering del componente.
   componentWillMount() {
 
     let idProprietario = sessionStorage.getItem('id')

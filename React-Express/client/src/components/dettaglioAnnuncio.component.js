@@ -3,7 +3,6 @@ import axios from 'axios';
 import displayComponent from '../utility/displayComponent'
 import '../stylesheets/dettaglioAnnuncio.css'
 import queryString from 'query-string'
-
 import dateFormat from 'dateformat'
 import DatePicker from 'react-datepicker'
 import moment from "moment";

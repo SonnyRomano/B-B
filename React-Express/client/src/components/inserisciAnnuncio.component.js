@@ -32,6 +32,9 @@ export default class InserisciAnnuncio extends Component {
     var dataTo = document.getElementById("dateTo")
     if (dataFrom.value > dataTo.value) dataTo.value = null
   }
+  //Controlla inserimento date Check-in e Check-out
+
+  //appena inserisco valori negli input,mi scatta questo evento che me li salva nello state,dopo che si è attivato l'evento handleSubmit
 
   handleChange = event => {
     this.setState({
