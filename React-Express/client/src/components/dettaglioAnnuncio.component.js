@@ -55,7 +55,7 @@ export default class DettaglioAnnuncio extends Component {
   }
 
   // Carica i dati relativi all'annuncio
-  componentWillMount() {
+  componentDidMount() {
 
     // Tramite inserimento manuale dell'URL o condivisione link
     if (this.props.history.action === 'POP') {
@@ -134,28 +134,31 @@ export default class DettaglioAnnuncio extends Component {
         descrizione: this.props.location.state[0].descrizione,
         costo: this.props.location.state[0].costo,
         telefono: this.props.location.state[0].telefono
-      }, () => {      // Carica le immagini dell'annuncio dentro listOfImages
-        const path = require.context('../../../images', true)
-        for (let i = 0; i < 5; i++) {
-          try {
-            var joined = this.state.listOfImages.concat(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'));
-            this.setState({ listOfImages: joined })
-          }
-          catch (err) {
-            console.log("Immagini finite")
-            break
-          }
-        }
-
-        this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
-
-        let idAnnuncio = this.props.location.state[0].idAnnuncio
-        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { idAnnuncio })
-          .then(res => {
-            this.setState({ dateOccupate: res.data })
-          })
-
       })
+
+      // Carica le immagini dell'annuncio dentro listOfImages
+      const path = require.context('../../../images', true)
+      for (let i = 0; i < 5; i++) {
+        try {
+          var joined = this.state.listOfImages.concat(path('./ID' + this.props.location.state[0].idAnnuncio + '/img' + i + '.png'));
+          this.setState({ listOfImages: joined })
+          console.log("index:" + i)
+        }
+        catch (err) {
+          console.log("Immagini finite")
+          break
+        }
+      }
+
+      this.setState({ CoverImg: require('../../../images/ID' + this.props.location.state[0].idAnnuncio + '/Cover.png') })
+
+      let idAnnuncio = this.props.location.state[0].idAnnuncio
+      axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { idAnnuncio })
+        .then(res => {
+          this.setState({ dateOccupate: res.data })
+        })
+
+
       this.setState({ datiPrenotazione: this.props.location.state[1] });
     }
   }
