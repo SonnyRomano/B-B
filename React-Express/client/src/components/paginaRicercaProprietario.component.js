@@ -9,7 +9,7 @@ export default class PaginaRicercaProprietario extends Component {
   }
 
   //Il metodo componentDidMount () viene chiamato dopo il rendering del componente.
-  componentWillMount() {
+  componentDidMount() {
 
     let idProprietario = sessionStorage.getItem('id')
 
@@ -20,7 +20,7 @@ export default class PaginaRicercaProprietario extends Component {
         console.log(res.data);
 
         const listItems = res.data.map((d) =>
-          <div className="card mb-3">
+          <div className="card mb-3" key={d.idAnnuncio}>
             <div className="row no-gutters">
               <div className="col-md-4">
                 <img src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} className="card-img" alt="CoverImage" style={{ maxHeight: 250, height: '100%', backgroundSize: 'cover' }} />
@@ -29,8 +29,8 @@ export default class PaginaRicercaProprietario extends Component {
                 <div className="card-body">
                   <h5 className="card-title">Titolo annuncio</h5>
                   <p className="card-text">{d.indirizzo}, {d.civico}<br />{d.cap} {d.citta}</p>
-                  <button onClick={() => this.handleClick(d)} type="button" className="btn btn-secondary mb-2">Modifica</button>
-                  <button onClick={() => this.handleClick(d)} type="button" className="btn btn-danger">Elimina</button>
+                  <button onClick={() => this.handleClickModify(d)} type="button" className="btn btn-secondary mb-2">Modifica</button>
+                  <button onClick={() => this.handleClickRemove(d.idAnnuncio)} type="button" className="btn btn-danger">Elimina</button>
                 </div>
               </div>
             </div>
@@ -46,8 +46,24 @@ export default class PaginaRicercaProprietario extends Component {
       })
   }
 
-  handleClick(info) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
+  handleClickModify(info) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
     this.props.history.push('/gestioneAnnunci/modificaAnnuncio', info);
+  }
+
+  handleClickRemove(idAnnuncio) {
+    if (window.confirm('Sei sicuro di voler eliminare questo annuncio?')) {
+      axios.post(`http://127.0.0.1:9000/gestioneAnnunci/eliminaAnnuncio`, { idAnnuncio })
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+          window.confirm('Annuncio eliminato');
+          window.location.reload(false);
+        })
+        .catch(err => {
+          console.log("Error = ", err)
+          window.confirm('Errore! Operazione annullata');
+        })
+    }
   }
 
   render() {
@@ -55,22 +71,25 @@ export default class PaginaRicercaProprietario extends Component {
       <div>
         <ul className="nav nav-pills nav-fill bg-white">
           <li className="nav-item">
-            <a className="nav-link active" href="#">Active</a>
+            <a className="nav-link active" href="/gestioneAnnunci/paginaRicercaProprietario">Annunci</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Much longer nav link</a>
+            <a className="nav-link" href="/gestioneAnnunci/visualizzaGuadagno">Visualizza Guadagni</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Link</a>
+            <a className="nav-link" href="/gestioneAnnunci/visualizzaPrenotazioni">Visualizza Prenotazioni Pendenti</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <a className="nav-link" href="#/">Rendiconta Tasse Soggiorno</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/gestioneLegale/visualizzaPrenotazioniQuestura">Questura</a>
           </li>
         </ul>
 
         <div className="container-fluid p-3" style={{ backgroundColor: '#f2f2f2' }} >
-          <h1 className="display-4 text-center mb-3">I tuoi annunci</h1>
-          <button type="button" className="btn btn-success mb-3">Aggiungi annuncio</button>
+          <h1 className="display-4 text-center mb-3">I Tuoi Annunci</h1>
+          <a className="btn btn-success mb-3" href='/gestioneAnnunci/inserisciAnnuncio'>Aggiungi annuncio</a>
           {this.state.listItems}
         </div>
 
