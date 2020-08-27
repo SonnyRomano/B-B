@@ -1,195 +1,331 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import '../stylesheets/gestioneAnnunci.css';
+// import '../stylesheets/gestioneAnnunci.css';
 import checkRoutingAccess from '../utility/checkRoutingAccess';
 import dateFormat from 'dateformat'
 
 
 export default class ModificaAnnuncio extends Component {
 
-    imageFiles = []
-    coverFile = []
+  imageFiles = []
+  coverFile = []
 
-    state = {
-        citta: '',
-        cap: '',
-        indirizzo: '',
-        civico: '',
-        dateFrom: '',
-        dateTo: '',
-        n_posti: '',
-        n_bagni: '',
-        wifi: 0,
-        ascensore: 0,
-        garage: 0,
-        terrazzo: 0,
-        descrizione: '',
-        telefono: '',
-        costo: 0,
-        idAnnuncio: ''
+  state = {
+    citta: '',
+    cap: '',
+    indirizzo: '',
+    civico: '',
+    dateFrom: '',
+    dateTo: '',
+    n_posti: '',
+    n_bagni: '',
+    wifi: 0,
+    ascensore: 0,
+    garage: 0,
+    terrazzo: 0,
+    descrizione: '',
+    telefono: '',
+    costo: 0,
+    idAnnuncio: ''
+  }
+
+  //Controlla inserimento date Check-in e Check-out
+  dataControl() {
+    var dataFrom = document.getElementById("dateFrom")
+    var dataTo = document.getElementById("dateTo")
+    if (dataFrom.value > dataTo.value) dataTo.value = null
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  onImageChange = (event) => {
+    this.imageFiles = event.target.files
+  }
+
+  onCoverChange = (event) => {
+    this.coverFile = event.target.files
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    let annuncio = {
+      idProprietario: sessionStorage.getItem('id'),
+      citta: this.state.citta,
+      cap: this.state.cap,
+      indirizzo: this.state.indirizzo,
+      civico: this.state.civico,
+      dateFrom: dateFormat(this.state.dateFrom, 'yyyy-mm-dd'),
+      dateTo: dateFormat(this.state.dateTo, 'yyyy-mm-dd'),
+      n_posti: this.state.n_posti,
+      n_bagni: this.state.n_bagni,
+      wifi: this.state.wifi,
+      ascensore: this.state.ascensore,
+      garage: this.state.garage,
+      terrazzo: this.state.terrazzo,
+      descrizione: this.state.descrizione,
+      costo: this.state.costo,
+      telefono: this.state.telefono,
+      idAnnuncio: this.state.idAnnuncio
     }
+    console.log(annuncio)
 
-    //Controlla inserimento date Check-in e Check-out
-    dataControl() {
-        var dataFrom = document.getElementById("dateFrom")
-        var dataTo = document.getElementById("dateTo")
-        if (dataFrom.value > dataTo.value) dataTo.value = null
-    }
+    axios.post(`http://127.0.0.1:9000/gestioneAnnunci/aggiornaAnnuncio`, { annuncio })
+      .then(res => {
+        console.log(res);
+        alert('Annuncio aggiornato con successo!')
+        this.props.history.push('/gestioneAnnunci/paginaRicercaProprietario');
+      })
+  }
 
-    handleChange = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+  componentDidMount() {
+    checkRoutingAccess(this.props)
+  }
 
-    onImageChange = (event) => {
-        this.imageFiles = event.target.files
-    }
+  componentWillMount() {
+    this.setState(this.props.location.state); //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
+  }
 
-    onCoverChange = (event) => {
-        this.coverFile = event.target.files
-    }
+  render() {
+    return (
+      <div className="container">
+        <div className="col-lg-10 py-4 rounded" style={{ backgroundColor: '#f2f2f2' }}>
 
-    handleSubmit = event => {
-        event.preventDefault();
+          <h3>Modifica i dati dell'annuncio selezionato</h3>
+          <hr />
 
-        let annuncio = {
-            idProprietario: sessionStorage.getItem('id'),
-            citta: this.state.citta,
-            cap: this.state.cap,
-            indirizzo: this.state.indirizzo,
-            civico: this.state.civico,
-            dateFrom: dateFormat(this.state.dateFrom, 'yyyy-mm-dd'),
-            dateTo: dateFormat(this.state.dateTo, 'yyyy-mm-dd'),
-            n_posti: this.state.n_posti,
-            n_bagni: this.state.n_bagni,
-            wifi: this.state.wifi,
-            ascensore: this.state.ascensore,
-            garage: this.state.garage,
-            terrazzo: this.state.terrazzo,
-            descrizione: this.state.descrizione,
-            costo: this.state.costo,
-            telefono: this.state.telefono,
-            idAnnuncio: this.state.idAnnuncio
-        }
-        console.log(annuncio)
+          <form onSubmit={this.handleSubmit}>
 
-        axios.post(`http://127.0.0.1:9000/gestioneAnnunci/aggiornaAnnuncio`, { annuncio })
-            .then(res => {
-                console.log(res);
-                alert('Annuncio aggiornato con successo!')
-                this.props.history.push('/gestioneAnnunci/paginaRicercaProprietario');
-            })
-    }
+            <div className="form-row">
+              <div className="form-group col-md-5">
+                <label>Città</label>
+                <input className="form-control" name="citta" value={this.state.citta} onChange={this.handleChange} required />
+              </div>
 
-    componentDidMount() {
-        checkRoutingAccess(this.props)
-    }
+              <div className="form-group col-md-5">
+                <label>Comune</label>
+                <select class="custom-select">
+                  <option selected>Open this select menu</option>
+                  <option value="1">Agrigento,AG</option>
+                  <option value="1">Alessandria,AL</option>
+                  <option value="1">Ancona,AN</option>
+                  <option value="1">Aosta,AO</option>
+                  <option value="1">Arezzo,AR</option>
+                  <option value="1">Ascoli Piceno,AP</option>
+                  <option value="1">Asti,AT</option>
+                  <option value="1">Avellino,AV</option>
+                  <option value="1">Bari,BA</option>
+                  <option value="1">Barletta-Andria-Trani,BT</option>
+                  <option value="1">Belluno,BL</option>
+                  <option value="1">Benevento,BN</option>
+                  <option value="1">Bergamo,BG</option>
+                  <option value="1">Biella,BI</option>
+                  <option value="1">Bologna,BO</option>
+                  <option value="1">Bolzano,BZ</option>
+                  <option value="1">Brescia,BS</option>
+                  <option value="1">Brindisi,BR</option>
+                  <option value="1">Cagliari,CA</option>
+                  <option value="1">Caltanissetta,CL</option>
+                  <option value="1">Campobasso,CB</option>
+                  <option value="1">Carbonia-Iglesias,CI</option>
+                  <option value="1">Caserta,CE</option>
+                  <option value="1">Catania,CT</option>
+                  <option value="1">Catanzaro,CZ</option>
+                  <option value="1">Chieti,CH</option>
+                  <option value="1">Como,CO</option>
+                  <option value="1">Cosenza,CS</option>
+                  <option value="1">Cremona,CR</option>
+                  <option value="1">Crotone,KR</option>
+                  <option value="1">Cuneo,CN</option>
+                  <option value="1">Enna,EN</option>
+                  <option value="1">Fermo,FM</option>
+                  <option value="1">Ferrara,FE</option>
+                  <option value="1">Firenze,FI</option>
+                  <option value="1">Foggia,FG</option>
+                  <option value="1">Forlì-Cesena,FC</option>
+                  <option value="1">Frosinone,FR</option>
+                  <option value="1">Genova,GE</option>
+                  <option value="1">Gorizia,GO</option>
+                  <option value="1">Grosseto,GR</option>
+                  <option value="1">Imperia,IM</option>
+                  <option value="1">Isernia,IS</option>
+                  <option value="1">La Spezia,SP</option>
+                  <option value="1">L'Aquila,AQ</option>
+                  <option value="1">Latina,LT</option>
+                  <option value="1">Lecce,LE</option>
+                  <option value="1">Lecco,LC</option>
+                  <option value="1">Livorno,LI</option>
+                  <option value="1">Lodi,LO</option>
+                  <option value="1">Lucca,LU</option>
+                  <option value="1">Macerata,MC</option>
+                  <option value="1">Mantova,MN</option>
+                  <option value="1">Massa-Carrara,MS</option>
+                  <option value="1">Matera,MT</option>
+                  <option value="1">Messina,ME</option>
+                  <option value="1">Milano,MI</option>
+                  <option value="1">Modena,MO</option>
+                  <option value="1">Monza e della Brianza,MB</option>
+                  <option value="1">Napoli,NA</option>
+                  <option value="1">Novara,NO</option>
+                  <option value="1">Nuoro,NU</option>
+                  <option value="1">Olbia-Tempio,OT</option>
+                  <option value="1">Oristano,OR</option>
+                  <option value="1">Padova,PD</option>
+                  <option value="1">Palermo,PA</option>
+                  <option value="1">Parma,PR</option>
+                  <option value="1">Pavia,PV</option>
+                  <option value="1">Perugia,PG</option>
+                  <option value="1">Pesaro e Urbino,PU</option>
+                  <option value="1">Pescara,PE</option>
+                  <option value="1">Piacenza,PC</option>
+                  <option value="1">Pisa,PI</option>
+                  <option value="1">Pistoia,PT</option>
+                  <option value="1">Pordenone,PN</option>
+                  <option value="1">Potenza,PZ</option>
+                  <option value="1">Prato,PO</option>
+                  <option value="1">Ragusa,RG</option>
+                  <option value="1">Ravenna,RA</option>
+                  <option value="1">Reggio Calabria,RC</option>
+                  <option value="1">Reggio Emilia,RE</option>
+                  <option value="1">Rieti,RI</option>
+                  <option value="1">Rimini,RN</option>
+                  <option value="1">Roma,RM</option>
+                  <option value="1">Rovigo,RO</option>
+                  <option value="1">Salerno,SA</option>
+                  <option value="1">Medio Campidano,VS</option>
+                  <option value="1">Sassari,SS</option>
+                  <option value="1">Savona,SV</option>
+                  <option value="1">Siena,SI</option>
+                  <option value="1">Siracusa,SR</option>
+                  <option value="1">Sondrio,SO</option>
+                  <option value="1">Taranto,TA</option>
+                  <option value="1">Teramo,TE</option>
+                  <option value="1">Terni,TR</option>
+                  <option value="1">Torino,TO</option>
+                  <option value="1">Ogliastra,OG</option>
+                  <option value="1">Trapani,TP</option>
+                  <option value="1">Trento,TN</option>
+                  <option value="1">Treviso,TV</option>
+                  <option value="1">Trieste,TS</option>
+                  <option value="1">Udine,UD</option>
+                  <option value="1">Varese,VA</option>
+                  <option value="1">Venezia,VE</option>
+                  <option value="1">Verbano-Cusio-Ossola,VB</option>
+                  <option value="1">Vercelli,VC</option>
+                  <option value="1">Verona,VR</option>
+                  <option value="1">Vibo Valentia,VV</option>
+                  <option value="1">Vicenza,VI</option>
+                  <option value="1">Viterbo,VT</option>
+                </select>
+              </div>
 
-    componentWillMount() {
-        this.setState(this.props.location.state); //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
-    }
+              <div className="form-group col-md-2">
+                <label>CAP</label>
+                <input className="form-control" name="cap" value={this.state.cap} pattern='[0-9]{5}' maxLength="5" onChange={this.handleChange} placeholder="90015" required />
+              </div>
+            </div>
 
-    render() {
+            <div className="form-row">
+              <div className="form-group col-md-6">
+                <label>Indirizzo</label>
+                <input className="form-control" name="indirizzo" value={this.state.indirizzo} onChange={this.handleChange} placeholder="Via Roma, 15" required />
+              </div>
+            </div>
 
+            <div className="form-row">
+              <div className="form-group col-md-3">
+                <label>Inizio disponibilità</label>
+                <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl}
+                  name="dateFrom" onChange={this.handleChange} value={dateFormat(this.state.dateFrom, "yyyy-mm-dd")} required />
+              </div>
+              <div className="form-group col-md-3">
+                <label>Termine disponibilità</label>
+                <input id="dateTo" type="date" className="form-control" onInput={this.dataControl}
+                  name="dateTo" onChange={this.handleChange} value={dateFormat(this.state.dateTo, "yyyy-mm-dd")} required />
+              </div>
+            </div>
 
-        return (
-            <div className="container justify-content-center">
-                <div className="col-md-10 py-5">
-                    <div className="card" style={{ padding: '2rem', background: '#FFFACD' }}>
+            <div className="form-row">
+              <div className="form-group col-md-3">
+                <label>Ospiti</label>
+                <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
+              </div>
+              <div className="form-group col-md-3">
+                <label>Camere da letto</label>
+                <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
+              </div>
+              <div className="form-group col-md-3">
+                <label>Numero letti</label>
+                <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
+              </div>
+              <div className="form-group col-md-3">
+                <label>Numero bagni</label>
+                <input className="form-control" name="n_bagni" type="number" min="1" onChange={this.handleChange} value={this.state.n_bagni} required />
+              </div>
+            </div>
 
-                        <h1 className="h3">Modifica i dati dell'annuncio selezionato</h1>
-                        <p className="card-text">Aggiorna i dati desiderati</p>
+            <div className="form-row mb-3">
+              <div className="form-check form-check-inline col-md-3">
+                <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} checked={Boolean(this.state.wifi)} />
+                <i className="fas fa-wifi mr-2"></i>
+                <label className="form-check-label" htmlFor="wifi">Wi-Fi</label>
+              </div>
+              <div className="form-check form-check-inline col-md-3">
+                <input className="form-check-input" type="checkbox" id="ascensore" name="ascensore" value="1" onChange={this.handleChange} checked={Boolean(this.state.ascensore)} />
+                <i className="fas fa-shower mr-2"></i>
+                <label className="form-check-label" htmlFor="ascensore">Doccia</label>
+              </div>
+              <div className="form-check form-check-inline col-md-3">
+                <input className="form-check-input" type="checkbox" id="garage" name="garage" value="1" onChange={this.handleChange} checked={Boolean(this.state.garage)} />
+                <i className="fas fa-tv mr-2"></i>
+                <label className="form-check-label" htmlFor="garage">TV</label>
+              </div>
+              <div className="form-check form-check-inline col-md-3">
+                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <i className="fas fa-utensils mr-2"></i>
+                <label className="form-check-label" htmlFor="terrazzo">Cucina</label>
+              </div>
+              <div className="form-check form-check-inline col-md-3">
+                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <i className="fas fa-thermometer-half mr-2"></i>
+                <label className="form-check-label" htmlFor="terrazzo">Riscaldamento</label>
+              </div>
+              <div className="form-check form-check-inline col-md-3">
+                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <i className="fas fa-wheelchair mr-2"></i>
+                <label className="form-check-label" htmlFor="terrazzo">Accessibile</label>
+              </div>
+            </div>
 
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="container">
-                                <div className="form-row">
-                                    <div className="col-4">
-                                        <label>Città</label>
-                                        <input className="form-control" name="citta" value={this.state.citta} onChange={this.handleChange} required />
-                                    </div>
-                                    <div className="col-2">
-                                        <label>Cap</label>
-                                        <input className="form-control" name="cap" value={this.state.cap} type='text' pattern='[0-9]{5}' maxLength="5" onChange={this.handleChange} required />
-                                    </div>
-                                    <div className="col-5">
-                                        <label>Indirizzo</label>
-                                        <input className="form-control" name="indirizzo" value={this.state.indirizzo} onChange={this.handleChange} required />
-                                    </div>
-                                    <div className="col-1">
-                                        <label>Civico</label>
-                                        <input className="form-control" name="civico" value={this.state.civico} type="number" min="1" onChange={this.handleChange} required />
-                                    </div>
-                                </div>
-
-                                <div className="form-row">
-                                    <div className="col-3">
-                                        <label>Inizio disponibilità</label>
-                                        <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl}
-                                            name="dateFrom" onChange={this.handleChange} value={dateFormat(this.state.dateFrom, "yyyy-mm-dd")} required />
-                                    </div>
-                                    <div className="col-3">
-                                        <label>Termine disponibilità</label>
-                                        <input id="dateTo" type="date" className="form-control" onInput={this.dataControl}
-                                            name="dateTo" onChange={this.handleChange} value={dateFormat(this.state.dateTo, "yyyy-mm-dd")} required />
-                                    </div>
-                                    <div className="col-3">
-                                        <label>Numero Posti Letto</label>
-                                        <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
-                                    </div>
-                                    <div className="col-3">
-                                        <label>Numero bagni</label>
-                                        <input className="form-control" name="n_bagni" type="number" min="1" onChange={this.handleChange} value={this.state.n_bagni} required />
-                                    </div>
-                                </div>
-
-                                <div className="form-row">
-                                    <div className="col-3">
-                                        <input type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} checked={Boolean(this.state.wifi)} />
-                                        <label htmlFor="wifi">Presenza Wi-fi</label>
-                                    </div>
-                                    <div className="col-3">
-                                        <input type="checkbox" id="ascensore" name="ascensore" value="1" onChange={this.handleChange} checked={Boolean(this.state.ascensore)} />
-                                        <label htmlFor="ascensore">Presenza ascensore</label>
-                                    </div>
-                                    <div className="col-3">
-                                        <input type="checkbox" id="garage" name="garage" value="1" onChange={this.handleChange} checked={Boolean(this.state.garage)} />
-                                        <label htmlFor="garage">Presenza garage</label>
-                                    </div>
-                                    <div className="col-3">
-                                        <input type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
-                                        <label htmlFor="terrazzo">Presenza terrazzo</label>
-                                    </div>
-                                </div>
-
-                                <div className="form-row">
-                                    <div className="col-6">
-                                        <label>Costo giornaliero</label>
-                                        <input className="form-control" name="costo" value={this.state.costo} type='number' onChange={this.handleChange} required />
-                                    </div>
-                                    <div className="col-6">
-                                        <label>Recapito telefonico</label>
-                                        <input className="form-control" name="telefono" value={this.state.telefono} type='text' pattern='[0-9]{10}' maxLength="10" onChange={this.handleChange} required />
-                                    </div>
-                                </div>
-                                {/*
-                                <div className="form-row">
-                                    <div className="col-6">
-                                        <label htmlFor="img">Seleziona Cover Annuncio:</label>
-                                        <input type="file" id="cover" name="cover" accept="image/*" value='' onChange={this.onCoverChange} />
-                                    </div>
-                                    <div className="col-6">
-                                        <label htmlFor="img">Seleziona immagini:</label>
-                                        <input type="file" id="img" name="img" accept="image/*" value='' multiple onChange={this.onImageChange} />
-                                    </div>
-                                </div>*/}
-                                <textarea rows="4" cols='70' name="descrizione" onChange={this.handleChange} value={this.state.descrizione}></textarea>
-                                <button className="btn btn-success btn-block mt-5" type="submit">Aggiorna Annuncio</button>
-                            </div>
-                        </form>
-                    </div>
+            <div className="form-row">
+              <div className="form-group col-md-6">
+                <label>Prezzo giornaliero</label>
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">€</span>
+                  </div>
+                  <input className="form-control rounded-right" name="costo" value={this.state.costo} type='number' onChange={this.handleChange} required />
                 </div>
-            </div >
-        );
-    }
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Titolo annuncio</label>
+              <input className="form-control" required />
+            </div>
+
+            <label>Descrizione</label>
+            <textarea className="form-control mb-5" rows="4" name="descrizione" onChange={this.handleChange} value={this.state.descrizione}></textarea>
+
+            <button className="btn btn-success btn-block" type="submit">Salva modifiche</button>
+          </form>
+        </div>
+      </div >
+
+    );
+  }
 }

@@ -4,63 +4,79 @@ import axios from 'axios';
 
 export default class PaginaRicercaProprietario extends Component {
 
-    state = {
-        listItems: '',
-    }
+  state = {
+    listItems: '',
+  }
 
-    componentWillMount() {
+  componentWillMount() {
 
-        let idProprietario = sessionStorage.getItem('id')
+    let idProprietario = sessionStorage.getItem('id')
 
-        //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
-        axios.post(`http://127.0.0.1:9000/gestioneAnnunci/ricercaAnnunciProprietario`, { idProprietario })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                const listItems = res.data.map((d) =>
-                    <li key={'li' + d.idAnnuncio} className="list-group-item" style={{ marginBottom: '4rem' }}>
-                        <div key={'a' + d.idAnnuncio} className="list-group-item list-group-item-action " style={{ marginTop: '1rem', marginBottom: '1rem', background: '#E6E6FA' }}>
-                            <div className='row' >
-                                <div className='col-6' key={'div' + d.idAnnuncio} style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-                                    <img key={'img' + d.idAnnuncio} style={{ width: '100%' }} src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage"  ></img>
-                                </div>
-                                <div className='col-6' style={{ marginTop: '2rem' }}>
-                                    <h5>- ID Annuncio: {d.idAnnuncio} <br></br>- Città: {d.citta}<br></br> - Indirizzo: {d.indirizzo}<br></br>- Costo Giornaliero: {d.costo} € </h5>
-                                    <button onClick={() => this.handleClick(d)} type="button" className="btn btn-lg btn-danger">Modifica</button>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                );
-                this.setState({
-                    listItems: listItems,
-                });
-            })
-            .catch(err => {
-                console.log("Error = ", err)
-            })
-    }
+    //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
+    axios.post(`http://127.0.0.1:9000/gestioneAnnunci/ricercaAnnunciProprietario`, { idProprietario })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
 
-    handleClick(info) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
-        this.props.history.push('/gestioneAnnunci/modificaAnnuncio', info);
-    }
-
-    render() {
-
-        return (
-            <div className="container justify-content-center">
-                <div className="col-md-9 py-5 " style={{ marginLeft: '12.5%' }}>
-                    <div className="card" style={{ background: '#FFFACD' }}>
-                        <div className="card-body" style={{ padding: '2rem' }}>
-                            <h1 className="h2" style={{ padding: '1rem', textAlign: 'center' }}>Modifica Annunci:</h1>
-                            <h1 className="h5" style={{ padding: '1rem', textAlign: 'left', marginBottom: '2rem' }}>Questa lista contiene tutti i tuoi annunci pubblicati; seleziona quale desideri modificare:</h1>
-                            <div className="list-group" >
-                                {this.state.listItems}
-                            </div>
-                        </div>
-                    </div>
+        const listItems = res.data.map((d) =>
+          <div className="card mb-3">
+            <div className="row no-gutters">
+              <div className="col-md-4">
+                <img src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} className="card-img" alt="CoverImage" style={{ maxHeight: 250, height: '100%', backgroundSize: 'cover' }} />
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title">Titolo annuncio</h5>
+                  <p className="card-text">{d.indirizzo}, {d.civico}<br />{d.cap} {d.citta}</p>
+                  <button onClick={() => this.handleClick(d)} type="button" className="btn btn-secondary mb-2">Modifica</button>
+                  <button onClick={() => this.handleClick(d)} type="button" className="btn btn-danger">Elimina</button>
                 </div>
+              </div>
             </div>
+          </div>
         );
-    }
+
+        this.setState({
+          listItems: listItems,
+        });
+      })
+      .catch(err => {
+        console.log("Error = ", err)
+      })
+  }
+
+  handleClick(info) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
+    this.props.history.push('/gestioneAnnunci/modificaAnnuncio', info);
+  }
+
+  render() {
+    return (
+      <div>
+        <ul className="nav nav-pills nav-fill bg-white">
+          <li className="nav-item">
+            <a className="nav-link active" href="#">Active</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">Much longer nav link</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">Link</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+
+        <div className="container-fluid p-3" style={{ backgroundColor: '#f2f2f2' }} >
+          <h1 className="display-4 text-center mb-3">I tuoi annunci</h1>
+          <button type="button" className="btn btn-success mb-3">Aggiungi annuncio</button>
+          {this.state.listItems}
+        </div>
+
+
+
+      </div>
+
+    );
+  }
 }

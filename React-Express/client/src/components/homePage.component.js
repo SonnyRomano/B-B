@@ -76,50 +76,50 @@ export default class HomePage extends Component {
   render() {
     return (
       <div className="container" id="page-container">
-        <div className="col-md-8 mb-5 p-0">
-          <div className="card">
-            <div className="card-body p-4" style={{ padding: '2rem' }}>
-              <h3>Prenota Case Vacanza e B&B sul nostro sito</h3>
-              <p className="card-text">Seleziona la località desiderata, le date di check in, check-out e il numero di ospiti</p>
-              <form onSubmit={this.handleSubmit}>
+        <div className="col-lg-8 p-4 bg-white rounded">
 
-                <div className="form-group">
-                  <i className="fas fa-city mr-2"></i>
-                  <label>Dove</label>
-                  <input className="form-control" placeholder="Dove vuoi andare?" name="citta" onChange={this.handleChange} required />
-                </div>
 
-                <div className="form-row mb-0">
-                  <div className="form-group col-md-6">
-                    <i className="far fa-calendar-check mr-2"></i>
-                    <label>Check-in e Check-out</label>
-                    <DatePicker
-                      id="dateFrom" type="date" className="form-control" name="dateFrom"
-                      selected={this.state.dateFrom}
-                      minDate={moment().toDate()}
-                      onChange={(dates) => this.handleChangeDate(dates[0], dates[1])}
-                      startDate={this.state.dateFrom}
-                      endDate={this.state.dateTo}
-                      selectsRange
-                      inline
-                    />
-                  </div>
+          <h3>Prenota Case Vacanza e B&B sul nostro sito</h3>
+          <p className="card-text">Seleziona la località desiderata, le date di check in, check-out e il numero di ospiti</p>
+          <form onSubmit={this.handleSubmit}>
 
-                  <div className="form-group col-md-6 px-0">
-                    <i className="fas fa-male mr-2"></i>
-                    <label>Ospiti</label>
-                    <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} placeholder="Aggiungi ospiti" required />
-                  </div>
-                </div>
-
-                <button className="btn btn-danger btn-block" type="submit">
-                  <i className="fas fa-search mr-2"></i>Cerca
-               </button>
-              </form>
+            <div className="form-group">
+              <i className="fas fa-city mr-2"></i>
+              <label>Dove</label>
+              <input className="form-control" placeholder="Dove vuoi andare?" name="citta" onChange={this.handleChange} required />
             </div>
-          </div>
+
+            <div className="form-row mb-4">
+              <div className="form-group col-md-6">
+                <i className="far fa-calendar-check mr-2"></i>
+                <label>Check-in e Check-out</label>
+                <DatePicker
+                  id="dateFrom" type="date" className="form-control" name="dateFrom"
+                  selected={this.state.dateFrom}
+                  minDate={moment().toDate()}
+                  onChange={(dates) => this.handleChangeDate(dates[0], dates[1])}
+                  startDate={this.state.dateFrom}
+                  endDate={this.state.dateTo}
+                  selectsRange
+                  inline
+                />
+              </div>
+
+              <div className="form-group col-md-6">
+                <i className="fas fa-male mr-2"></i>
+                <label>Ospiti</label>
+                <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} placeholder="Aggiungi ospiti" required />
+              </div>
+            </div>
+
+            <button className="btn btn-danger btn-block" type="submit">
+              <i className="fas fa-search mr-2"></i>Cerca
+               </button>
+          </form>
         </div>
-      </div >
+      </div>
+
+
     );
   }
 }

@@ -70,6 +70,7 @@ export default class Navbar extends Component {
 
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav ml-auto">
+
             <li className="nav-item dropdown" name="BottoniProprietario">
               <a className="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Gestione Legale</a>
               <div className="dropdown-menu">
@@ -97,6 +98,20 @@ export default class Navbar extends Component {
             </li>
             <li className="nav-item">
               <a className="nav-link" onClick={() => displayComponent("SignUp", true)}>{this.state.signUpString}</a>
+            </li>
+
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span style={{ fontSize: '30px', color: 'Dodgerblue' }}>
+                  <i className="fas fa-user"></i>
+                </span>
+              </a>
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a className="dropdown-item font-weight-bold" onClick={() => this.displayComponent("SignUp", true)}>Registrati</a>
+                <a className="dropdown-item" onClick={() => this.autenticationControl()}>Accedi</a>
+                <div className="dropdown-divider"></div>
+                <a className="dropdown-item" onClick={() => this.displayComponent("DiventaHost", true)}>Diventa un host</a>
+              </div>
             </li>
           </ul>
         </div>
