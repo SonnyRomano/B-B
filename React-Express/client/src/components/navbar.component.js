@@ -121,7 +121,7 @@ export default class Navbar extends Component {
               <a className="nav-link" id='visualizzaPrenotazioni' href="/gestioneAnnunci/visualizzaPrenotazioni">Visualizza Prenotazioni Pendenti</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" id='rendicontaTasse' href="#/">Rendiconta Tasse Soggiorno</a>
+              <a className="nav-link" id='rendicontaTasse' href="/gestioneLegale/rendicontaTasse">Rendiconta Tasse Soggiorno</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" id='Questura' href="/gestioneLegale/visualizzaPrenotazioniQuestura">Questura</a>
