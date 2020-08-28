@@ -27,8 +27,8 @@ export default class PaginaRicercaProprietario extends Component {
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <h5 className="card-title">Titolo annuncio</h5>
-                  <p className="card-text">{d.indirizzo}, {d.civico}<br />{d.cap} {d.citta}</p>
+                  <h5 className="card-title">{d.titolo}</h5>
+                  <p className="card-text">{d.indirizzo}<br />{d.cap} {d.citta}</p>
                   <button onClick={() => this.handleClickModify(d)} type="button" className="btn btn-secondary mb-2">Modifica</button>
                   <button onClick={() => this.handleClickRemove(d.idAnnuncio)} type="button" className="btn btn-danger">Elimina</button>
                 </div>
@@ -74,9 +74,6 @@ export default class PaginaRicercaProprietario extends Component {
           <a className="btn btn-success mb-3" href='/gestioneAnnunci/inserisciAnnuncio'>Aggiungi annuncio</a>
           {this.state.listItems}
         </div>
-
-
-
       </div>
 
     );

@@ -12,16 +12,20 @@ export default class InserisciAnnuncio extends Component {
     citta: '',
     cap: '',
     indirizzo: '',
-    civico: '',
     dateFrom: '',
     dateTo: '',
     n_posti: '',
+    n_camere: '',
+    n_letti: '',
     n_bagni: '',
     wifi: 0,
-    ascensore: 0,
-    garage: 0,
-    terrazzo: 0,
+    doccia: 0,
+    tv: 0,
+    cucina: 0,
+    riscaldamento: 0,
+    accessibile: 0,
     descrizione: '',
+    titolo: '',
     telefono: '',
     costo: ''
   }
@@ -56,20 +60,24 @@ export default class InserisciAnnuncio extends Component {
     let annuncio = {
       idProprietario: sessionStorage.getItem('id'),
       citta: this.state.citta,
-      cap: this.state.cap,
       indirizzo: this.state.indirizzo,
-      civico: this.state.civico,
+      cap: this.state.cap,
       dateFrom: this.state.dateFrom,
       dateTo: this.state.dateTo,
       n_posti: this.state.n_posti,
+      n_camere: this.state.n_camere,
+      n_letti: this.state.n_letti,
       n_bagni: this.state.n_bagni,
       wifi: this.state.wifi,
-      ascensore: this.state.ascensore,
-      garage: this.state.garage,
-      terrazzo: this.state.terrazzo,
+      doccia: this.state.doccia,
+      tv: this.state.tv,
+      cucina: this.state.cucina,
+      riscaldamento: this.state.riscaldamento,
+      accessibile: this.state.accessibile,
       descrizione: this.state.descrizione,
+      titolo: this.state.titolo,
       costo: this.state.costo,
-      telefono: this.state.telefono
+      //telefono: this.state.telefono
     }
 
     axios.post(`http://127.0.0.1:9000/gestioneAnnunci/inserisciAnnuncio`, { annuncio })
@@ -145,11 +153,11 @@ export default class InserisciAnnuncio extends Component {
               </div>
               <div className="form-group col-md-3">
                 <label>Camere da letto</label>
-                <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
+                <input className="form-control" name="n_camere" type="number" min="1" onChange={this.handleChange} value={this.state.n_camere} required />
               </div>
               <div className="form-group col-md-3">
                 <label>Numero letti</label>
-                <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
+                <input className="form-control" name="n_letti" type="number" min="1" onChange={this.handleChange} value={this.state.n_letti} required />
               </div>
               <div className="form-group col-md-3">
                 <label>Numero bagni</label>
@@ -159,34 +167,34 @@ export default class InserisciAnnuncio extends Component {
 
             <div className="form-row mb-3">
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} checked={Boolean(this.state.wifi)} />
+                <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} />
                 <i className="fas fa-wifi mr-2"></i>
                 <label className="form-check-label" htmlFor="wifi">Wi-Fi</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="ascensore" name="ascensore" value="1" onChange={this.handleChange} checked={Boolean(this.state.ascensore)} />
+                <input className="form-check-input" type="checkbox" id="doccia" name="doccia" value="1" onChange={this.handleChange} />
                 <i className="fas fa-shower mr-2"></i>
-                <label className="form-check-label" htmlFor="ascensore">Doccia</label>
+                <label className="form-check-label" htmlFor="doccia">Doccia</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="garage" name="garage" value="1" onChange={this.handleChange} checked={Boolean(this.state.garage)} />
+                <input className="form-check-input" type="checkbox" id="tv" name="tv" value="1" onChange={this.handleChange} />
                 <i className="fas fa-tv mr-2"></i>
-                <label className="form-check-label" htmlFor="garage">TV</label>
+                <label className="form-check-label" htmlFor="tv">TV</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <input className="form-check-input" type="checkbox" id="cucina" name="cucina" value="1" onChange={this.handleChange} />
                 <i className="fas fa-utensils mr-2"></i>
-                <label className="form-check-label" htmlFor="terrazzo">Cucina</label>
+                <label className="form-check-label" htmlFor="cucina">Cucina</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <input className="form-check-input" type="checkbox" id="riscaldamento" name="riscaldamento" value="1" onChange={this.handleChange} />
                 <i className="fas fa-thermometer-half mr-2"></i>
-                <label className="form-check-label" htmlFor="terrazzo">Riscaldamento</label>
+                <label className="form-check-label" htmlFor="riscaldamento">Riscaldamento</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <input className="form-check-input" type="checkbox" id="accessibile" name="accessibile" value="1" onChange={this.handleChange} />
                 <i className="fas fa-wheelchair mr-2"></i>
-                <label className="form-check-label" htmlFor="terrazzo">Accessibile</label>
+                <label className="form-check-label" htmlFor="accessibile">Accessibile</label>
               </div>
             </div>
 
@@ -203,17 +211,17 @@ export default class InserisciAnnuncio extends Component {
             </div>
 
             <div className="form-row">
-              <div class="input-group col-md-6">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"></input>
-                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+              <div className="input-group col-md-6">
+                <div className="custom-file">
+                  <input type="file" className="custom-file-input" id="cover" name="cover" accept="image/*" onChange={this.onCoverChange} aria-describedby="inputGroupFileAddon01"></input>
+                  <label className="custom-file-label" htmlFor="inputGroupFile01">Inserisci Cover</label>
                 </div>
               </div>
 
-              <div class="input-group col-md-6">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"></input>
-                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+              <div className="input-group col-md-6">
+                <div className="custom-file">
+                  <input type="file" className="custom-file-input" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} aria-describedby="inputGroupFileAddon01"></input>
+                  <label className="custom-file-label" htmlFor="inputGroupFile01">Inserisci Immagini</label>
                 </div>
               </div>
             </div>
@@ -231,7 +239,7 @@ export default class InserisciAnnuncio extends Component {
 
             <div className="form-group">
               <label>Titolo annuncio</label>
-              <input className="form-control" required />
+              <input className="form-control" name='titolo' required />
             </div>
 
             <label>Descrizione</label>

@@ -68,24 +68,29 @@ async function inserisciAnnuncio(req, res, next) {
     let results = {};
     try {
         results = await db.query('INSERT INTO `annunci` \
-          (idProprietario, citta, cap, indirizzo, civico, dateFrom, dateTo, n_bagni, n_posti, wifi, ascensore, garage, terrazzo, descrizione, telefono, costo) VALUES ?', [
+          (idProprietario, citta, cap, indirizzo, dateFrom, dateTo, n_bagni, n_camere, n_letti, n_posti,\
+             wifi, doccia, tv, cucina, riscaldamento, accessibile,\
+             descrizione, titolo, costo) VALUES ?', [
             [
                 [
                     req.body.annuncio.idProprietario,
                     req.body.annuncio.citta,
                     req.body.annuncio.cap,
                     req.body.annuncio.indirizzo,
-                    req.body.annuncio.civico,
                     req.body.annuncio.dateFrom,
                     req.body.annuncio.dateTo,
                     req.body.annuncio.n_bagni,
+                    req.body.annuncio.n_camere,
+                    req.body.annuncio.n_letti,
                     req.body.annuncio.n_posti,
                     req.body.annuncio.wifi,
-                    req.body.annuncio.ascensore,
-                    req.body.annuncio.garage,
-                    req.body.annuncio.terrazzo,
+                    req.body.annuncio.doccia,
+                    req.body.annuncio.tv,
+                    req.body.annuncio.cucina,
+                    req.body.annuncio.riscaldamento,
+                    req.body.annuncio.accessibile,
                     req.body.annuncio.descrizione,
-                    req.body.annuncio.telefono,
+                    req.body.annuncio.titolo,
                     req.body.annuncio.costo
                 ]
             ]
@@ -154,6 +159,9 @@ async function eliminaAnnuncio(req, res, next) {
 
         console.log(results);
         console.log(`Annuncio eliminato!`);
+
+        fs.rmdirSync(dirImage + 'ID' + req.body.idAnnuncio, { recursive: true });
+
         res.send(results);
     } catch (err) {
         console.log(err);
