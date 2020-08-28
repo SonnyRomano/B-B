@@ -20,10 +20,10 @@ export default class PaginaRicercaProprietario extends Component {
         console.log(res.data);
 
         const listItems = res.data.map((d) =>
-          <div className="card mb-3" key={d.idAnnuncio}>
+          <div className="shadow card mb-3">
             <div className="row no-gutters">
               <div className="col-md-4">
-                <img src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} className="card-img" alt="CoverImage" style={{ maxHeight: 250, height: '100%', backgroundSize: 'cover' }} />
+                <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
               </div>
               <div className="col-md-8">
                 <div className="card-body">
@@ -75,7 +75,6 @@ export default class PaginaRicercaProprietario extends Component {
           {this.state.listItems}
         </div>
       </div>
-
     );
   }
 }

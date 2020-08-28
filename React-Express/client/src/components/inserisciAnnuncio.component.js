@@ -132,7 +132,6 @@ export default class InserisciAnnuncio extends Component {
 
             </div>
 
-
             <div className="form-row">
               <div className="form-group col-md-3">
                 <label>Inizio disponibilità</label>
