@@ -113,120 +113,8 @@ export default class InserisciAnnuncio extends Component {
               </div>
 
               <div className="form-group col-md-5">
-                <label>Comune</label>
-                <select class="custom-select">
-                  <option selected>Open this select menu</option>
-                  <option value="1">Agrigento,AG</option>
-                  <option value="1">Alessandria,AL</option>
-                  <option value="1">Ancona,AN</option>
-                  <option value="1">Aosta,AO</option>
-                  <option value="1">Arezzo,AR</option>
-                  <option value="1">Ascoli Piceno,AP</option>
-                  <option value="1">Asti,AT</option>
-                  <option value="1">Avellino,AV</option>
-                  <option value="1">Bari,BA</option>
-                  <option value="1">Barletta-Andria-Trani,BT</option>
-                  <option value="1">Belluno,BL</option>
-                  <option value="1">Benevento,BN</option>
-                  <option value="1">Bergamo,BG</option>
-                  <option value="1">Biella,BI</option>
-                  <option value="1">Bologna,BO</option>
-                  <option value="1">Bolzano,BZ</option>
-                  <option value="1">Brescia,BS</option>
-                  <option value="1">Brindisi,BR</option>
-                  <option value="1">Cagliari,CA</option>
-                  <option value="1">Caltanissetta,CL</option>
-                  <option value="1">Campobasso,CB</option>
-                  <option value="1">Carbonia-Iglesias,CI</option>
-                  <option value="1">Caserta,CE</option>
-                  <option value="1">Catania,CT</option>
-                  <option value="1">Catanzaro,CZ</option>
-                  <option value="1">Chieti,CH</option>
-                  <option value="1">Como,CO</option>
-                  <option value="1">Cosenza,CS</option>
-                  <option value="1">Cremona,CR</option>
-                  <option value="1">Crotone,KR</option>
-                  <option value="1">Cuneo,CN</option>
-                  <option value="1">Enna,EN</option>
-                  <option value="1">Fermo,FM</option>
-                  <option value="1">Ferrara,FE</option>
-                  <option value="1">Firenze,FI</option>
-                  <option value="1">Foggia,FG</option>
-                  <option value="1">Forlì-Cesena,FC</option>
-                  <option value="1">Frosinone,FR</option>
-                  <option value="1">Genova,GE</option>
-                  <option value="1">Gorizia,GO</option>
-                  <option value="1">Grosseto,GR</option>
-                  <option value="1">Imperia,IM</option>
-                  <option value="1">Isernia,IS</option>
-                  <option value="1">La Spezia,SP</option>
-                  <option value="1">L'Aquila,AQ</option>
-                  <option value="1">Latina,LT</option>
-                  <option value="1">Lecce,LE</option>
-                  <option value="1">Lecco,LC</option>
-                  <option value="1">Livorno,LI</option>
-                  <option value="1">Lodi,LO</option>
-                  <option value="1">Lucca,LU</option>
-                  <option value="1">Macerata,MC</option>
-                  <option value="1">Mantova,MN</option>
-                  <option value="1">Massa-Carrara,MS</option>
-                  <option value="1">Matera,MT</option>
-                  <option value="1">Messina,ME</option>
-                  <option value="1">Milano,MI</option>
-                  <option value="1">Modena,MO</option>
-                  <option value="1">Monza e della Brianza,MB</option>
-                  <option value="1">Napoli,NA</option>
-                  <option value="1">Novara,NO</option>
-                  <option value="1">Nuoro,NU</option>
-                  <option value="1">Olbia-Tempio,OT</option>
-                  <option value="1">Oristano,OR</option>
-                  <option value="1">Padova,PD</option>
-                  <option value="1">Palermo,PA</option>
-                  <option value="1">Parma,PR</option>
-                  <option value="1">Pavia,PV</option>
-                  <option value="1">Perugia,PG</option>
-                  <option value="1">Pesaro e Urbino,PU</option>
-                  <option value="1">Pescara,PE</option>
-                  <option value="1">Piacenza,PC</option>
-                  <option value="1">Pisa,PI</option>
-                  <option value="1">Pistoia,PT</option>
-                  <option value="1">Pordenone,PN</option>
-                  <option value="1">Potenza,PZ</option>
-                  <option value="1">Prato,PO</option>
-                  <option value="1">Ragusa,RG</option>
-                  <option value="1">Ravenna,RA</option>
-                  <option value="1">Reggio Calabria,RC</option>
-                  <option value="1">Reggio Emilia,RE</option>
-                  <option value="1">Rieti,RI</option>
-                  <option value="1">Rimini,RN</option>
-                  <option value="1">Roma,RM</option>
-                  <option value="1">Rovigo,RO</option>
-                  <option value="1">Salerno,SA</option>
-                  <option value="1">Medio Campidano,VS</option>
-                  <option value="1">Sassari,SS</option>
-                  <option value="1">Savona,SV</option>
-                  <option value="1">Siena,SI</option>
-                  <option value="1">Siracusa,SR</option>
-                  <option value="1">Sondrio,SO</option>
-                  <option value="1">Taranto,TA</option>
-                  <option value="1">Teramo,TE</option>
-                  <option value="1">Terni,TR</option>
-                  <option value="1">Torino,TO</option>
-                  <option value="1">Ogliastra,OG</option>
-                  <option value="1">Trapani,TP</option>
-                  <option value="1">Trento,TN</option>
-                  <option value="1">Treviso,TV</option>
-                  <option value="1">Trieste,TS</option>
-                  <option value="1">Udine,UD</option>
-                  <option value="1">Varese,VA</option>
-                  <option value="1">Venezia,VE</option>
-                  <option value="1">Verbano-Cusio-Ossola,VB</option>
-                  <option value="1">Vercelli,VC</option>
-                  <option value="1">Verona,VR</option>
-                  <option value="1">Vibo Valentia,VV</option>
-                  <option value="1">Vicenza,VI</option>
-                  <option value="1">Viterbo,VT</option>
-                </select>
+                <label>Indirizzo</label>
+                <input className="form-control" name="indirizzo" value={this.state.indirizzo} onChange={this.handleChange} placeholder="Via Roma, 15" required />
               </div>
 
               <div className="form-group col-md-2">
@@ -234,14 +122,6 @@ export default class InserisciAnnuncio extends Component {
                 <input className="form-control" name="cap" value={this.state.cap} pattern='[0-9]{5}' maxLength="5" onChange={this.handleChange} placeholder="90015" required />
               </div>
 
-            </div>
-
-            <div className="form-row">
-
-              <div className="form-group col-md-6">
-                <label>Indirizzo</label>
-                <input className="form-control" name="indirizzo" value={this.state.indirizzo} onChange={this.handleChange} placeholder="Via Roma, 15" required />
-              </div>
             </div>
 
             <div className="form-row">

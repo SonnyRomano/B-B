@@ -231,7 +231,7 @@ export default class DettaglioAnnuncio extends Component {
     modalImg.src = img.src;
 
     // Get the <span> element that closes the modal
-    var span = document.getElementById("cls");
+    var span = document.getElementById("close-btn");
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
@@ -263,7 +263,7 @@ export default class DettaglioAnnuncio extends Component {
     return (
       <div>
         <div id="myModal" className="modal">
-          <span className="close" id="cls">&times;</span>
+          <span className="close" id="close-btn">&times;</span>
           <img className="modal-content" id="img01" alt='ImgModal' />
         </div>
         <div className="container shadow p-3 bg-white mb-5 rounded" style={{ background: '#f2f2f2' }}>
@@ -338,11 +338,9 @@ export default class DettaglioAnnuncio extends Component {
                   </div>
                 </div>
 
-                <div className="form-row">
-                  <div className="col-6">
-                    <label>Ospiti</label>
-                    <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
-                  </div>
+                <div className="form-row col-6">
+                  <label>Ospiti</label>
+                  <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
                 </div>
 
                 <br />

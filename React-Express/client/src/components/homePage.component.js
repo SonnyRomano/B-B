@@ -77,10 +77,8 @@ export default class HomePage extends Component {
     return (
       <div className="container" id="page-container">
         <div className="col-lg-8 p-4 bg-white rounded">
-
-
-          <h3>Prenota Case Vacanza e B&B sul nostro sito</h3>
-          <p className="card-text">Seleziona la località desiderata, le date di check in, check-out e il numero di ospiti</p>
+          <h2>Prenota Case Vacanza e B&B sul nostro sito</h2>
+          <p>Seleziona la località desiderata, le date di check in, check-out e il numero di ospiti</p>
           <form onSubmit={this.handleSubmit}>
 
             <div className="form-group">
