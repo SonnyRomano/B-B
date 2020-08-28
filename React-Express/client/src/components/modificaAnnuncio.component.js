@@ -14,18 +14,22 @@ export default class ModificaAnnuncio extends Component {
     citta: '',
     cap: '',
     indirizzo: '',
-    civico: '',
     dateFrom: '',
     dateTo: '',
     n_posti: '',
+    n_camere: '',
+    n_letti: '',
     n_bagni: '',
     wifi: 0,
-    ascensore: 0,
-    garage: 0,
-    terrazzo: 0,
+    doccia: 0,
+    tv: 0,
+    cucina: 0,
+    riscaldamento: 0,
+    accessibile: 0,
     descrizione: '',
+    titolo: '',
     telefono: '',
-    costo: 0,
+    costo: '',
     idAnnuncio: ''
   }
 
@@ -56,20 +60,23 @@ export default class ModificaAnnuncio extends Component {
     let annuncio = {
       idProprietario: sessionStorage.getItem('id'),
       citta: this.state.citta,
-      cap: this.state.cap,
       indirizzo: this.state.indirizzo,
-      civico: this.state.civico,
+      cap: this.state.cap,
       dateFrom: dateFormat(this.state.dateFrom, 'yyyy-mm-dd'),
       dateTo: dateFormat(this.state.dateTo, 'yyyy-mm-dd'),
       n_posti: this.state.n_posti,
+      n_camere: this.state.n_camere,
+      n_letti: this.state.n_letti,
       n_bagni: this.state.n_bagni,
-      wifi: this.state.wifi,
-      ascensore: this.state.ascensore,
-      garage: this.state.garage,
-      terrazzo: this.state.terrazzo,
+      wifi: Number(this.state.wifi),
+      doccia: Number(this.state.doccia),
+      tv: Number(this.state.tv),
+      cucina: Number(this.state.cucina),
+      riscaldamento: Number(this.state.riscaldamento),
+      accessibile: Number(this.state.accessibile),
       descrizione: this.state.descrizione,
+      titolo: this.state.titolo,
       costo: this.state.costo,
-      telefono: this.state.telefono,
       idAnnuncio: this.state.idAnnuncio
     }
     console.log(annuncio)
@@ -87,7 +94,7 @@ export default class ModificaAnnuncio extends Component {
   }
 
   componentWillMount() {
-    this.setState(this.props.location.state); //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
+    this.setState(this.props.location.state, () => { console.log(this.state) }); //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
   }
 
   render() {
@@ -137,11 +144,11 @@ export default class ModificaAnnuncio extends Component {
               </div>
               <div className="form-group col-md-3">
                 <label>Camere da letto</label>
-                <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
+                <input className="form-control" name="n_camere" type="number" min="1" onChange={this.handleChange} value={this.state.n_camere} required />
               </div>
               <div className="form-group col-md-3">
                 <label>Numero letti</label>
-                <input className="form-control" name="n_posti" type="number" min="1" onChange={this.handleChange} value={this.state.n_posti} required />
+                <input className="form-control" name="n_letti" type="number" min="1" onChange={this.handleChange} value={this.state.n_letti} required />
               </div>
               <div className="form-group col-md-3">
                 <label>Numero bagni</label>
@@ -151,34 +158,34 @@ export default class ModificaAnnuncio extends Component {
 
             <div className="form-row mb-3">
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} checked={Boolean(this.state.wifi)} />
+                <input className="form-check-input" type="checkbox" id="wifi" name="wifi" onChange={() => { this.setState({ wifi: !this.state.wifi }) }} checked={this.state.wifi} />
                 <i className="fas fa-wifi mr-2"></i>
                 <label className="form-check-label" htmlFor="wifi">Wi-Fi</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="ascensore" name="ascensore" value="1" onChange={this.handleChange} checked={Boolean(this.state.ascensore)} />
+                <input className="form-check-input" type="checkbox" id="doccia" name="doccia" onChange={() => { this.setState({ doccia: !this.state.doccia }) }} checked={this.state.doccia} />
                 <i className="fas fa-shower mr-2"></i>
-                <label className="form-check-label" htmlFor="ascensore">Doccia</label>
+                <label className="form-check-label" htmlFor="doccia">Doccia</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="garage" name="garage" value="1" onChange={this.handleChange} checked={Boolean(this.state.garage)} />
+                <input className="form-check-input" type="checkbox" id="tv" name="tv" onChange={() => { this.setState({ tv: !this.state.tv }) }} checked={this.state.tv} />
                 <i className="fas fa-tv mr-2"></i>
-                <label className="form-check-label" htmlFor="garage">TV</label>
+                <label className="form-check-label" htmlFor="tv">TV</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <input className="form-check-input" type="checkbox" id="cucina" name="cucina" onChange={() => { this.setState({ cucina: !this.state.cucina }) }} checked={this.state.cucina} />
                 <i className="fas fa-utensils mr-2"></i>
-                <label className="form-check-label" htmlFor="terrazzo">Cucina</label>
+                <label className="form-check-label" htmlFor="cucina">Cucina</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <input className="form-check-input" type="checkbox" id="riscaldamento" name="riscaldamento" onChange={() => { this.setState({ riscaldamento: !this.state.riscaldamento }) }} checked={this.state.riscaldamento} />
                 <i className="fas fa-thermometer-half mr-2"></i>
-                <label className="form-check-label" htmlFor="terrazzo">Riscaldamento</label>
+                <label className="form-check-label" htmlFor="riscaldamento">Riscaldamento</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
-                <input className="form-check-input" type="checkbox" id="terrazzo" name="terrazzo" value="1" onChange={this.handleChange} checked={Boolean(this.state.terrazzo)} />
+                <input className="form-check-input" type="checkbox" id="accessibile" name="accessibile" onChange={() => { this.setState({ accessibile: !this.state.accessibile }) }} checked={this.state.accessibile} />
                 <i className="fas fa-wheelchair mr-2"></i>
-                <label className="form-check-label" htmlFor="terrazzo">Accessibile</label>
+                <label className="form-check-label" htmlFor="accessibile">Accessibile</label>
               </div>
             </div>
 
@@ -196,7 +203,7 @@ export default class ModificaAnnuncio extends Component {
 
             <div className="form-group">
               <label>Titolo annuncio</label>
-              <input className="form-control" required />
+              <input className="form-control" name='titolo' onChange={this.handleChange} value={this.state.titolo} required />
             </div>
 
             <label>Descrizione</label>

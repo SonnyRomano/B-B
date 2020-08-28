@@ -20,7 +20,7 @@ export default class PaginaRicercaProprietario extends Component {
         console.log(res.data);
 
         const listItems = res.data.map((d) =>
-          <div className="shadow card mb-3">
+          <div className="shadow card mb-3" key={d.idAnnuncio}>
             <div className="row no-gutters">
               <div className="col-md-4">
                 <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />

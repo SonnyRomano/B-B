@@ -29,9 +29,7 @@ async function invioDatiQuestura(req, res, next) {
 
     console.log(req.body.dati.nomeCognome)
 
-    res.status(200).send('Invio riuscito')
-
-    /*const db = await makeDb(config);
+    const db = await makeDb(config);
     let results = {};
 
     try {
@@ -62,13 +60,12 @@ async function invioDatiQuestura(req, res, next) {
 
     var textEmail
     var dati = req.body.dati
-    for(let i=0; i<dati.nomeCognome.lenght;i++)
-    {
-        textEmail += 'Ospite '+ i + ': ' + dati.nomeCognome[i]
+    for (let i = 0; i < dati.nomeCognome.lenght; i++) {
+        textEmail += 'Ospite ' + i + ': ' + dati.nomeCognome[i] + '\nCodice Fiscale: ' + dati.codiceFiscale[i] + '\n\n'
     }
 
     var mailOptions = {
-        attachments: [req.body.dati.formData.file]
+        attachments: [req.body.dati.formData.file],
         from: 'teammars44@gmail.com',
         to: 'emailQuestura@questura.it',
         subject: 'Dati Ospiti',
@@ -79,8 +76,9 @@ async function invioDatiQuestura(req, res, next) {
             console.log(error);
         } else {
             console.log('Email inviata: ' + info.response);
+            res.status(200).send('Invio riuscito')
         }
-    });*/
+    });
 }
 
 

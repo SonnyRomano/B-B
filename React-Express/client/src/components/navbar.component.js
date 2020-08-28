@@ -48,7 +48,6 @@ export default class Navbar extends Component {
   componentDidMount() {
     this.autenticationString();
     let regex = RegExp('/gestione')
-    console.log(window.location.href)
     if (regex.test(window.location.href)) displayComponent("tabAnnunci", true)
     else displayComponent("tabAnnunci", false)
 

@@ -38,6 +38,17 @@ async function effettuaPrenotazione(req, res, next) {
     let results = {};
 
     try {
+
+        //CREO TABELLA prenotazioni SE NON ESISTE
+        let query = 'CREATE TABLE IF NOT EXISTS prenotazioni \
+                    (`idPrenotazione` INT AUTO_INCREMENT PRIMARY KEY, `idAnnuncio` INT, `idProprietario` INT, `idCliente` INT,\
+                    `dateFrom` DATE, `dateTo` DATE, `costo` INT, idPagamento` INT,\
+                    `confermata` TINYINT, `questura` TINYINT)'
+        db.query(query, (err, result) => {
+            if (err) throw err
+            console.log(result);
+        })
+
         results = await db.query('INSERT INTO `prenotazioni` \
           (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, confermata, questura) VALUES ?', [
             [

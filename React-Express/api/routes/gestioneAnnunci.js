@@ -67,6 +67,19 @@ async function inserisciAnnuncio(req, res, next) {
     const db = await makeDb(config);
     let results = {};
     try {
+
+        //CREO TABELLA annunci SE NON ESISTE
+        let query = 'CREATE TABLE IF NOT EXISTS annunci \
+                (`idAnnuncio` INT AUTO_INCREMENT PRIMARY KEY, `idProprietario` INT, `citta` VARCHAR(255), cap` VARCHAR(255),\
+                `indirizzo` VARCHAR(255), `dateFrom` DATE, `dateTo` DATE, `n_bagni` INT, n_camere` INT,\
+                `n_letti` INT, `n_posti` INT, `wifi` TINYINT, `doccia` TINYINT, `tv` TINYINT, `cucina` TINYINT, `riscaldamento` TINYINT,\
+                `accessibile` TINYINT, `descrizione` VARCHAR(255), `titolo` VARCHAR(255), `costo` INT)'
+        db.query(query, (err, result) => {
+            if (err) throw err
+            console.log(result);
+        })
+
+
         results = await db.query('INSERT INTO `annunci` \
           (idProprietario, citta, cap, indirizzo, dateFrom, dateTo, n_bagni, n_camere, n_letti, n_posti,\
              wifi, doccia, tv, cucina, riscaldamento, accessibile,\
@@ -176,24 +189,28 @@ async function aggiornaAnnuncio(req, res, next) {
     let results = {};
     try {
         results = await db.query('UPDATE annunci \
-                            SET idProprietario=?,citta=?,cap=?,indirizzo=?,civico=?,dateFrom=?,dateTo=?,n_bagni=?,n_posti=?,\
-                            wifi=?,ascensore=?,garage=?,terrazzo=?,descrizione=?,telefono=?,costo=? WHERE idAnnuncio = ? ',
+                            SET idProprietario=?,citta=?,cap=?,indirizzo=?,dateFrom=?,dateTo=?,\
+                            n_bagni=?,n_camere=?, n_letti=?, n_posti=?,wifi=?,doccia=?,tv=?,cucina=?,\
+                            riscaldamento=?,accessibile=?,descrizione=?,titolo=?,costo=? WHERE idAnnuncio = ? ',
             [
                 [req.body.annuncio.idProprietario],
                 [req.body.annuncio.citta],
                 [req.body.annuncio.cap],
                 [req.body.annuncio.indirizzo],
-                [req.body.annuncio.civico],
                 [req.body.annuncio.dateFrom],
                 [req.body.annuncio.dateTo],
                 [req.body.annuncio.n_bagni],
+                [req.body.annuncio.n_camere],
+                [req.body.annuncio.n_letti],
                 [req.body.annuncio.n_posti],
                 [req.body.annuncio.wifi],
-                [req.body.annuncio.ascensore],
-                [req.body.annuncio.garage],
-                [req.body.annuncio.terrazzo],
+                [req.body.annuncio.doccia],
+                [req.body.annuncio.tv],
+                [req.body.annuncio.cucina],
+                [req.body.annuncio.riscaldamento],
+                [req.body.annuncio.accessibile],
                 [req.body.annuncio.descrizione],
-                [req.body.annuncio.telefono],
+                [req.body.annuncio.titolo],
                 [req.body.annuncio.costo],
                 [req.body.annuncio.idAnnuncio]
             ])
