@@ -47,37 +47,89 @@ export default class Navbar extends Component {
 
   componentDidMount() {
     this.autenticationString();
+    let regex = RegExp('/gestione')
+    console.log(window.location.href)
+    if (regex.test(window.location.href)) displayComponent("tabAnnunci", true)
+    else displayComponent("tabAnnunci", false)
+
+    let path = 'http://localhost:3000'
+
+    switch (window.location.href) {
+      case path + '/gestioneAnnunci/paginaRicercaProprietario':
+        document.getElementById('Annunci').className = "nav-link active"
+        break
+
+      case path + "/gestioneAnnunci/visualizzaGuadagno":
+        document.getElementById('visualizzaGuadagni').className = "nav-link active"
+        break
+
+      case path + "/gestioneAnnunci/visualizzaPrenotazioni":
+        document.getElementById('visualizzaPrenotazioni').className = "nav-link active"
+        break
+
+      case path + "/gestioneAnnunci/rendicontaTasse":
+        document.getElementById('rendicontaTasse').className = "nav-link active"
+        break
+
+      case path + '/gestioneLegale/visualizzaPrenotazioniQuestura':
+        document.getElementById('Questura').className = "nav-link active"
+        break
+
+      default:
+        break
+    }
   }
 
   render() {
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-dark" style={{ zIndex: 999 }}>
-        <a className="navbar-brand" href="/">
-          <img src={logo} width="30" height="30" alt='HomePageImg' className="d-inline-block align-top mr-2" />Bootstrap</a>
+      <div>
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark" style={{ zIndex: 999 }}>
+          <a className="navbar-brand" href="/">
+            <img src={logo} width="30" height="30" alt='HomePageImg' className="d-inline-block align-top mr-2" />Bootstrap</a>
 
-        <button className="navbar-toggler" style={{ width: 60 }} type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+          <button className="navbar-toggler" style={{ width: 60 }} type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-        <div className="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul className="navbar-nav ml-auto">
+          <div className="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul className="navbar-nav ml-auto">
 
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span style={{ fontSize: '30px', color: 'Dodgerblue' }}>
-                  <i className="fas fa-user"></i>
-                </span>
-              </a>
-              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a className="dropdown-item" id='login' onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
-                <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => this.displayComponent("SignUp", true)}>Registrati</a>
-                <a className="dropdown-item" id='diventaHost' onClick={() => this.displayComponent("DiventaHost", true)}>Diventa Host</a>
-                <a className="dropdown-item" id="gestioneAnnunci" href="/gestioneAnnunci/paginaRicercaProprietario">Gestione Annunci</a>
-              </div>
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span style={{ fontSize: '30px', color: 'Dodgerblue' }}>
+                    <i className="fas fa-user"></i>
+                  </span>
+                </a>
+                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a className="dropdown-item" id='login' onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
+                  <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => this.displayComponent("SignUp", true)}>Registrati</a>
+                  <a className="dropdown-item" id='diventaHost' onClick={() => this.displayComponent("DiventaHost", true)}>Diventa Host</a>
+                  <a className="dropdown-item" id="gestioneAnnunci" href="/gestioneAnnunci/paginaRicercaProprietario">Gestione Annunci</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div id='tabAnnunci'>
+          <ul className="nav nav-pills nav-fill bg-white">
+            <li className="nav-item">
+              <a className="nav-link" id='Annunci' href="/gestioneAnnunci/paginaRicercaProprietario">Annunci</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" id='visualizzaGuadagni' href="/gestioneAnnunci/visualizzaGuadagno">Visualizza Guadagni</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" id='visualizzaPrenotazioni' href="/gestioneAnnunci/visualizzaPrenotazioni">Visualizza Prenotazioni Pendenti</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" id='rendicontaTasse' href="#/">Rendiconta Tasse Soggiorno</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" id='Questura' href="/gestioneLegale/visualizzaPrenotazioniQuestura">Questura</a>
             </li>
           </ul>
         </div>
-      </nav>
+      </div>
     );
   }
 }

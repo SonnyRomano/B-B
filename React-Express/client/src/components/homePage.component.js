@@ -76,7 +76,7 @@ export default class HomePage extends Component {
   render() {
     return (
       <div className="container" id="page-container">
-        <div className="col-lg-8 p-4 bg-white rounded">
+        <div className="col-lg-8 p-4 my-4 bg-white rounded">
 
 
           <h3>Prenota Case Vacanza e B&B sul nostro sito</h3>

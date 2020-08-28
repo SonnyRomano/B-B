@@ -69,24 +69,6 @@ export default class PaginaRicercaProprietario extends Component {
   render() {
     return (
       <div>
-        <ul className="nav nav-pills nav-fill bg-white">
-          <li className="nav-item">
-            <a className="nav-link active" href="/gestioneAnnunci/paginaRicercaProprietario">Annunci</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/gestioneAnnunci/visualizzaGuadagno">Visualizza Guadagni</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/gestioneAnnunci/visualizzaPrenotazioni">Visualizza Prenotazioni Pendenti</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#/">Rendiconta Tasse Soggiorno</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="/gestioneLegale/visualizzaPrenotazioniQuestura">Questura</a>
-          </li>
-        </ul>
-
         <div className="container-fluid p-3" style={{ backgroundColor: '#f2f2f2' }} >
           <h1 className="display-4 text-center mb-3">I Tuoi Annunci</h1>
           <a className="btn btn-success mb-3" href='/gestioneAnnunci/inserisciAnnuncio'>Aggiungi annuncio</a>
