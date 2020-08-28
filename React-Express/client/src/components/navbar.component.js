@@ -101,8 +101,8 @@ export default class Navbar extends Component {
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a className="dropdown-item" id='login' onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
-                  <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => this.displayComponent("SignUp", true)}>Registrati</a>
-                  <a className="dropdown-item" id='diventaHost' onClick={() => this.displayComponent("DiventaHost", true)}>Diventa Host</a>
+                  <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => displayComponent("SignUp", true)}>Registrati</a>
+                  <a className="dropdown-item" id='diventaHost' onClick={() => displayComponent("DiventaHost", true)}>Diventa Host</a>
                   <a className="dropdown-item" id="gestioneAnnunci" href="/gestioneAnnunci/paginaRicercaProprietario">Gestione Annunci</a>
                 </div>
               </li>

@@ -42,8 +42,8 @@ async function effettuaPrenotazione(req, res, next) {
         //CREO TABELLA prenotazioni SE NON ESISTE
         let query = 'CREATE TABLE IF NOT EXISTS prenotazioni \
                     (`idPrenotazione` INT AUTO_INCREMENT PRIMARY KEY, `idAnnuncio` INT, `idProprietario` INT, `idCliente` INT,\
-                    `dateFrom` DATE, `dateTo` DATE, `costo` INT, idPagamento` INT,\
-                    `confermata` TINYINT, `questura` TINYINT)'
+                    `dateFrom` DATE, `dateTo` DATE, `costo` INT, `idPagamento` INT,\
+                    `confermata` TINYINT(1), `questura` TINYINT(1))'
         db.query(query, (err, result) => {
             if (err) throw err
             console.log(result);

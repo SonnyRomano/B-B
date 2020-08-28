@@ -30,9 +30,9 @@ async function registrazione(req, res, next) {
   try {
 
     //CREO TABELLA utenti SE NON ESISTE
-    let query = 'CREATE TABLE IF NOT EXISTS prenotazioni \
+    let query = 'CREATE TABLE IF NOT EXISTS utenti \
                 (`id` INT AUTO_INCREMENT PRIMARY KEY, `email` VARCHAR(255),\
-                `password` VARCHAR(255), `host` TINYINT)'
+                `password` VARCHAR(255), `host` TINYINT(1))'
     db.query(query, (err, result) => {
       if (err) throw err
       console.log(result);
@@ -79,7 +79,6 @@ async function registrazione(req, res, next) {
       console.log(results);
       console.log(`Utente ${req.body.user.email} inserito!`);
       console.log(id_utente);
-      res.send(id_utente)
       res.status(200).send(id_utente.toString());
     }
   } catch (err) {

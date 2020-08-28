@@ -70,10 +70,10 @@ async function inserisciAnnuncio(req, res, next) {
 
         //CREO TABELLA annunci SE NON ESISTE
         let query = 'CREATE TABLE IF NOT EXISTS annunci \
-                (`idAnnuncio` INT AUTO_INCREMENT PRIMARY KEY, `idProprietario` INT, `citta` VARCHAR(255), cap` VARCHAR(255),\
-                `indirizzo` VARCHAR(255), `dateFrom` DATE, `dateTo` DATE, `n_bagni` INT, n_camere` INT,\
-                `n_letti` INT, `n_posti` INT, `wifi` TINYINT, `doccia` TINYINT, `tv` TINYINT, `cucina` TINYINT, `riscaldamento` TINYINT,\
-                `accessibile` TINYINT, `descrizione` VARCHAR(255), `titolo` VARCHAR(255), `costo` INT)'
+                (`idAnnuncio` INT AUTO_INCREMENT PRIMARY KEY, `idProprietario` INT, `citta` VARCHAR(255), `cap` VARCHAR(255),\
+                `indirizzo` VARCHAR(255), `dateFrom` DATE, `dateTo` DATE, `n_bagni` INT, `n_camere` INT,\
+                `n_letti` INT, `n_posti` INT, `wifi` TINYINT(1), `doccia` TINYINT(1), `tv` TINYINT(1), `cucina` TINYINT(1), `riscaldamento` TINYINT(1),\
+                `accessibile` TINYINT(1), `descrizione` VARCHAR(255), `titolo` VARCHAR(255), `costo` INT)'
         db.query(query, (err, result) => {
             if (err) throw err
             console.log(result);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../stylesheets/index.css';
 import axios from 'axios';
+import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class PaginaRicercaProprietario extends Component {
 
@@ -10,6 +11,8 @@ export default class PaginaRicercaProprietario extends Component {
 
   //Il metodo componentDidMount () viene chiamato dopo il rendering del componente.
   componentDidMount() {
+
+    checkRoutingAccess(this.props)
 
     let idProprietario = sessionStorage.getItem('id')
 
