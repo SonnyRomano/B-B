@@ -76,8 +76,7 @@ export default class InserisciAnnuncio extends Component {
       accessibile: this.state.accessibile,
       descrizione: this.state.descrizione,
       titolo: this.state.titolo,
-      costo: this.state.costo,
-      //telefono: this.state.telefono
+      costo: this.state.costo
     }
 
     axios.post(`http://127.0.0.1:9000/gestioneAnnunci/inserisciAnnuncio`, { annuncio })
