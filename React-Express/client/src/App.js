@@ -18,6 +18,8 @@ import moduloPagamento from './components/moduloPagamento.component';
 import VisualizzaPrenotazioni from './components/visualizzaPrenotazioni.component';
 import RiepilogoPrenotazione from "./components/riepilogoPrenotazione";
 import VisualizzaGuadagno from './components/visualizzaGuadagno.component'
+import RendicontaTasse from './components/RendicontaTasse.component'
+
 
 import VisualizzaPrenotazioniQuestura from './components/visualizzaPrenotazioniQuestura.component'
 import FormQuestura from './components/formQuestura.component'
@@ -63,6 +65,7 @@ class App extends Component {
 
                         <Route exact path="/gestioneLegale/visualizzaPrenotazioniQuestura" component={VisualizzaPrenotazioniQuestura} />
                         <Route exact path="/gestioneLegale/formQuestura" component={FormQuestura} />
+                        <Route exact path="/gestioneLegale/rendicontaTasse" component={RendicontaTasse} />
                     </React.Fragment>
                 </Router>
 

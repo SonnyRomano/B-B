@@ -7,79 +7,6 @@ const crypto = require('crypto');
 const { config } = require('../db/config');
 const { makeDb, withTransaction } = require('../db/dbmiddleware');
 
-/*
-// Libreria Passport
-let passport = require('passport');
-let LocalStrategy = require('passport-local').Strategy;
-
-// Specifica, solo durante l'autenticazione, quali informazioni devono essere conservate nella sessione
-passport.serializeUser(function (user, done) {
-  console.log("Serialized")
-  done(null, user.id);
-});
-
-// Invocato ad ogni richiesta da passport.session
-passport.deserializeUser((user, done) => {
-  console.log("Deserialized")
-  done(null, { id: user.id });
-});
-
-// Passport Strategy
-passport.use(new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
-},
-  async function (email, password, done) {
-
-    // istanziamo il middleware
-    const db = await makeDb(config);
-    let results = {};
-    try {
-
-      await withTransaction(db, async () => {
-        // inserimento utente
-        results = await db.query('SELECT * FROM `utenti`\
-        WHERE email = ?', [
-          email
-        ])
-          .catch(err => {
-            throw err;
-          });
-
-        if (results.length == 0) {
-          console.log('Utente non trovato!');
-          return done(null, false, { message: 'Utente non trovato' });
-        } else {
-          let pwdhash = crypto.createHash('sha512'); // istanziamo l'algoritmo di hashing
-          pwdhash.update(password); // cifriamo la password
-          let encpwd = pwdhash.digest('hex'); // otteniamo la stringa esadecimale
-
-          if (encpwd != results[0].password) {
-            // password non coincidenti
-            console.log('Password errata!');
-            return done(null, false, { message: 'Password errata' });
-          } else {
-            console.log('Utente autenticato');
-
-            console.log('Dati utente:');
-            console.log(results[0]);
-
-            return done(null, results[0]);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-      next(createError(500));
-    }
-  }
-));
-
-router.post('/login', passport.authenticate('local'), function (req, res) {
-  res.send(req.session);
-});*/
-
-
 // La rotta /users è vietata
 router.get('/', function (req, res, next) {
   next(createError(403));
@@ -101,6 +28,16 @@ async function registrazione(req, res, next) {
   const db = await makeDb(config);
   let results = {};
   try {
+
+    //CREO TABELLA utenti SE NON ESISTE
+    let query = 'CREATE TABLE IF NOT EXISTS utenti \
+                (`id` INT AUTO_INCREMENT PRIMARY KEY, `email` VARCHAR(255),\
+                `password` VARCHAR(255), `host` TINYINT(1))'
+    db.query(query, (err, result) => {
+      if (err) throw err
+      console.log(result);
+    })
+
     // Controllo email già registrata
     results = await db.query('SELECT * FROM `utenti`\
     WHERE email = ?', [
@@ -142,7 +79,6 @@ async function registrazione(req, res, next) {
       console.log(results);
       console.log(`Utente ${req.body.user.email} inserito!`);
       console.log(id_utente);
-      res.send(id_utente)
       res.status(200).send(id_utente.toString());
     }
   } catch (err) {

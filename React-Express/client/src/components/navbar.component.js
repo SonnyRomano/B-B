@@ -48,7 +48,6 @@ export default class Navbar extends Component {
   componentDidMount() {
     this.autenticationString();
     let regex = RegExp('/gestione')
-    console.log(window.location.href)
     if (regex.test(window.location.href)) displayComponent("tabAnnunci", true)
     else displayComponent("tabAnnunci", false)
 
@@ -102,8 +101,8 @@ export default class Navbar extends Component {
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a className="dropdown-item" id='login' onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
-                  <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => this.displayComponent("SignUp", true)}>Registrati</a>
-                  <a className="dropdown-item" id='diventaHost' onClick={() => this.displayComponent("DiventaHost", true)}>Diventa Host</a>
+                  <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => displayComponent("SignUp", true)}>Registrati</a>
+                  <a className="dropdown-item" id='diventaHost' onClick={() => displayComponent("DiventaHost", true)}>Diventa Host</a>
                   <a className="dropdown-item" id="gestioneAnnunci" href="/gestioneAnnunci/paginaRicercaProprietario">Gestione Annunci</a>
                 </div>
               </li>
@@ -122,7 +121,7 @@ export default class Navbar extends Component {
               <a className="nav-link" id='visualizzaPrenotazioni' href="/gestioneAnnunci/visualizzaPrenotazioni">Visualizza Prenotazioni Pendenti</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" id='rendicontaTasse' href="#/">Rendiconta Tasse Soggiorno</a>
+              <a className="nav-link" id='rendicontaTasse' href="/gestioneLegale/rendicontaTasse">Rendiconta Tasse Soggiorno</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" id='Questura' href="/gestioneLegale/visualizzaPrenotazioniQuestura">Questura</a>

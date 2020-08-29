@@ -38,8 +38,19 @@ async function effettuaPrenotazione(req, res, next) {
     let results = {};
 
     try {
+
+        //CREO TABELLA prenotazioni SE NON ESISTE
+        let query = 'CREATE TABLE IF NOT EXISTS prenotazioni \
+                    (`idPrenotazione` INT AUTO_INCREMENT PRIMARY KEY, `idAnnuncio` INT, `idProprietario` INT, `idCliente` INT,\
+                    `dateFrom` DATE, `dateTo` DATE, `costo` INT, `idPagamento` INT,\
+                    `confermata` TINYINT(1), `questura` TINYINT(1))'
+        db.query(query, (err, result) => {
+            if (err) throw err
+            console.log(result);
+        })
+
         results = await db.query('INSERT INTO `prenotazioni` \
-          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, attiva) VALUES ?', [
+          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, confermata, questura) VALUES ?', [
             [
                 [
                     req.body.datiPrenotazione.idAnnuncio,
@@ -49,6 +60,7 @@ async function effettuaPrenotazione(req, res, next) {
                     req.body.datiPrenotazione.dateTo,
                     req.body.datiPrenotazione.costoTotale,
                     req.body.datiPrenotazione.idPagamento,
+                    false,
                     false
                 ]
             ]
@@ -209,7 +221,7 @@ async function confermaPrenotazione(req, res, next) {
 
         //Accedo al dbms per settare ad attiva la prenotazione dalla rispettiva tabella
         try {
-            db.query('UPDATE `prenotazioni` SET attiva = 1 WHERE idPrenotazione = ?;',
+            db.query('UPDATE `prenotazioni` SET confermata = 1 WHERE idPrenotazione = ?;',
                 [
                     req.body.confermaP.idPrenotazione,
                 ]
@@ -346,7 +358,7 @@ async function visualizzaPrenotazioniProprietario(req, res, next) {
         await withTransaction(db, async () => {
             // inserimento utente
             results = await db.query('SELECT * FROM `prenotazioni`\
-            WHERE idProprietario = ? AND attiva = 0', [
+            WHERE idProprietario = ? AND confermata = 0', [
                 req.body.idProprietario
             ])
                 .catch(err => {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 // import '../stylesheets/index.css';
 import axios from 'axios';
+import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class PaginaRicercaProprietario extends Component {
 
@@ -11,6 +12,8 @@ export default class PaginaRicercaProprietario extends Component {
   //Il metodo componentDidMount () viene chiamato dopo il rendering del componente.
   componentDidMount() {
 
+    checkRoutingAccess(this.props)
+
     let idProprietario = sessionStorage.getItem('id')
 
     //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
@@ -20,15 +23,15 @@ export default class PaginaRicercaProprietario extends Component {
         console.log(res.data);
 
         const listItems = res.data.map((d) =>
-          <div className="shadow card mb-3">
+          <div className="shadow card mb-3" key={d.idAnnuncio}>
             <div className="row no-gutters">
               <div className="col-md-4">
                 <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <h5 className="card-title">Titolo annuncio</h5>
-                  <p className="card-text">{d.indirizzo}, {d.civico}<br />{d.cap} {d.citta}</p>
+                  <h5 className="card-title">{d.titolo}</h5>
+                  <p className="card-text">{d.indirizzo}<br />{d.cap} {d.citta}</p>
                   <button onClick={() => this.handleClickModify(d)} type="button" className="btn btn-secondary mb-2">Modifica</button>
                   <button onClick={() => this.handleClickRemove(d.idAnnuncio)} type="button" className="btn btn-danger">Elimina</button>
                 </div>
