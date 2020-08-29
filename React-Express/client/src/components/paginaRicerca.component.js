@@ -31,24 +31,50 @@ export default class PaginaRicerca extends Component {
     //Crea un oggetto che contiene il mapping dei dati come componenti <li>
     const listItems = risultatiRicerca.map((d) =>
 
-      <div class="col mb-4">
-        <div class="card h-100" onClick={() => this.handleClick(d)}>
-          <img src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} class="card-img-top" alt="..." />
-          <div class="card-body p-3">
-            <h5 class="card-title ">{d.descrizione}</h5>
-            <p class="card-text text-muted">Da €{d.costo}</p>
-            <span className="mr-3">
-              <i class="fas fa-male mr-2"></i>{d.n_posti}
+      <div className="col mb-4">
+        <div className="card h-100" onClick={() => this.handleClick(d)}>
+          <img src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} className="card-img-top" alt="..." />
+          <div className="card-body p-3">
+            <h5 className="card-title">{d.descrizione}</h5>
+            <p className="card-text text-muted">Da €{d.costo}</p>
+            {/* <div>
+              <span className="mr-3">
+                <i className="fas fa-wifi"></i>
+              </span>
+              <span className="mr-3">
+                <i className="fas fa-utensils"></i>
+              </span>
+              <span className="mr-3">
+                <i className="fas fa-shower"></i>
+              </span>
+              <span className="mr-3">
+                <i className="fas fa-thermometer-half"></i>
+              </span>
+              <span className="mr-3">
+                <i className="fas fa-tv"></i>
+              </span>
+              <span className="mr-3">
+                <i className="fas fa-wheelchair"></i>
+              </span>
+            </div> */}
+
+            <div>
+              <span className="mr-3">
+                <i className="fas fa-male mr-2"></i>{d.n_posti}
+              </span>
+              <span className="mr-3">
+                <i className="fas fa-bed mr-2"></i>2
             </span>
-            <span className="mr-3">
-              <i class="fas fa-bed mr-2"></i>2
+              <span className="mr-3">
+                <i className="fas fa-bath mr-2"></i>1
             </span>
-            <span className="mr-3">
-              <i class="fas fa-bath mr-2"></i>1
-            </span>
+              {/* <span style={{ fontSize: '3em', color: 'Tomato' }}>
+              <i class="fas fa-camera"></i>
+            </span> */}
+            </div>
           </div>
         </div>
-      </div>
+      </div >
     );
 
     /*       <li key={'li' + d.idAnnuncio} className="list-group-item" style={{ marginBottom: '4rem', backgroundColor: 'grey' }}>
@@ -68,7 +94,50 @@ export default class PaginaRicerca extends Component {
       <div className="container shadow p-3 bg-white mb-5 rounded" style={{ backgroundColor: '#f2f2f2' }}>
         <h1 class="display-4 mb-4">Risultati di ricerca - {this.datiPrenotazione.citta}</h1>
         <p>{listItems.length} {listItems.length === 1 ? 'alloggio' : 'alloggi'} {listItems.length === 1 ? 'trovato' : 'trovati'}</p>
+
+
+        <div class="row row-cols-1 row-cols-md-4 row-cols-xl-6">
+          <div class="col">
+            <button type="button" class="btn btn-outline-dark">
+              <i className="fas fa-wifi mr-2"></i>
+              <label className="form-check-label" htmlFor="wifi">Wi-Fi</label>
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-dark">
+              <i className="fas fa-utensils mr-2"></i>
+              <label className="form-check-label" htmlFor="wifi">Cucina</label>
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-dark">
+              <i className="fas fa-shower mr-2"></i>
+              <label className="form-check-label" htmlFor="wifi">Doccia</label>
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-dark">
+              <i className="fas fa-thermometer-half mr-2"></i>
+              <label className="form-check-label" htmlFor="wifi">Riscaldamento</label>
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-dark">
+              <i className="fas fa-tv mr-2"></i>
+              <label className="form-check-label" htmlFor="wifi">TV</label>
+            </button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-dark">
+              <i className="fas fa-wheelchair mr-2"></i>
+              <label className="form-check-label" htmlFor="wifi">Accessibile</label>
+            </button>
+          </div>
+        </div>
+
+
         <hr />
+
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           {listItems}
         </div>

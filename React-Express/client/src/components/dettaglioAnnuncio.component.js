@@ -297,114 +297,81 @@ export default class DettaglioAnnuncio extends Component {
             <div className="col-md-7 p-0 ml-3">
               <h1 className="display-4">{this.state.descrizione}</h1>
               <p className="lead">{this.state.n_posti} ospiti · 1 camera da letto · 2 letti · 1 bagno</p>
+              <h2>Servizi</h2>
               <hr className="m-0" />
               <ul className="list-group list-group-flush mb-4">
-                <li className="list-group-item" key="wifi1" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="wifi2" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="wifi3" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="wifi4" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
+                <li className="list-group-item" key="wifi" id='wifi'>
+                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-wifi"></i></span>
+                  WiFi
+                </li>
+                <li className="list-group-item" key="shower" id='shower'>
+                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-shower"></i></span>
+                  Doccia</li>
+                <li className="list-group-item" key="tv" id='tv'>
+                  <i className="fas fa-tv"></i>TV</li>
+                <li className="list-group-item" key="utensils" id='utensils'>
+                  <i className="fas fa-utensils"></i>Cucina</li>
+                <li className="list-group-item" key="thermometer" id='thermometer'>
+                  <i className="fas fa-thermometer-half">
+                  </i>Riscaldamento</li>
+                <li className="list-group-item" key="wheelchair" id='wheelchair'>
+                  <i className="fas fa-wheelchair"></i>Accessibile</li>
                 <hr className="m-0" />
               </ul>
 
+              <h2>Extra Info</h2>
 
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!</p>
+
+              <p>
+                <span style={{ fontSize: '2em', color: 'Red' }}>
+                  <i class="fas fa-map-marker-alt"></i>
+                </span>
+                <br />
+                {this.state.indirizzo}<br />{this.state.cap} {this.state.citta}
+              </p>
             </div>
 
             <div className="col-md-4 p-0 ml-auto" id="sqr">
               <div className="border border-dark rounded shadow p-3">
                 <h3 className="mb-4">Aggiungi le date per conoscere i prezzi</h3>
-                <div className="form-group">
-                  <div className="form-row">
-                    <div className="col-6">
-                      <label>Check-in</label>
-                      <DatePicker
-                        id="dateFrom" type="date" className="form-control" name="dateFrom"
-                        selected={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
-                        minDate={moment(this.state.dateFrom, 'YYYY-MM-DD') > moment.now() ? moment(this.state.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
-                        maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
-                        onChange={(date) => this.handleChangeDate(date, true)}
-                        filterDate={(date) => this.filtraDate(date)}
-                      />
-                    </div>
+                <form>
+                  <div className="form-group">
+                    <div className="form-row">
+                      <div className="col-6">
+                        <label>Check-in</label>
+                        <DatePicker
+                          id="dateFrom" type="date" className="form-control" name="dateFrom"
+                          selected={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
+                          minDate={moment(this.state.dateFrom, 'YYYY-MM-DD') > moment.now() ? moment(this.state.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
+                          maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
+                          onChange={(date) => this.handleChangeDate(date, true)}
+                          filterDate={(date) => this.filtraDate(date)}
+                        />
+                      </div>
 
-                    <div className="col-6">
-                      <label>Check-out</label>
-                      <DatePicker
-                        id="dateTo" type="date" className="form-control" name="dateTo"
-                        selected={moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').toDate() : moment.now()}
-                        minDate={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
-                        maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
-                        onChange={(date) => this.handleChangeDate(date, false)}
-                        filterDate={(date) => this.filtraDate(date)}
-                      />
+                      <div className="col-6">
+                        <label>Check-out</label>
+                        <DatePicker
+                          id="dateTo" type="date" className="form-control" name="dateTo"
+                          selected={moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').toDate() : moment.now()}
+                          minDate={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
+                          maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
+                          onChange={(date) => this.handleChangeDate(date, false)}
+                          filterDate={(date) => this.filtraDate(date)}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="form-row col-6">
-                  <label>Ospiti</label>
-                  <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
-                </div>
-
-                <br />
-
-                <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
-
-              </div>
-            </div>
-
-          </div>
-
-
-
-          <div className="row" style={{ marginTop: '0.3rem' }}>
-            <div className="col-md-6">
-              <div className="list-group">
-                <li className="list-group-item" key="citta">Città: {this.state.citta}</li>
-                <li className="list-group-item" key="cap">CAP: {this.state.cap}</li>
-                <li className="list-group-item" key="indirizzo">Indirizzo: {this.state.indirizzo}, {this.state.civico}</li>
-                {/* <li className="list-group-item" key="num_civico">Numero Civico:</li> */}
-                <li className="list-group-item" key="dateFrom">Disponibilità {dateFormat(this.state.dateFrom, "dd/mm/yyyy")} - {dateFormat(this.state.dateTo, "dd/mm/yyyy")}</li>
-                {/* <li className="list-group-item" key="dateTo">Disponibile fino a: </li> */}
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="list-group">
-                <li className="list-group-item" key="num_posti">
-                  <i className="fas fa-bed mr-2"></i>Camere da letto: {this.state.n_posti}
-                </li>
-                <li className="list-group-item" key="num_bagni">
-                  <i className="fas fa-bath mr-2"></i>Bagni: {this.state.n_bagni}
-                </li>
-                <li className="list-group-item" key="wifi" id='wifi'><i className="fa fa-fw fa-wifi mr-2"></i>WiFi</li>
-                <li className="list-group-item" key="ascensore" id='ascensore'><strong>Presenza Ascensore</strong></li>
-                <li className="list-group-item" key="garage" id='garage'><strong>Presenza Garage</strong></li>
-                <li className="list-group-item" key="terrazzo" id='terrazzo'><strong>Presenza Terrazzo</strong></li>
-              </div>
-            </div>
-          </div>
-          {/* <div className="row" style={{ marginTop: '0.7rem' }}>
-          <h4 className="my-12">Prezzo & Contatti:</h4>
-        </div> */}
-          <div className="row" style={{ marginTop: '0.3rem' }}>
-            <div className="col-md-4">
-              {/* <div className="list-group">
-              <li className="list-group-item" key="costo"><strong>Costo: </strong>{this.state.costo}€</li>
-            </div> */}
-            </div>
-            <div className="col-md-4">
-              <div className="list-group">
-                {/* <li className="list-group-item" key="cellulare"><strong>Cellulare: </strong>{this.state.telefono}</li> */}
-              </div>
-              <div className="row" style={{ marginTop: '1rem' }}>
-                <div className="col-md-4">
-                  <div className="list-group" style={{ backgroundColor: 'white', textAlign: 'right' }}>
-                    <label><strong>Costo Complessivo:</strong></label>
-                    <div>Costo:{this.state.costo} X<br /> Numero Giorni: {diffDays} X <br></br> Numero Ospiti: {this.state.datiPrenotazione.n_ospiti} <br></br> ------- <br></br>{this.state.costoTotale} €</div>
+                  <div className="form-row col-6 p-0 mx-0 mb-3">
+                    <label>Ospiti</label>
+                    <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
                   </div>
-                </div>
-                <div className="col-md-5">
-                </div>
+
+                  <p className="lead">€{this.state.costo} / notte</p>
+                  <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga €{this.state.costoTotale} e affitta!</button>
+                </form>
               </div>
             </div>
           </div>
