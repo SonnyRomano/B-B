@@ -62,7 +62,6 @@ export default class DettaglioAnnuncio extends Component {
 
   // Carica i dati relativi all'annuncio
   componentDidMount() {
-
     // Tramite inserimento manuale dell'URL o condivisione link
     if (!(this.props.history.action === 'POP')) this.setState({ datiPrenotazione: this.props.location.state[1] });
 
