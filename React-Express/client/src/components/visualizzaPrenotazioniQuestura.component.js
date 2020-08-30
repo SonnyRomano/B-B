@@ -27,8 +27,8 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <h5 className="card-title">Titolo annuncio</h5>
-                  <p class="card-text">{d.indirizzo}, {d.civico}<br />{d.cap} {d.citta}<br></br>Inizio Prenotazione: {dateFormat(d.dateFrom, "dd-mm-yyyy")}<br></br>Fine Prenotazione: {dateFormat(d.dateTo, "dd-mm-yyyy")}<br></br>Pagato: €{d.costo}</p>
+                  <h5 className="card-title">{d.titolo}</h5>
+                  <p className="card-text">{d.indirizzo}<br />{d.cap} {d.citta}<br></br>Inizio Prenotazione: {dateFormat(d.dateFrom, "dd-mm-yyyy")}<br></br>Fine Prenotazione: {dateFormat(d.dateTo, "dd-mm-yyyy")}<br></br>Pagato: €{d.costo}</p>
                   <button onClick={() => this.handleClick(d.idPrenotazione)} type="button" className="btn btn-primary">Invia Dati alla Questura</button><br />
                 </div>
               </div>

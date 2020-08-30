@@ -57,8 +57,8 @@ export default class FormQuestura extends Component {
   aggiungiOspite() {
     let listTemp = this.state.listOfFields
     listTemp.push(
-      <div>
-        <div key={listTemp.length} className="form-row">
+      <div key={listTemp.length}>
+        <div className="form-row">
           <div className="form-group col-md-6">
             <label>Nome e Cognome</label>
             <input className="form-control" name="nomeCognome" placeholder="Inserire Nome e Cognome" required />
@@ -105,10 +105,10 @@ export default class FormQuestura extends Component {
             <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} />
           </div> */}
 
-          <div class="input-group col-md-6 mb-3 p-0">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} aria-describedby="inputGroupFileAddon01" />
-              <label class="custom-file-label" for="inputGroupFile01">Seleziona Immagini Documenti</label>
+          <div className="input-group col-md-6 mb-3 p-0">
+            <div className="custom-file">
+              <input type="file" className="custom-file-input" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} aria-describedby="inputGroupFileAddon01" />
+              <label className="custom-file-label" htmlFor="inputGroupFile01">Seleziona Immagini Documenti</label>
             </div>
           </div>
 

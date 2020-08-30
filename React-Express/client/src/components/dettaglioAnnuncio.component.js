@@ -14,18 +14,22 @@ export default class DettaglioAnnuncio extends Component {
     citta: '',
     cap: '',
     indirizzo: '',
-    civico: '',
     dateFrom: '',
     dateTo: '',
     n_posti: '',
+    n_camere: '',
+    n_letti: '',
     n_bagni: '',
     wifi: 0,
-    ascensore: 0,
-    garage: 0,
-    terrazzo: 0,
+    doccia: 0,
+    tv: 0,
+    cucina: 0,
+    riscaldamento: 0,
+    accessibile: 0,
     descrizione: '',
-    costo: '',
+    titolo: '',
     telefono: '',
+    costo: '',
 
     listOfImages: [],
     CoverImg: '',
@@ -49,118 +53,86 @@ export default class DettaglioAnnuncio extends Component {
 
   componentDidUpdate() {
     displayComponent('wifi', Boolean(this.state.wifi))
-    displayComponent('ascensore', Boolean(this.state.ascensore))
-    displayComponent('garage', Boolean(this.state.garage))
-    displayComponent('terrazzo', Boolean(this.state.terrazzo))
+    displayComponent('doccia', Boolean(this.state.doccia))
+    displayComponent('tv', Boolean(this.state.tv))
+    displayComponent('cucina', Boolean(this.state.cucina))
+    displayComponent('riscaldamento', Boolean(this.state.riscaldamento))
+    displayComponent('accessibile', Boolean(this.state.accessibile))
   }
 
   // Carica i dati relativi all'annuncio
   componentDidMount() {
 
     // Tramite inserimento manuale dell'URL o condivisione link
-    if (this.props.history.action === 'POP') {
+    if (!(this.props.history.action === 'POP')) this.setState({ datiPrenotazione: this.props.location.state[1] });
 
-      let values = queryString.parse(this.props.location.search)
-      let id = values.id
+    let values = queryString.parse(this.props.location.search)
+    let id = values.id
 
-      axios.post(`http://127.0.0.1:9000/gestioneAnnunci/recuperaAnnuncio`, { id })
-        .then(res => {
+    axios.post(`http://127.0.0.1:9000/gestioneAnnunci/recuperaAnnuncio`, { id })
+      .then(res => {
 
-          this.setState({
-            idAnnuncio: res.data[0].idAnnuncio,
-            idProprietario: res.data[0].idProprietario,
-            citta: res.data[0].citta,
-            cap: res.data[0].cap,
-            indirizzo: res.data[0].indirizzo,
-            civico: res.data[0].civico,
-            dateFrom: res.data[0].dateFrom,
-            dateTo: res.data[0].dateTo,
-            n_posti: res.data[0].n_posti,
-            n_bagni: res.data[0].n_bagni,
-            wifi: res.data[0].wifi,
-            ascensore: res.data[0].ascensore,
-            garage: res.data[0].garage,
-            terrazzo: res.data[0].terrazzo,
-            descrizione: res.data[0].descrizione,
-            costo: res.data[0].costo,
-            telefono: res.data[0].telefono
-          })
-          console.log(this.state)
+        this.setState({
+          idAnnuncio: res.data[0].idAnnuncio,
+          idProprietario: res.data[0].idProprietario,
+          citta: res.data[0].citta,
+          cap: res.data[0].cap,
+          indirizzo: res.data[0].indirizzo,
+          dateFrom: res.data[0].dateFrom,
+          dateTo: res.data[0].dateTo,
+          n_posti: res.data[0].n_posti,
+          n_camere: res.data[0].n_camere,
+          n_letti: res.data[0].n_letti,
+          n_bagni: res.data[0].n_bagni,
+          wifi: res.data[0].wifi,
+          doccia: res.data[0].doccia,
+          tv: res.data[0].tv,
+          cucina: res.data[0].cucina,
+          riscaldamento: res.data[0].riscaldamento,
+          accessibile: res.data[0].accessibile,
+          descrizione: res.data[0].descrizione,
+          costo: res.data[0].costo,
+          titolo: res.data[0].titolo
+        })
+        console.log(this.state)
 
-          // Carica le immagini dell'annuncio dentro listOfImages
-          const path = require.context('../../../images', true)
-          for (let i = 0; i < 5; i++) {
-            try {
-              var joined = this.state.listOfImages.concat(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'));
-              this.setState({ listOfImages: joined })
-            }
-            catch (err) {
-              console.log("Immagini finite")
-              break
-            }
+        // Carica le immagini dell'annuncio dentro listOfImages
+        const path = require.context('../../../images', true)
+        for (let i = 0; i < 5; i++) {
+          try {
+            var joined = this.state.listOfImages.concat(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'));
+            this.setState({ listOfImages: joined })
           }
+          catch (err) {
+            console.log("Immagini finite")
+            break
+          }
+        }
 
-          this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
+        this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
 
 
-          axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { id })
-            .then(res => {
-              this.setState({ dateOccupate: res.data })
-            })
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { id })
+          .then(res => {
+            this.setState({ dateOccupate: res.data })
+          })
 
-        })
-        .catch(err => {
-          console.log("Error = ", err);
-          alert("Annuncio non Trovato")
-        })
-    }
-    else {
-      //Copia i dati dei risultati della ricerca nello state della pagina passati dal push  
-      this.setState({
-        idAnnuncio: this.props.location.state[0].idAnnuncio,
-        idProprietario: this.props.location.state[0].idProprietario,
-        citta: this.props.location.state[0].citta,
-        cap: this.props.location.state[0].cap,
-        indirizzo: this.props.location.state[0].indirizzo,
-        civico: this.props.location.state[0].civico,
-        dateFrom: this.props.location.state[0].dateFrom,
-        dateTo: this.props.location.state[0].dateTo,
-        n_posti: this.props.location.state[0].n_posti,
-        n_bagni: this.props.location.state[0].n_bagni,
-        wifi: this.props.location.state[0].wifi,
-        ascensore: this.props.location.state[0].ascensore,
-        garage: this.props.location.state[0].garage,
-        terrazzo: this.props.location.state[0].terrazzo,
-        descrizione: this.props.location.state[0].descrizione,
-        costo: this.props.location.state[0].costo,
-        telefono: this.props.location.state[0].telefono
       })
+      .catch(err => {
+        console.log("Error = ", err);
+        alert("Annuncio non Trovato")
+      })
+  }
 
-      // Carica le immagini dell'annuncio dentro listOfImages
-      const path = require.context('../../../images', true)
-      for (let i = 0; i < 5; i++) {
-        try {
-          var joined = this.state.listOfImages.concat(path('./ID' + this.props.location.state[0].idAnnuncio + '/img' + i + '.png'));
-          this.setState({ listOfImages: joined })
-          console.log("index:" + i)
-        }
-        catch (err) {
-          console.log("Immagini finite")
-          break
-        }
+  // Controlla se ci sono date già prenotate all'interno di quella effettuata
+  checkDateInside() {
+    for (let i = 0; i < this.state.dateOccupate.length; i++) {
+      if ((moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD') <= moment(this.state.dateOccupate[i].dateFrom, 'YYYY-MM-DD') &&
+        moment(this.state.dateOccupate[i].dateTo, 'YYYY-MM-DD') <= moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD'))) {
+        return true
       }
-
-      this.setState({ CoverImg: require('../../../images/ID' + this.props.location.state[0].idAnnuncio + '/Cover.png') })
-
-      let idAnnuncio = this.props.location.state[0].idAnnuncio
-      axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { idAnnuncio })
-        .then(res => {
-          this.setState({ dateOccupate: res.data })
-        })
-
-
-      this.setState({ datiPrenotazione: this.props.location.state[1] });
     }
+    return false
   }
 
   // Effettua Prenotazione - Reindirizza a Modulo Pagamento
@@ -171,6 +143,9 @@ export default class DettaglioAnnuncio extends Component {
     }
     else if (isNaN(this.state.costoTotale)) {
       alert("Devi Inserire i Dati Relativi per Poter Prenotare")
+    }
+    else if (this.checkDateInside()) {
+      alert("Date Occupate all'Interno del Range di quelle Inserite");
     }
     else {
       const prenotazione = {
@@ -295,37 +270,37 @@ export default class DettaglioAnnuncio extends Component {
           </div>
           <div className="row">
             <div className="col-md-7 p-0 ml-3">
-              <h1 className="display-4">{this.state.descrizione}</h1>
-              <p className="lead">{this.state.n_posti} ospiti · 1 camera da letto · 2 letti · 1 bagno</p>
+              <h1 className="display-4">{this.state.titolo}</h1>
+              <p className="lead">{this.state.n_posti} ospiti · {this.state.n_camere} camera/e da letto · {this.state.n_letti} letti · {this.state.n_bagni} bagno/i</p>
               <h2>Servizi</h2>
               <hr className="m-0" />
               <ul className="list-group list-group-flush mb-4">
                 <li className="list-group-item" key="wifi" id='wifi'>
-                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-wifi"></i></span>
+                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-wifi"></i></span>
                   WiFi
                 </li>
-                <li className="list-group-item" key="shower" id='shower'>
-                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-shower"></i></span>
+                <li className="list-group-item" key="doccia" id='doccia'>
+                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-shower"></i></span>
                   Doccia</li>
                 <li className="list-group-item" key="tv" id='tv'>
                   <i className="fas fa-tv"></i>TV</li>
-                <li className="list-group-item" key="utensils" id='utensils'>
+                <li className="list-group-item" key="cucina" id='cucina'>
                   <i className="fas fa-utensils"></i>Cucina</li>
-                <li className="list-group-item" key="thermometer" id='thermometer'>
+                <li className="list-group-item" key="riscaldamento" id='riscaldamento'>
                   <i className="fas fa-thermometer-half">
                   </i>Riscaldamento</li>
-                <li className="list-group-item" key="wheelchair" id='wheelchair'>
+                <li className="list-group-item" key="accessibile" id='accessibile'>
                   <i className="fas fa-wheelchair"></i>Accessibile</li>
                 <hr className="m-0" />
               </ul>
 
-              <h2>Extra Info</h2>
+              <h2>Descrizione</h2>
 
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!</p>
+              <p>{this.state.descrizione}</p>
 
               <p>
                 <span style={{ fontSize: '2em', color: 'Red' }}>
-                  <i class="fas fa-map-marker-alt"></i>
+                  <i className="fas fa-map-marker-alt"></i>
                 </span>
                 <br />
                 {this.state.indirizzo}<br />{this.state.cap} {this.state.citta}
@@ -366,7 +341,7 @@ export default class DettaglioAnnuncio extends Component {
 
                   <div className="form-row col-6 p-0 mx-0 mb-3">
                     <label>Ospiti</label>
-                    <input className="form-control" name="n_ospiti" type="number" min="1" onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
+                    <input className="form-control" name="n_ospiti" type="number" min="1" max={this.state.n_posti} onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
                   </div>
 
                   <p className="lead">€{this.state.costo} / notte</p>

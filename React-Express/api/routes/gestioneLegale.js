@@ -21,7 +21,7 @@ router.post('/visualizzaPrenotazioniQuestura', visualizzaPrenotazioniQuestura);
 
 router.post('/rendicontaTasseSoggiorno', rendicontaTasseSoggiorno);
 
-router.post('/pagaTasseSoggiorno', pagaTasseSoggiorno );
+router.post('/pagaTasseSoggiorno', pagaTasseSoggiorno);
 
 
 // middleware di invio dati Questura
@@ -91,8 +91,8 @@ async function visualizzaPrenotazioniQuestura(req, res, next) {
 
         await withTransaction(db, async () => {
             // inserimento utente
-            results = await db.query('SELECT * FROM `prenotazioni`\
-            WHERE idProprietario = ? AND confermata = 1 AND questura = 0', [
+            results = await db.query('SELECT * FROM `prenotazioni` P JOIN `annunci` A\
+            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND confermata = 1 AND questura = 0', [
                 req.body.idProprietario
             ])
                 .catch(err => {
@@ -147,7 +147,7 @@ async function rendicontaTasseSoggiorno(req, res, next) {
     }
 }
 
-    // middleware di invio dati Questura
+// middleware di invio dati Questura
 async function pagaTasseSoggiorno(req, res, next) {
 
     console.log(req.body.versamento)
@@ -174,7 +174,7 @@ async function pagaTasseSoggiorno(req, res, next) {
     } */
 
 
-   //Invio la mail all'ufficio turismo
+    //Invio la mail all'ufficio turismo
     var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
         service: 'gmail',
         auth: {
