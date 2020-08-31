@@ -74,6 +74,7 @@ export default class PaginaRicercaProprietario extends Component {
       <div>
         <div className="container-fluid p-3" style={{ backgroundColor: '#f2f2f2' }} >
           <h1 className="display-4 text-center mb-3">I Tuoi Annunci</h1>
+          <a className="btn btn-primary btn-block mb-3" href="/gestioneAnnunci/visualizzaPrenotazioni">Prenotazioni pendenti</a>
           <a className="btn btn-success btn-block mb-3" href='/gestioneAnnunci/inserisciAnnuncio'>Aggiungi annuncio</a>
           {this.state.listItems}
         </div>

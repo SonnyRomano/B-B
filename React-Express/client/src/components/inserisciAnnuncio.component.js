@@ -166,32 +166,36 @@ export default class InserisciAnnuncio extends Component {
             <div className="form-row mb-3">
               <div className="form-check form-check-inline col-md-3">
                 <input className="form-check-input" type="checkbox" id="wifi" name="wifi" value='1' onChange={this.handleChange} />
-                <i className="fas fa-wifi mr-2"></i>
+                <span style={{ width: 28 }}><i className="fas fa-wifi"></i></span>
                 <label className="form-check-label" htmlFor="wifi">Wi-Fi</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
                 <input className="form-check-input" type="checkbox" id="doccia" name="doccia" value="1" onChange={this.handleChange} />
-                <i className="fas fa-shower mr-2"></i>
+                <span style={{ width: 28 }}><i className="fas fa-shower"></i></span>
                 <label className="form-check-label" htmlFor="doccia">Doccia</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
                 <input className="form-check-input" type="checkbox" id="tv" name="tv" value="1" onChange={this.handleChange} />
-                <i className="fas fa-tv mr-2"></i>
+
+                <span style={{ width: 28 }}><i className="fas fa-tv"></i></span>
                 <label className="form-check-label" htmlFor="tv">TV</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
                 <input className="form-check-input" type="checkbox" id="cucina" name="cucina" value="1" onChange={this.handleChange} />
-                <i className="fas fa-utensils mr-2"></i>
+
+                <span style={{ width: 28 }}><i className="fas fa-utensils"></i></span>
                 <label className="form-check-label" htmlFor="cucina">Cucina</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
                 <input className="form-check-input" type="checkbox" id="riscaldamento" name="riscaldamento" value="1" onChange={this.handleChange} />
-                <i className="fas fa-thermometer-half mr-2"></i>
+
+                <span style={{ width: 28 }}><i className="fas fa-thermometer-half"></i></span>
                 <label className="form-check-label" htmlFor="riscaldamento">Riscaldamento</label>
               </div>
               <div className="form-check form-check-inline col-md-3">
                 <input className="form-check-input" type="checkbox" id="accessibile" name="accessibile" value="1" onChange={this.handleChange} />
-                <i className="fas fa-wheelchair mr-2"></i>
+                <span style={{ width: 28 }}><i className="fas fa-wheelchair"></i></span>
+
                 <label className="form-check-label" htmlFor="accessibile">Accessibile</label>
               </div>
             </div>
@@ -208,7 +212,8 @@ export default class InserisciAnnuncio extends Component {
               </div>
             </div>
 
-            <div className="form-row">
+            <label>Foto</label>
+            <div className="form-row mb-3">
               <div className="input-group col-md-6">
                 <div className="custom-file">
                   <input type="file" className="custom-file-input" id="cover" name="cover" accept="image/*" onChange={this.onCoverChange} aria-describedby="inputGroupFileAddon01"></input>
@@ -241,7 +246,7 @@ export default class InserisciAnnuncio extends Component {
             </div>
 
             <label>Descrizione</label>
-            <textarea className="form-control mb-5" rows="4" name="descrizione" onChange={this.handleChange} value={this.state.descrizione}></textarea>
+            <textarea className="form-control mb-5" rows="4" name="descrizione" onChange={this.handleChange} value={this.state.descrizione} required></textarea>
 
             <button className="btn btn-success btn-block" type="submit">Inserisci annuncio</button>
 

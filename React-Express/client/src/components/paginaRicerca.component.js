@@ -35,7 +35,7 @@ export default class PaginaRicerca extends Component {
         <div className="card h-100" onClick={() => this.handleClick(d)}>
           <img src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} className="card-img-top" alt="..." />
           <div className="card-body p-3">
-            <h5 className="card-title">{d.descrizione}</h5>
+            <h5 className="card-title">{d.titolo}</h5>
             <p className="card-text text-muted">Da €{d.costo}</p>
             {/* <div>
               <span className="mr-3">
@@ -63,11 +63,11 @@ export default class PaginaRicerca extends Component {
                 <i className="fas fa-male mr-2"></i>{d.n_posti}
               </span>
               <span className="mr-3">
-                <i className="fas fa-bed mr-2"></i>2
-            </span>
+                <i className="fas fa-bed mr-2"></i>{d.n_camere}
+              </span>
               <span className="mr-3">
-                <i className="fas fa-bath mr-2"></i>1
-            </span>
+                <i className="fas fa-bath mr-2"></i>{d.n_bagni}
+              </span>
               {/* <span style={{ fontSize: '3em', color: 'Tomato' }}>
               <i class="fas fa-camera"></i>
             </span> */}

@@ -122,18 +122,13 @@ export default class DettaglioAnnuncio extends Component {
         citta: this.props.location.state[0].citta,
         cap: this.props.location.state[0].cap,
         indirizzo: this.props.location.state[0].indirizzo,
-        civico: this.props.location.state[0].civico,
         dateFrom: this.props.location.state[0].dateFrom,
         dateTo: this.props.location.state[0].dateTo,
         n_posti: this.props.location.state[0].n_posti,
         n_bagni: this.props.location.state[0].n_bagni,
         wifi: this.props.location.state[0].wifi,
-        ascensore: this.props.location.state[0].ascensore,
-        garage: this.props.location.state[0].garage,
-        terrazzo: this.props.location.state[0].terrazzo,
         descrizione: this.props.location.state[0].descrizione,
         costo: this.props.location.state[0].costo,
-        telefono: this.props.location.state[0].telefono
       })
 
       // Carica le immagini dell'annuncio dentro listOfImages
@@ -295,8 +290,8 @@ export default class DettaglioAnnuncio extends Component {
           </div>
           <div className="row">
             <div className="col-md-7 p-0 ml-3">
-              <h1 className="display-4">{this.state.descrizione}</h1>
-              <p className="lead">{this.state.n_posti} ospiti · 1 camera da letto · 2 letti · 1 bagno</p>
+              <h1 className="display-4">{this.state.titolo}</h1>
+              <p className="lead">{this.state.n_posti} ospiti · 1 camera da letto · 2 letti · {this.n_bagni} bagno</p>
               <h2>Servizi</h2>
               <hr className="m-0" />
               <ul className="list-group list-group-flush mb-4">
@@ -306,22 +301,28 @@ export default class DettaglioAnnuncio extends Component {
                 </li>
                 <li className="list-group-item" key="shower" id='shower'>
                   <span style={{ fontSize: '1.3em' }}><i class="fas fa-shower"></i></span>
-                  Doccia</li>
+                  Doccia
+                </li>
                 <li className="list-group-item" key="tv" id='tv'>
-                  <i className="fas fa-tv"></i>TV</li>
+                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-tv"></i></span>
+                  TV
+                </li>
                 <li className="list-group-item" key="utensils" id='utensils'>
-                  <i className="fas fa-utensils"></i>Cucina</li>
+                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-utensils"></i></span>
+                  Cucina
+                </li>
                 <li className="list-group-item" key="thermometer" id='thermometer'>
-                  <i className="fas fa-thermometer-half">
-                  </i>Riscaldamento</li>
+                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-thermometer-half"></i></span>
+                  Riscaldamento</li>
                 <li className="list-group-item" key="wheelchair" id='wheelchair'>
-                  <i className="fas fa-wheelchair"></i>Accessibile</li>
+                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-wheelchair"></i></span>
+                  Accessibile</li>
                 <hr className="m-0" />
               </ul>
 
               <h2>Extra Info</h2>
 
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!</p>
+              <p>{this.state.descrizione}</p>
 
               <p>
                 <span style={{ fontSize: '2em', color: 'Red' }}>
@@ -376,7 +377,7 @@ export default class DettaglioAnnuncio extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
