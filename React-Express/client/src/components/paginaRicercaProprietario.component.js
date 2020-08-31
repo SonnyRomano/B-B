@@ -26,7 +26,9 @@ export default class PaginaRicercaProprietario extends Component {
           <div className="shadow card mb-3" key={d.idAnnuncio}>
             <div className="row no-gutters">
               <div className="col-md-4">
-                <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
+                <a href={'/gestioneAnnunci/dettaglioAnnuncio?id=' + d.idAnnuncio}>
+                  <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
+                </a>
               </div>
               <div className="col-md-8">
                 <div className="card-body">

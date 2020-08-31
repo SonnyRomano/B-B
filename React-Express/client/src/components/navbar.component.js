@@ -47,19 +47,17 @@ export default class Navbar extends Component {
 
   componentDidMount() {
     this.autenticationString();
-    let regex = RegExp('/gestione')
-    if (regex.test(window.location.href)) displayComponent("tabAnnunci", true)
-    else displayComponent("tabAnnunci", false)
-
     let path = 'http://localhost:3000'
 
     switch (window.location.href) {
       case path + '/gestioneAnnunci/paginaRicercaProprietario':
         document.getElementById('Annunci').className = "nav-link active"
+        displayComponent("tabAnnunci", true)
         break
 
       case path + "/gestioneAnnunci/visualizzaGuadagno":
         document.getElementById('visualizzaGuadagni').className = "nav-link active"
+        displayComponent("tabAnnunci", true)
         break
 
       case path + "/gestioneAnnunci/visualizzaPrenotazioni":
@@ -68,13 +66,16 @@ export default class Navbar extends Component {
 
       case path + "/gestioneAnnunci/rendicontaTasse":
         document.getElementById('rendicontaTasse').className = "nav-link active"
+        displayComponent("tabAnnunci", true)
         break
 
       case path + '/gestioneLegale/visualizzaPrenotazioniQuestura':
         document.getElementById('Questura').className = "nav-link active"
+        displayComponent("tabAnnunci", true)
         break
 
       default:
+        displayComponent("tabAnnunci", false)
         break
     }
   }

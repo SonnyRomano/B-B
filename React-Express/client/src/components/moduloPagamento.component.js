@@ -131,7 +131,7 @@ export default class moduloPagamento extends React.Component {
               </div>
               <div className="form-group m-2">
                 <label htmlFor="ccnum">Numero della carta</label>
-                <input type="text" className="form-control" name="cardnumber" onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
+                <input type="text" className="form-control" name="cardnumber" max='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
               </div>
               <div className="form-group m-2">
                 <label htmlFor="expmonth">Exp Month</label>
