@@ -7,24 +7,25 @@ export default class RendicontaTasse extends Component {
 
     state = {
         listItems: '',  //Oggetti da visualizzare
+
         importoTotale: 0,  //Importo totale da versare all'ufficio del turismo
     }
 
-    componentWillMount() {
+    componentWillMount() { //Eseguo queste operazioni prima di montare il componente
 
         let dataReq = {
             idProprietario : sessionStorage.getItem('id'),
-            dataOdierna : moment().format('YYYY-MM-DD'),
+            //dataOdierna : moment().format('YYYY-MM-DD'),
         };
 
         //Effettua un post passandogli i dati
         axios.post(`http://127.0.0.1:9000/gestioneLegale/rendicontaTasseSoggiorno`, { dataReq })
             .then(res => {
 
-                const tassa = '0.02'    //suppongo tassa fissa da versare al 2% del costo pagato al momento della prenotazione
-
+                const tassa = '3'    //suppongo tassa fissa da versare di 3 euro per ogni ospite in ciascuna prenotazione
+            
                 for (let i = 0; i < res.data.length; i++) {     //memorizzo nello state il totale di tasse da pagare
-                    this.setState({ importoTotale: this.state.importoTotale + (res.data[i].costo * parseFloat(tassa)) })
+                    this.setState({ importoTotale: this.state.importoTotale + (res.data[i].n_ospiti * parseFloat(tassa)) })
                 }
 
                 const listItems = res.data.map((d) =>
@@ -35,7 +36,7 @@ export default class RendicontaTasse extends Component {
                                     <img key={'img' + d.idPrenotazione} style={{ width: '100%' }} src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage"  ></img>
                                 </div>
                                 <div className='col-6' style={{ marginTop: '2rem' }}>
-                                    <h5>- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- IdCliente: {d.idCliente}<br></br> - Inizio Prenotazione: {d.dateFrom}<br></br> - Fine Prenotazione: {d.dateTo}<br></br>- Tassa da versare per l'annuncio: {d.costo * parseFloat(tassa)} € </h5> 
+                                    <h5>- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- IdCliente: {d.idCliente}<br></br> - Ospiti: {d.n_ospiti}x <br></br>- Tassa da versare: {d.n_ospiti}x{parseFloat(tassa)}€ = {d.n_ospiti * parseFloat(tassa)}€ </h5> 
                                 </div>
                             </div>
                         </div>
@@ -52,17 +53,8 @@ export default class RendicontaTasse extends Component {
     }
 
     handlePay(versamento) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
-        axios.post(`http://127.0.0.1:9000/gestioneLegale/pagaTasseSoggiorno`, versamento)
-        .then(res => {
-            alert('Tasse versate con successo a ufficio turismo')
-        })
-        .catch(err => {
-            console.log("Error = ", err)
-        })
-
+        this.props.history.push('/gestioneLegale/formUfficioTurismo', versamento);
     }
-    
-
 
     render() {
 
@@ -82,7 +74,7 @@ export default class RendicontaTasse extends Component {
                                         <h1 className="h5" style={{ padding: '1rem', textAlign: 'left', marginBottom: '2rem' }}>Importo totale da versare: {this.state.importoTotale} €</h1>
                                     </div>
                                     <div className='col-4' style={{ marginTop: '2rem' }}>
-                                        <button type="button" className="btn btn-success btn-lg" onClick={() => this.handlePay(this.state.importoTotale)}>Versa all'ufficio turismo!</button>
+                                        <button type="button" className="btn btn-success btn-lg" onClick={() => this.handlePay(this.state.importoTotale)}>Invia generalità e paga all'ufficio turismo!</button>
                                     </div>
                                 </div>
                             </div> 

@@ -27,7 +27,7 @@ router.post('/visualizzaPrenotazioniProprietario', visualizzaPrenotazioniProprie
 /* proprietario visualiza visualizza Guadagno Proprietario */
 router.post('/visualizzaGuadagnoProprietario', visualizzaGuadagnoProprietario);
 
-/* recupera prenotazion */
+/* recupera prenotazioni */
 router.post('/recuperaPrenotazioni', recuperaPrenotazioni);
 
 
@@ -42,15 +42,15 @@ async function effettuaPrenotazione(req, res, next) {
         //CREO TABELLA prenotazioni SE NON ESISTE
         let query = 'CREATE TABLE IF NOT EXISTS prenotazioni \
                     (`idPrenotazione` INT AUTO_INCREMENT PRIMARY KEY, `idAnnuncio` INT, `idProprietario` INT, `idCliente` INT,\
-                    `dateFrom` DATE, `dateTo` DATE, `costo` INT, `idPagamento` INT,\
-                    `confermata` TINYINT(1), `questura` TINYINT(1))'
+                    `dateFrom` DATE, `dateTo` DATE, `costo` INT, `n_ospiti` INT,  `idPagamento` INT,\
+                    `confermata` TINYINT(1), `questura` TINYINT(1), `ufficioTurismo` TINYINT(1) )'
         db.query(query, (err, result) => {
             if (err) throw err
             console.log(result);
         })
 
         results = await db.query('INSERT INTO `prenotazioni` \
-          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, idPagamento, confermata, questura) VALUES ?', [
+          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, n_ospiti, idPagamento, confermata, questura, ufficioTurismo) VALUES ?', [
             [
                 [
                     req.body.datiPrenotazione.idAnnuncio,
@@ -59,7 +59,9 @@ async function effettuaPrenotazione(req, res, next) {
                     req.body.datiPrenotazione.dateFrom,
                     req.body.datiPrenotazione.dateTo,
                     req.body.datiPrenotazione.costoTotale,
+                    req.body.datiPrenotazione.n_ospiti,
                     req.body.datiPrenotazione.idPagamento,
+                    false,
                     false,
                     false
                 ]

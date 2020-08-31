@@ -23,6 +23,7 @@ import RendicontaTasse from './components/RendicontaTasse.component'
 
 import VisualizzaPrenotazioniQuestura from './components/visualizzaPrenotazioniQuestura.component'
 import FormQuestura from './components/formQuestura.component'
+import FormUfficioTurismo from "./components/formUfficioTurismo.component";
 
 
 
@@ -65,6 +66,7 @@ class App extends Component {
 
                         <Route exact path="/gestioneLegale/visualizzaPrenotazioniQuestura" component={VisualizzaPrenotazioniQuestura} />
                         <Route exact path="/gestioneLegale/formQuestura" component={FormQuestura} />
+                        <Route exact path="/gestioneLegale/formUfficioTurismo" component={FormUfficioTurismo} />
                         <Route exact path="/gestioneLegale/rendicontaTasse" component={RendicontaTasse} />
                     </React.Fragment>
                 </Router>
