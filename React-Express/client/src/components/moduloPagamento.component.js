@@ -62,10 +62,10 @@ export default class moduloPagamento extends React.Component {
   }
 
   componentDidMount() {
-    //Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
-    if (this.props.history.action === 'POP') {
-      this.props.history.push('/')
-    }
+    // Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
+    // if (this.props.history.action === 'POP') {
+    //   this.props.history.push('/')
+    // }
   }
 
   render() {
@@ -73,7 +73,7 @@ export default class moduloPagamento extends React.Component {
     this.datiPrenotazione = this.props.location.state;
 
     return (
-      <div className="container" id="bg1">
+      <div className="container p-3 rounded" style={{ backgroundColor: '#f2f2f2' }} >
         <div className="display-4">Checkout Form</div>
         <hr />
         <form onSubmit={this.handleSubmit}>
@@ -81,32 +81,32 @@ export default class moduloPagamento extends React.Component {
             <div className="col-sm-6">
               <h3 className="mb-5">Indirizzo di fatturazione</h3>
 
-              <div className="form-group m-2">
-                <label htmlFor="fname"><i className="fa fa-user"></i> Nome e cognome</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="fname" placeholder="John M. Doe" />
+              <div className="form-group">
+                <label htmlFor="fname"><i className="fa fa-user mr-2"></i>Nome e cognome</label>
+                <input type="text" onChange={this.handleChange} className="form-control" name="fname" placeholder="Mario Rossi" />
               </div>
-              <div className="form-group m-2">
-                <label htmlFor="email"><i className="fa fa-envelope"></i> Email</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="email" placeholder="john@example.com" />
+              <div className="form-group">
+                <label htmlFor="email"><i className="fa fa-envelope mr-2"></i>Email</label>
+                <input type="text" onChange={this.handleChange} className="form-control" name="email" placeholder="mariorossi@gmail.com" />
               </div>
-              <div className="form-group m-2">
-                <label htmlFor="adr"><i className="fa fa-address-card-o"></i> Via e numero civico</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="adr" placeholder="542 W. 15th Street" />
+              <div className="form-group">
+                <label htmlFor="adr"><i className="far fa-address-card mr-2"></i>Via e numero civico</label>
+                <input type="text" onChange={this.handleChange} className="form-control" name="adr" placeholder="Via Roma, 15" />
               </div>
-              <div className="form-group m-2">
-                <label htmlFor="city"><i className="fa fa-institution"></i> Città</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="city" placeholder="New York" />
+              <div className="form-group">
+                <label htmlFor="city"><i className="fas fa-city mr-2"></i>Città</label>
+                <input type="text" onChange={this.handleChange} className="form-control" name="city" placeholder="Roma" />
               </div>
 
 
-              <div className="row m-2">
-                <div style={{ paddingLeft: 0 }} className="col">
+              <div className="form-row">
+                <div className="form-group col-sm-6">
                   <label htmlFor="prov">Provincia</label>
-                  <input type="text" onChange={this.handleChange} className="form-control" name="prov" placeholder="NY" />
+                  <input type="text" onChange={this.handleChange} className="form-control" name="prov" placeholder="RM" />
                 </div>
-                <div style={{ padding: 0 }} className="col">
+                <div className="form-group col-sm-6">
                   <label htmlFor="cap">CAP</label>
-                  <input type="text" onChange={this.handleChange} className="form-control" name="cap" placeholder="10001" />
+                  <input type="text" onChange={this.handleChange} className="form-control" name="cap" placeholder="90015" />
                 </div>
               </div>
 
@@ -114,7 +114,7 @@ export default class moduloPagamento extends React.Component {
 
             <div className="col-sm-6">
               <h3 className="mb-5">Payment</h3>
-              <div style={{ height: 101 }} className="m-2">
+              <div style={{ height: 101 }} className="mb-3">
                 <label>Accepted Cards</label>
                 <div className="icon-container">
                   <i className="fab fa-cc-visa mr-2"></i>
@@ -125,35 +125,89 @@ export default class moduloPagamento extends React.Component {
               </div>
 
 
-              <div className="form-group m-2">
+              <div className="form-group">
                 <label htmlFor="cname">Nome sulla carta</label>
-                <input type="text" className="form-control" name="cardname" onChange={this.handleChange} placeholder="John More" />
+                <input type="text" className="form-control" name="cardname" onChange={this.handleChange} placeholder="Mario Rossi" />
               </div>
-              <div className="form-group m-2">
+              <div className="form-group">
                 <label htmlFor="ccnum">Numero della carta</label>
                 <input type="text" className="form-control" name="cardnumber" max='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
               </div>
-              <div className="form-group m-2">
-                <label htmlFor="expmonth">Exp Month</label>
-                <input type="text" className="form-control" name="expmonth" onChange={this.handleChange} />
-              </div>
 
+              <div className="form-row">
+                <div className="form-group col-md-4">
+                  <label htmlFor="expmonth">Exp Month</label>
+                  <input type="text" className="form-control" name="expmonth" onChange={this.handleChange} />
+                </div>
 
-              <div className="row m-2">
-                <div style={{ paddingLeft: 0 }} className="col">
+                <div className="form-group col-md-4">
                   <label htmlFor="expyear">Exp Year</label>
                   <input type="text" className="form-control" name="expyear" onChange={this.handleChange} />
                 </div>
-                <div style={{ padding: 0 }} className="col">
+
+                <div className="form-group col-md-3">
                   <label htmlFor="cvv">CVV</label>
                   <input type="text" className="form-control" name="cvv" onChange={this.handleChange} />
                 </div>
               </div>
 
+              {/* <div className="form-row">
+
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputState">Exp Month</label>
+                  <select className="custom-select" onChange={this.handleChange}>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                </div>
+
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputState">Exp Year</label>
+                  <select className="custom-select" onChange={this.handleChange}>
+                    <option value="1">2020</option>
+                    <option value="2">2021</option>
+                    <option value="3">2022</option>
+                    <option value="4">2023</option>
+                    <option value="5">2024</option>
+                    <option value="6">2025</option>
+                    <option value="7">2026</option>
+                    <option value="8">2027</option>
+                    <option value="9">2028</option>
+                    <option value="10">2029</option>
+                    <option value="11">2030</option>
+                    <option value="12">2031</option>
+                    <option value="13">2032</option>
+                    <option value="14">2033</option>
+                    <option value="15">2034</option>
+                    <option value="16">2035</option>
+                    <option value="17">2036</option>
+                    <option value="18">2037</option>
+                    <option value="19">2038</option>
+                    <option value="20">2039</option>
+                    <option value="21">2040</option>
+                  </select>
+                </div>
+
+                <div className="form-group col-md-3">
+                  <label htmlFor="cvv">CVV</label>
+                  <input className="form-control" name="cvv" onChange={this.handleChange} />
+                </div>
+
+              </div> */}
 
             </div>
           </div>
-          <button type="submit" className="btn btn-secondary m-2">Continue to checkout</button>
+          <button type="submit" className="btn btn-secondary btn-block">Continue to checkout</button>
         </form>
       </div>
     )

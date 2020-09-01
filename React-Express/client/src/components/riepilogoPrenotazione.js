@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import '../stylesheets/index.css';
+// import '../stylesheets/index.css';
 import axios from 'axios';
 import dateFormat from 'dateformat'
 
@@ -35,10 +35,10 @@ export default class RiepilogoPrenotazione extends Component {
   }
 
   componentDidMount() {
-    //Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
-    if (this.props.history.action === 'POP') {
-      this.props.history.push('/')
-    }
+    // Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
+    // if (this.props.history.action === 'POP') {
+    //   this.props.history.push('/')
+    // }
   }
 
 
@@ -47,46 +47,50 @@ export default class RiepilogoPrenotazione extends Component {
     this.datiPagamento = this.props.location.state[1];
 
     return (
-      <div className="container justify-content-center">
-        <div className="col-md-9 py-5 " style={{ marginLeft: '12.5%' }}>
-          <div className="card" style={{ background: '#FFFACD' }}>
-            <div className="card-body" style={{ padding: '2rem' }}>
-              <h1 className="h1" style={{ padding: '1rem', textAlign: 'center', marginBottom: '2rem' }}>Riepilogo Prenotazione</h1>
-              <div className="container">
-                <div className="row" style={{ marginTop: '0.3rem' }}>
-                  <div className="col-md-6">
-                    <div className="list-group">
-                      <li className="list-group-item" key="idAnnuncio"><strong>ID Annuncio: </strong>{this.datiPrenotazione.idAnnuncio}</li>
-                      <li className="list-group-item" key="dateFrom"><strong>Data Inizio: </strong>{dateFormat(this.datiPrenotazione.dateFrom, "dd/mm/yyyy")}</li>
-                      <li className="list-group-item" key="dateTo"><strong>Data Fine: </strong>{dateFormat(this.datiPrenotazione.dateTo, "dd/mm/yyyy")}</li>
-                    </div>
-                  </div>
-                </div>
-                <div className="row" style={{ marginTop: '0.3rem' }}>
-                  <div className="col-md-6">
-                    <div className="list-group">
-                      <li className="list-group-item" key="citta"><strong>Intestatario: </strong>{this.datiPagamento.fname}</li>
-                      <li className="list-group-item" key="dateFrom"><strong>Numero Carta: </strong>{this.datiPagamento.cardnumber}</li>
-                      <li className="list-group-item" key="dateTo"><strong>Scadenza: </strong>{this.datiPagamento.expmonth} / {this.datiPagamento.expyear}</li>
-                    </div>
-                  </div>
-                </div>
-                <div className="row" style={{ marginTop: '0.3rem' }}>
-                  <div className="col-md-4">
-                    <div className="list-group">
-                      <li className="list-group-item" key="costo"><strong>Costo Totale: </strong>{this.datiPrenotazione.costoTotale}€</li>
-                    </div>
-                  </div>
-                </div>
-                <div className="row" style={{ marginTop: '1rem' }}>
-                  <div className="col-md-5">
-                    <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div className="container p-3 rounded" style={{ backgroundColor: '#f2f2f2' }} >
+        <h1 className="display-4 text-center mb-3">Riepilogo Prenotazione</h1>
+        <hr />
+
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+          <div className="col">
+            <h4>Dettagli prenotazione</h4>
+            <p>
+              ID annuncio: {this.datiPrenotazione.idAnnuncio}&nbsp;&rarr;&nbsp;
+              <a href={'/gestioneAnnunci/dettaglioAnnuncio?id=' + this.datiPrenotazione.idAnnuncio}>vedi annuncio</a>
+              <br />
+              ID proprietario: {this.datiPrenotazione.idProprietario}<br />
+              Inizio prenotazione: {dateFormat(this.datiPrenotazione.dateFrom, "dd/mm/yyyy")}<br />
+              Fine prenotazione: {dateFormat(this.datiPrenotazione.dateTo, "dd/mm/yyyy")}<br />
+              Numero di ospiti: {this.datiPagamento.n_posti}
+            </p>
           </div>
+
+          <div className="col">
+            <h4>Indirizzo di fatturazione</h4>
+            <p>
+              {this.datiPagamento.fname}<br />
+              {this.datiPagamento.adr}<br />
+              {this.datiPagamento.city}, {this.datiPagamento.cap}<br />
+              {this.datiPagamento.email}
+            </p>
+          </div>
+          <div className="col">
+            <h4>Modalità di pagamento</h4>
+            <p>
+              Carta di credito<br />
+              {this.datiPagamento.cardnumber}<br />
+              Scade il {this.datiPagamento.expmonth}/{this.datiPagamento.expyear}
+              <br />
+              <br />
+              Nome sulla carta<br />
+              {this.datiPagamento.cardname}
+            </p>
+          </div>
+
         </div>
+        <p className="lead text-center">Totale: {this.datiPrenotazione.costoTotale} €</p>
+
+        <button type="button" className="btn btn-success btn-block" onClick={() => this.effettuaPrenotazione()}>Conferma prenotazione</button>
       </div>
     );
   }

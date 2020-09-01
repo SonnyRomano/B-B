@@ -270,7 +270,7 @@ export default class DettaglioAnnuncio extends Component {
           <div className="row">
             <div className="col-md-7 p-0 ml-3">
               <h1 className="display-4">{this.state.titolo}</h1>
-              <p className="lead">{this.state.n_posti} ospiti · {this.state.n_camere} camera/e da letto · {this.state.n_letti} letti · {this.state.n_bagni} bagno/i</p>
+              <p className="lead">{this.state.n_posti} {this.state.n_posti === 1 ? 'ospite' : 'ospiti'} · {this.state.n_camere} {this.n_camere === 1 ? 'camera' : 'camere'} da letto · {this.state.n_letti} {this.state.n_letti === 1 ? 'letto' : 'letti'} · {this.state.n_bagni} {this.state.n_bagni === 1 ? 'bagno' : 'bagni'}</p>
               <h2>Servizi</h2>
               <hr className="m-0" />
               <ul className="list-group list-group-flush mb-4">
@@ -278,42 +278,31 @@ export default class DettaglioAnnuncio extends Component {
                   <span style={{ fontSize: '1.3em' }}><i className="fas fa-wifi"></i></span>
                   WiFi
                 </li>
-                <li className="list-group-item" key="shower" id='shower'>
-                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-shower"></i></span>
+                <li className="list-group-item" key="doccia" id='doccia'>
+                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-shower"></i></span>
                   Doccia
                 </li>
                 <li className="list-group-item" key="tv" id='tv'>
-                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-tv"></i></span>
+                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-tv"></i></span>
                   TV
                 </li>
-                <li className="list-group-item" key="utensils" id='utensils'>
-                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-utensils"></i></span>
+                <li className="list-group-item" key="cucina" id='cucina'>
+                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-utensils"></i></span>
                   Cucina
                 </li>
-                <li className="list-group-item" key="thermometer" id='thermometer'>
-                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-thermometer-half"></i></span>
-                  Riscaldamento</li>
-                <li className="list-group-item" key="wheelchair" id='wheelchair'>
-                  <span style={{ fontSize: '1.3em' }}><i class="fas fa-wheelchair"></i></span>
-                  Accessibile</li>
-                <li className="list-group-item" key="doccia" id='doccia'>
-                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-shower"></i></span>
-                  Doccia</li>
-                <li className="list-group-item" key="tv" id='tv'>
-                  <i className="fas fa-tv"></i>TV</li>
-                <li className="list-group-item" key="cucina" id='cucina'>
-                  <i className="fas fa-utensils"></i>Cucina</li>
                 <li className="list-group-item" key="riscaldamento" id='riscaldamento'>
-                  <i className="fas fa-thermometer-half">
-                  </i>Riscaldamento</li>
+                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-thermometer-half"></i></span>
+                  Riscaldamento</li>
                 <li className="list-group-item" key="accessibile" id='accessibile'>
-                  <i className="fas fa-wheelchair"></i>Accessibile</li>
+                  <span style={{ fontSize: '1.3em' }}><i className="fas fa-wheelchair"></i></span>
+                  Accessibile</li>
                 <hr className="m-0" />
               </ul>
 
-              <h2>Descrizione</h2>
-
-              <p>{this.state.descrizione}</p>
+              <div className="pr-3">
+                <h2>Extra Info</h2>
+                <p>{this.state.descrizione}</p>
+              </div>
 
               <p>
                 <span style={{ fontSize: '2em', color: 'Red' }}>
