@@ -6,7 +6,7 @@ import HomePage from './components/homePage.component'
 import Login from './components/login.component'
 import SignUp from './components/signUp.component';
 import DiventaHost from './components/diventaHost.component'
-import Footer from './components/footer.component';
+//import Footer from './components/footer.component';
 import PaginaRicerca from './components/paginaRicerca.component';
 
 import InserisciAnnuncio from './components/inserisciAnnuncio.component'

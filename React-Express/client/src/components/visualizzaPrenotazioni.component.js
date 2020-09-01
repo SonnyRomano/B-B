@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../stylesheets/index.css';
 import axios from 'axios';
+import dateFormat from 'dateformat'
 
 export default class VisualizzaPrenotazioni extends Component {
 
@@ -25,10 +26,10 @@ export default class VisualizzaPrenotazioni extends Component {
                   <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
                 </a>
               </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- ID Cliente: {d.idCliente}<br></br> - Inizio Prenotazione: {d.dateFrom}<br></br> - Fine Prenotazione: {d.dateTo}<br></br>- Prezzo Pagato: {d.costo} €</p>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title">{d.titolo}</h5>
+                  <p className="card-text">- Citta: {d.citta} <br></br>- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- ID Cliente: {d.idCliente}<br></br> - Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br> - Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>- Prezzo Pagato: {d.costo} €</p>
                   <button onClick={() => this.handleConfirm(d)} type="button" className="btn btn-success mb-2">Accetta prenotazione</button>
                   <button onClick={() => this.handleRejection(d)} type="button" className="btn btn-danger">Declina prenotazione</button>
                 </div>
@@ -109,7 +110,7 @@ export default class VisualizzaPrenotazioni extends Component {
     return (
       <div className="container-fluid p-3 rounded" style={{ backgroundColor: '#f2f2f2' }} >
         <h1 className="display-4 text-center mb-3">Prenotazioni Pendenti</h1>
-        <p><i class="fas fa-info-circle mr-2"></i>Questa lista contiene tutte le prenotazioni dei clienti relative ai tuoi annunci pubblicati; seleziona per ognuno di essi se desideri confermarli o annullarli.</p>
+        <p><i className="fas fa-info-circle mr-2"></i>Questa lista contiene tutte le prenotazioni dei clienti relative ai tuoi annunci pubblicati; seleziona per ognuno di essi se desideri confermarli o annullarli.</p>
         <hr />
         {this.state.listItems}
       </div >

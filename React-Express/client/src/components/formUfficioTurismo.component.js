@@ -8,7 +8,7 @@ export default class FormUfficioTurismo extends Component {
   state = {
     listOfFields: [],
 
-    versamento:0
+    versamento: 0
   }
 
   handleSubmit = event => {
@@ -25,7 +25,7 @@ export default class FormUfficioTurismo extends Component {
     let dati = {
       nomeCognome,
       codiceFiscale,
-      versamento : this.state.versamento
+      versamento: this.state.versamento
     }
 
     console.log(dati)
@@ -71,6 +71,7 @@ export default class FormUfficioTurismo extends Component {
   }
 
   render() {
+    // eslint-disable-next-line
     this.state.versamento = this.props.location.state
 
     return (
@@ -95,7 +96,7 @@ export default class FormUfficioTurismo extends Component {
             <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} />
           </div> */}
 
-        <button className="btn btn btn-success" type="submit">Invia generalità e versa {this.state.versamento}€</button>
+          <button className="btn btn btn-success" type="submit">Invia generalità e versa {this.state.versamento}€</button>
 
         </form>
       </div>

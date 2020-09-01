@@ -28,7 +28,7 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
               <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{d.titolo}</h5>
-                  <p className="card-text">{d.indirizzo}<br />{d.cap} {d.citta}<br></br>Inizio Prenotazione: {dateFormat(d.dateFrom, "dd-mm-yyyy")}<br></br>Fine Prenotazione: {dateFormat(d.dateTo, "dd-mm-yyyy")}<br></br>Pagato: €{d.costo}</p>
+                  <p className="card-text">Indirizzo: {d.indirizzo}<br />Citta: {d.citta} - {d.cap}<br></br>Inizio Prenotazione: {dateFormat(d.dateFrom, "dd-mm-yyyy")}<br></br>Fine Prenotazione: {dateFormat(d.dateTo, "dd-mm-yyyy")}<br></br>Pagato: €{d.costo}</p>
                   <button onClick={() => this.handleClick(d.idPrenotazione)} type="button" className="btn btn-primary">Invia Dati alla Questura</button><br />
                 </div>
               </div>
@@ -56,7 +56,7 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
     return (
       <div className="container-fluid p-3 rounded" style={{ backgroundColor: '#f2f2f2' }} >
         <h1 className="display-4 text-center">Lista prenotazioni da inviare alla Questura</h1>
-        <p><i class="fas fa-info-circle mr-2"></i>Questa lista contiene tutte le prenotazioni di cui inviare alla Questura i dati degli ospiti</p>
+        <p><i className="fas fa-info-circle mr-2"></i>Questa lista contiene tutte le prenotazioni di cui inviare alla Questura i dati degli ospiti</p>
         <hr />
         {this.state.listItems}
       </div>
