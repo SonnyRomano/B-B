@@ -114,7 +114,7 @@ async function visualizzaPrenotazioniQuestura(req, res, next) {
     }
 }
 
-// middleware di rendiconta tasse di soggiorno
+// middleware di rendiconta tasse di soggiorno per caricare tutte le prenotazioni attive di un singolo proprietario con id passato come parametro
 async function rendicontaTasseSoggiorno(req, res, next) {
     // istanziamo il middleware
     const db = await makeDb(config);
@@ -124,7 +124,7 @@ async function rendicontaTasseSoggiorno(req, res, next) {
         await withTransaction(db, async () => {
             // inserimento utente
             results = await db.query('SELECT * FROM `prenotazioni`\
-            WHERE idProprietario = ? AND confermata = 1', [
+            WHERE idProprietario = ? AND confermata = 1 AND ufficioTurismo = 0', [
                 req.body.dataReq.idProprietario
                 //req.body.dataReq.dataOdierna
             ])
@@ -150,10 +150,6 @@ async function rendicontaTasseSoggiorno(req, res, next) {
 // middleware di invio dati Questura
 async function pagaTasseSoggiorno(req, res, next) {
 
-    console.log(req.body.versamento)
-
-    res.status(200).send('Invio riuscito')
-
     /* const db = await makeDb(config);
     let results = {};
 
@@ -173,6 +169,8 @@ async function pagaTasseSoggiorno(req, res, next) {
         next(createError(500));
     } */
 
+    var textEmail = '';
+    var dati = req.body.dati;
 
     //Invio la mail all'ufficio turismo
     var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
@@ -183,14 +181,18 @@ async function pagaTasseSoggiorno(req, res, next) {
         }
     });
 
-    var versamento = req.body.versamento
+    for (let i = 0; i < dati.nomeCognome.lenght; i++) {
+        textEmail += 'Ospite ' + i + ': ' + dati.nomeCognome[i] + '\nCodice Fiscale: ' + dati.codiceFiscale[i] + '\n\n'
+    };
+    textEmail += 'Versamento effettuato ad ufficio turismo pari a ' + dati.versamento;
 
     var mailOptions = {
         from: 'teammars44@gmail.com',
-        to: 'emailQuestura@questura.it',
-        subject: 'Soldi versati alla questura',
-        text: versamento
+        to: 'maraglianofrancesco1@gmail.com',
+        subject: 'Pagamento tasse di soggiorno',
+        text: textEmail
     };
+
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
@@ -198,6 +200,9 @@ async function pagaTasseSoggiorno(req, res, next) {
             console.log('Email inviata: ' + info.response);
         }
     });
+
+    res.status(200).send('Invio riuscito')
+
 }
 
 

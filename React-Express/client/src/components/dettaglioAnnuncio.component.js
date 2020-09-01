@@ -153,7 +153,8 @@ export default class DettaglioAnnuncio extends Component {
         idCliente: sessionStorage.getItem('id'),
         dateFrom: dateFormat(this.state.datiPrenotazione.dateFrom, "yyyy-mm-dd"),
         dateTo: dateFormat(this.state.datiPrenotazione.dateTo, "yyyy-mm-dd"),
-        costoTotale: this.state.costoTotale
+        costoTotale: this.state.costoTotale,
+        n_ospiti: this.state.datiPrenotazione.n_ospiti
       };
 
       console.log(prenotazione);

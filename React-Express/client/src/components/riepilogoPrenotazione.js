@@ -17,6 +17,7 @@ export default class RiepilogoPrenotazione extends Component {
       dateFrom: this.datiPrenotazione.dateFrom,
       dateTo: this.datiPrenotazione.dateTo,
       costoTotale: this.datiPrenotazione.costoTotale,
+      n_ospiti: this.datiPrenotazione.n_ospiti,
       idPagamento: this.datiPagamento.idPagamento
     }
 
