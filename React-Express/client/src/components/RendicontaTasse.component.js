@@ -12,6 +12,17 @@ export default class RendicontaTasse extends Component {
     importoTotale: 0,  //Importo totale da versare all'ufficio del turismo
   }
 
+  diffDays(dateTo, dateFrom) {
+    // Calcolo differenza di giorni
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    let firstDate = new Date(dateTo);
+    let secondDate = new Date(dateFrom);
+
+    let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+
+    return diffDays
+  }
+
   componentWillMount() { //Eseguo queste operazioni prima di montare il componente
 
     let dataReq = {
@@ -22,8 +33,9 @@ export default class RendicontaTasse extends Component {
     //Effettua un post passandogli i dati
     axios.post(`http://127.0.0.1:9000/gestioneLegale/rendicontaTasseSoggiorno`, { dataReq })
       .then(res => {
-        for (let i = 0; i < res.data.length; i++) {     //memorizzo nello state il totale di tasse da pagare
-          this.setState({ importoTotale: this.state.importoTotale + ((res.data[i].n_adulti) * parseFloat(res.data[i].tassa)) })
+        for (let i = 0; i < res.data.length; i++) {
+          //memorizzo nello state il totale di tasse da pagare
+          this.setState({ importoTotale: this.state.importoTotale + ((res.data[i].n_adulti) * parseFloat(res.data[i].tassa) * this.diffDays(res.data[i].dateTo, res.data[i].dateFrom)) })
         }
 
         const listItems = res.data.map((d) =>
@@ -37,7 +49,7 @@ export default class RendicontaTasse extends Component {
               <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{d.titolo}</h5>
-                  <p className="card-text">- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- IdCliente: {d.idCliente}<br></br> - Ospiti: {d.n_adulti} Adulti e {d.n_bambini} Bambini<br></br>- Tassa da versare: {d.n_adulti}x{parseFloat(d.tassa)}€ = {d.n_adulti * parseFloat(d.tassa)}€ </p>
+                  <p className="card-text">- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- IdCliente: {d.idCliente}<br></br> - Ospiti: {d.n_adulti} Adulti e {d.n_bambini} Bambini<br></br> - Numero Giorni: {this.diffDays(d.dateTo, d.dateFrom)}<br></br> - Tassa da versare: {d.n_adulti} x {this.diffDays(d.dateTo, d.dateFrom)} x {parseFloat(d.tassa)}€ = {d.n_adulti * this.diffDays(d.dateTo, d.dateFrom) * parseFloat(d.tassa)}€ </p>
                   {/* <button onClick={() => this.handleClick(d.idPrenotazione)} type="button" className="btn btn-primary">Invia Dati alla Questura</button><br /> */}
                 </div>
               </div>
