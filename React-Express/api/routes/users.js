@@ -75,11 +75,9 @@ async function registrazione(req, res, next) {
         .catch(err => {
           throw err;
         });
-      let id_utente = results.insertId;
       console.log(results);
       console.log(`Utente ${req.body.user.email} inserito!`);
-      console.log(id_utente);
-      res.status(200).send(id_utente.toString());
+      res.status(200).send(results);
     }
   } catch (err) {
     console.log(err);
@@ -121,9 +119,7 @@ async function autenticazione(req, res, next) {
           console.log('Dati utente:');
           console.log(results[0]);
 
-          let datiUtente = { id: results[0].id, host: results[0].host }
-
-          res.send(datiUtente);
+          res.send(results[0]);
         }
       }
     });

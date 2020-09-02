@@ -121,6 +121,14 @@ async function rendicontaTasseSoggiorno(req, res, next) {
     // istanziamo il middleware
     const db = await makeDb(config);
     let results = {};
+
+    let mese;
+    if (req.body.dataReq.mese <= 3) mese = '2020-12-31';
+    else if (req.body.dataReq.mese <= 6) mese = '2020-3-31';
+    else if (req.body.dataReq.mese <= 9) mese = '2020-6-30';
+    else mese = '2020-9-30';
+
+    console.log(mese)
     try {
 
         await withTransaction(db, async () => {
@@ -128,9 +136,9 @@ async function rendicontaTasseSoggiorno(req, res, next) {
             results = await db.query('SELECT P.idPrenotazione, P.idAnnuncio, P.idProprietario, \
             P.idCliente, P.dateFrom, P.dateTo, P.n_adulti, P.n_bambini, P.costo, A.titolo, A.indirizzo, A.citta, A.cap, A.tassa\
             FROM `prenotazioni` P JOIN `annunci` A\
-            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 1 AND P.ufficioTurismo = 0', [
-                req.body.dataReq.idProprietario
-                //req.body.dataReq.dataOdierna
+            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 1 AND P.ufficioTurismo = 0 AND P.dateTo <= ?', [
+                req.body.dataReq.idProprietario,
+                mese
             ])
                 .catch(err => {
                     throw err;
