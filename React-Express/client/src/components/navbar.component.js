@@ -9,11 +9,13 @@ export default class Navbar extends Component {
 
   // Cambia il testo dei bottoni di autenticazione
   autenticationString() {
-    console.log('IDUtente: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
+    console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost') + '  -  email: ' + sessionStorage.getItem('email'));
     let id_utente = sessionStorage.getItem('id');
     if (id_utente !== null) {
       this.setState({ loginString: "Logout" });
       displayComponent('signUp', false)
+      displayComponent('email', true)
+
       if (Number(sessionStorage.getItem('isHost')) === 1) {
         displayComponent('Annunci', true)
         displayComponent('visualizzaGuadagni', true)
@@ -35,6 +37,7 @@ export default class Navbar extends Component {
       displayComponent('Questura', false)
       displayComponent('rendicontaTasse', false)
 
+      displayComponent('email', false)
       displayComponent('diventaHost', false)
       this.setState({ loginString: "Accedi" });
     }
@@ -94,6 +97,7 @@ export default class Navbar extends Component {
                   </span>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a id='email'>{sessionStorage.getItem('email')}</a>
                   <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => displayComponent("SignUp", true)}>Registrati</a>
                   <a className="dropdown-item" id='login' onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
                   {/* <div className="dropdown-divider"></div> */}

@@ -2,14 +2,13 @@ import React, { Component } from "react";
 // import '../stylesheets/index.css';
 import axios from 'axios';
 import moment from "moment";
-import dateFormat from 'dateformat'
 
 export default class RendicontaTasse extends Component {
 
   state = {
     listItems: '',  //Oggetti da visualizzare
 
-    importoTotale: 0,  //Importo totale da versare all'ufficio del turismo
+    importoTotale: 0  //Importo totale da versare all'ufficio del turismo
   }
 
   diffDays(dateTo, dateFrom) {
@@ -24,10 +23,10 @@ export default class RendicontaTasse extends Component {
   }
 
   componentWillMount() { //Eseguo queste operazioni prima di montare il componente
-
+    console.log(moment().format("M"))
     let dataReq = {
       idProprietario: sessionStorage.getItem('id'),
-      //dataOdierna : moment().format('YYYY-MM-DD'),
+      mese: moment().format('M')
     };
 
     //Effettua un post passandogli i dati

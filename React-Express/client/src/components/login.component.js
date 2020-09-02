@@ -33,8 +33,9 @@ export default class Login extends Component {
         // Set dell'id utente nella sessione corrente
         sessionStorage.clear();
         sessionStorage.setItem('id', res.data.id);
+        sessionStorage.setItem('email', res.data.email);
         sessionStorage.setItem('isHost', res.data.host);
-        console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost'));
+        console.log('ID: ' + sessionStorage.getItem('id') + '  -  isHost: ' + sessionStorage.getItem('isHost') + '  -  email: ' + sessionStorage.getItem('email'));
         window.location.reload(false);
         // Chiude la schermata di Login
         displayComponent("Login", false)

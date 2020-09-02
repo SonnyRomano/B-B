@@ -237,8 +237,8 @@ export default class DettaglioAnnuncio extends Component {
     this.state.costoTotale = this.state.costo * diffDays * this.state.datiPrenotazione.n_ospiti
 
     const photos = this.state.listOfImages.map((img) =>
-      <div class="carousel-item">
-        <img src={img} class="d-block w-100" alt="..." />
+      <div className="carousel-item" key={img}>
+        <img src={img} className="d-block w-100" alt="..." />
       </div>
     )
 
@@ -251,20 +251,20 @@ export default class DettaglioAnnuncio extends Component {
         <div className="container shadow p-3 bg-white mb-5 rounded" style={{ background: '#f2f2f2' }}>
           <p className="text-muted" style={{ fontWeight: 600, textDecoration: 'underline' }}>{this.state.citta}</p>
 
-          <div id="carouselExampleControls" class="carousel slide mb-3" data-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src={this.state.CoverImg} class="d-block w-100" alt="..." />
+          <div id="carouselExampleControls" className="carousel slide mb-3" data-ride="carousel">
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <img src={this.state.CoverImg} className="d-block w-100" alt="..." />
               </div>
               {photos}
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
+            <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
+            <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="sr-only">Next</span>
             </a>
           </div>
 
@@ -345,7 +345,7 @@ export default class DettaglioAnnuncio extends Component {
                         <label>Check-in</label>
                         <DatePicker
                           id="dateFrom" type="date" className="form-control" name="dateFrom"
-                          selected={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
+                          selected={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : null}
                           minDate={moment(this.state.dateFrom, 'YYYY-MM-DD') > moment.now() ? moment(this.state.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
                           maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
                           onChange={(date) => this.handleChangeDate(date, true)}
@@ -357,7 +357,7 @@ export default class DettaglioAnnuncio extends Component {
                         <label>Check-out</label>
                         <DatePicker
                           id="dateTo" type="date" className="form-control" name="dateTo"
-                          selected={moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').toDate() : moment.now()}
+                          selected={moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateTo, 'YYYY-MM-DD').toDate() : null}
                           minDate={moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').isValid() ? moment(this.state.datiPrenotazione.dateFrom, 'YYYY-MM-DD').toDate() : moment.now()}
                           maxDate={moment(this.state.dateTo, 'YYYY-MM-DD').toDate()}
                           onChange={(date) => this.handleChangeDate(date, false)}
