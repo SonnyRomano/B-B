@@ -23,13 +23,15 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
           <div className="shadow card mb-3" key={'li' + d.idPrenotazione}>
             <div className="row no-gutters">
               <div className='col-md-4' key={'div' + d.idPrenotazione}>
-                <img className="card-img" key={'img' + d.idPrenotazione} src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
+                <a href={'/gestioneAnnunci/dettaglioAnnuncio?id=' + d.idAnnuncio}>
+                  <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
+                </a>
               </div>
               <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{d.titolo}</h5>
-                  <p className="card-text">{d.indirizzo}<br />{d.cap} {d.citta}<br></br>Inizio Prenotazione: {dateFormat(d.dateFrom, "dd-mm-yyyy")}<br></br>Fine Prenotazione: {dateFormat(d.dateTo, "dd-mm-yyyy")}<br></br>Pagato: €{d.costo}</p>
-                  <button onClick={() => this.handleClick(d.idPrenotazione)} type="button" className="btn btn-primary">Invia Dati alla Questura</button><br />
+                  <p className="card-text">{d.indirizzo}<br />{d.cap} {d.citta}<br></br>Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br>Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>Pagato: €{d.costo}</p>
+                  <button onClick={() => this.handleClick(d.idPrenotazione)} type="button" className="btn btn-primary">Invia dati</button><br />
                 </div>
               </div>
             </div>

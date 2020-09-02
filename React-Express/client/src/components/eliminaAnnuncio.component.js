@@ -41,18 +41,18 @@ export default class EliminaAnnuncio extends Component {
             })
     }
 
-    handleClick(idAnnuncio) { 
+    handleClick(idAnnuncio) {
         axios.post(`http://127.0.0.1:9000/gestioneAnnunci/eliminaAnnuncio`, { idAnnuncio })
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-            window.confirm('Annuncio eliminato');
-            window.location.reload(false);
-        })
-        .catch(err => {
-            console.log("Error = ", err)
-            window.confirm('Errore! Operazione annullata');
-        })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+                window.confirm('Annuncio eliminato');
+                window.location.reload(false);
+            })
+            .catch(err => {
+                console.log("Error = ", err)
+                window.confirm('Errore! Operazione annullata');
+            })
     }
 
     render() {

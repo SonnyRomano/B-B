@@ -110,7 +110,6 @@ export default class DettaglioAnnuncio extends Component {
 
         this.setState({ CoverImg: require('../../../images/ID' + this.state.idAnnuncio + '/Cover.png') })
 
-
         axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/recuperaPrenotazioni`, { id })
           .then(res => {
             this.setState({ dateOccupate: res.data })
@@ -163,8 +162,7 @@ export default class DettaglioAnnuncio extends Component {
     }
   }
 
-
-  //Controlla inserimento date Check-in e Check-out
+  // Controlla inserimento date Check-in e Check-out
   dataControl() {
     var dataFrom = document.getElementById("dateFrom")
     var dataTo = document.getElementById("dateTo")
@@ -238,6 +236,12 @@ export default class DettaglioAnnuncio extends Component {
     // eslint-disable-next-line
     this.state.costoTotale = this.state.costo * diffDays * this.state.datiPrenotazione.n_ospiti
 
+    const photos = this.state.listOfImages.map((img) =>
+      <div class="carousel-item">
+        <img src={img} class="d-block w-100" alt="..." />
+      </div>
+    )
+
     return (
       <div>
         <div id="myModal" className="modal">
@@ -246,6 +250,23 @@ export default class DettaglioAnnuncio extends Component {
         </div>
         <div className="container shadow p-3 bg-white mb-5 rounded" style={{ background: '#f2f2f2' }}>
           <p className="text-muted" style={{ fontWeight: 600, textDecoration: 'underline' }}>{this.state.citta}</p>
+
+          <div id="carouselExampleControls" class="carousel slide mb-3" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src={this.state.CoverImg} class="d-block w-100" alt="..." />
+              </div>
+              {photos}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
 
           <div className="row mb-5 m-0" id="pics">
             <div className="col-md-6 px-0">

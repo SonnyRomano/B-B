@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import '../stylesheets/gestioneAnnunci.css';
+// import '../stylesheets/gestioneAnnunci.css';
 import checkRoutingAccess from '../utility/checkRoutingAccess';
 
 
@@ -59,15 +59,23 @@ export default class FormQuestura extends Component {
     listTemp.push(
       <div key={listTemp.length}>
         <div className="form-row">
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-4">
             <label>Nome e Cognome</label>
             <input className="form-control" name="nomeCognome" placeholder="Inserire Nome e Cognome" required />
           </div>
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-4">
             <label>Codice Fiscale</label>
             <input className="form-control" name="codiceFiscale" placeholder="Inserire Codice Fiscale" required />
           </div>
+          <div className="form-group col-md-4">
+            <label>Documenti</label>
+            <div className="custom-file">
+              <input type="file" className="custom-file-input" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} aria-describedby="inputGroupFileAddon01" />
+              <label className="custom-file-label" htmlFor="inputGroupFile01">Seleziona immagini</label>
+            </div>
+          </div>
         </div>
+
         <hr className="my-3" />
       </div>
     )
@@ -90,9 +98,9 @@ export default class FormQuestura extends Component {
         <hr />
 
         <form onSubmit={this.handleSubmit}>
-          <button type="button" className="btn btn btn-primary mb-3" onClick={() => this.aggiungiOspite()}>Aggiungi Ospite</button>
+          <button type="button" className="btn btn btn-primary mb-3" onClick={() => this.aggiungiOspite()}>Aggiungi ospite</button>
 
-          <button type="button" className="btn btn btn-danger mb-3" onClick={() => this.rimuoviOspite()}>Rimuovi Ultimo Ospite</button>
+          <button type="button" className="btn btn btn-danger mb-3" onClick={() => this.rimuoviOspite()}>Rimuovi ultimo ospite</button>
 
           <div>
             {
@@ -105,12 +113,12 @@ export default class FormQuestura extends Component {
             <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} />
           </div> */}
 
-          <div className="input-group col-md-6 mb-3 p-0">
+          {/* <div className="input-group col-md-6 mb-3 p-0">
             <div className="custom-file">
               <input type="file" className="custom-file-input" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} aria-describedby="inputGroupFileAddon01" />
-              <label className="custom-file-label" htmlFor="inputGroupFile01">Seleziona Immagini Documenti</label>
+              <label className="custom-file-label" htmlFor="inputGroupFile01">Seleziona immagini documenti</label>
             </div>
-          </div>
+          </div> */}
 
 
           <button className="btn btn btn-success" type="submit">Invia dati</button>

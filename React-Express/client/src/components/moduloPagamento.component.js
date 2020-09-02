@@ -151,7 +151,7 @@ export default class moduloPagamento extends React.Component {
                 </div>
               </div>
 
-              {/* <div className="form-row">
+              <div className="form-row">
 
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState">Exp Month</label>
@@ -160,8 +160,8 @@ export default class moduloPagamento extends React.Component {
                     <option value="02">02</option>
                     <option value="03">03</option>
                     <option value="04">04</option>
-                    <option value="5">05</option>
-                    <option value="6">06</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
                     <option value="7">07</option>
                     <option value="8">08</option>
                     <option value="9">09</option>
@@ -203,7 +203,12 @@ export default class moduloPagamento extends React.Component {
                   <input className="form-control" name="cvv" onChange={this.handleChange} />
                 </div>
 
-              </div> */}
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                <label class="form-check-label" for="defaultCheck1">Paga in loco</label>
+              </div>
 
             </div>
           </div>

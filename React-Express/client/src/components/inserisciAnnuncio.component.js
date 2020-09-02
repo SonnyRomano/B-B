@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import '../stylesheets/gestioneAnnunci.css';
+// import '../stylesheets/gestioneAnnunci.css';
 import checkRoutingAccess from '../utility/checkRoutingAccess';
 
 export default class InserisciAnnuncio extends Component {

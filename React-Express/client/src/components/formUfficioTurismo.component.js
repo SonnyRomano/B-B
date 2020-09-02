@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import '../stylesheets/gestioneAnnunci.css';
+// import '../stylesheets/gestioneAnnunci.css';
 import checkRoutingAccess from '../utility/checkRoutingAccess';
 
 
@@ -8,7 +8,7 @@ export default class FormUfficioTurismo extends Component {
   state = {
     listOfFields: [],
 
-    versamento:0
+    versamento: 0
   }
 
   handleSubmit = event => {
@@ -25,7 +25,7 @@ export default class FormUfficioTurismo extends Component {
     let dati = {
       nomeCognome,
       codiceFiscale,
-      versamento : this.state.versamento
+      versamento: this.state.versamento
     }
 
     console.log(dati)
@@ -80,14 +80,12 @@ export default class FormUfficioTurismo extends Component {
         <hr />
 
         <form onSubmit={this.handleSubmit}>
-          <button type="button" className="btn btn btn-primary mb-3" onClick={() => this.aggiungiOspite()}>Aggiungi Ospite</button>
+          <button type="button" className="btn btn btn-primary mb-3" onClick={() => this.aggiungiOspite()}>Aggiungi ospite</button>
 
-          <button type="button" className="btn btn btn-danger mb-3" onClick={() => this.rimuoviOspite()}>Rimuovi Ultimo Ospite</button>
+          <button type="button" className="btn btn btn-danger mb-3" onClick={() => this.rimuoviOspite()}>Rimuovi ultimo ospite</button>
 
           <div>
-            {
-              this.state.listOfFields
-            }
+            {this.state.listOfFields}
           </div>
 
           {/* <div className="form-row col-md-6 mb-3">
@@ -95,7 +93,7 @@ export default class FormUfficioTurismo extends Component {
             <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} />
           </div> */}
 
-        <button className="btn btn btn-success" type="submit">Invia generalità e versa {this.state.versamento}€</button>
+          <button className="btn btn btn-success" type="submit">Invia generalità e versa {this.state.versamento}€</button>
 
         </form>
       </div>

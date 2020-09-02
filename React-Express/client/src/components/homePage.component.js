@@ -21,7 +21,7 @@ export default class HomePage extends Component {
       [event.target.name]: event.target.value //prendo il valore città,dal target name = "citta" e lo salva come valore in citta dell'oggetto state
     });
   }
-//appena scrivo della data,mi scatta questo evento che me li salve in dataFrom e dataTo
+  //appena scrivo della data,mi scatta questo evento che me li salve in dataFrom e dataTo
   handleChangeDate(start, end) {
     this.setState({
       dateFrom: start,
@@ -44,7 +44,7 @@ export default class HomePage extends Component {
       alert("Non puoi soggiornare per più di 28 giorni")
     }
     else {
-//creo oggetto ricerca,in cui,i dati salvati nei vari elementi,li prendo dal render
+      //creo oggetto ricerca,in cui,i dati salvati nei vari elementi,li prendo dal render
       const ricerca = {
         citta: this.state.citta,
         dateFrom: dateFormat(this.state.dateFrom, "yyyy-mm-dd"),
@@ -76,11 +76,11 @@ export default class HomePage extends Component {
 
   render() {
     return (
-      <div className="container" id="page-container">
+      <div className="container">
         <div className="col-lg-8 p-4 bg-white rounded">
           <h2>Prenota Case Vacanza e B&B sul nostro sito</h2>
           <p>Seleziona la località desiderata, le date di check in, check-out e il numero di ospiti</p>
-          <form onSubmit={this.handleSubmit}> 
+          <form onSubmit={this.handleSubmit}>
 
             <div className="form-group">
               <i className="fas fa-city mr-2"></i>
