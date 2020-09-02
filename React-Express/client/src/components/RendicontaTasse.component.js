@@ -22,11 +22,8 @@ export default class RendicontaTasse extends Component {
     //Effettua un post passandogli i dati
     axios.post(`http://127.0.0.1:9000/gestioneLegale/rendicontaTasseSoggiorno`, { dataReq })
       .then(res => {
-
-        const tassa = '3'    //suppongo tassa fissa da versare di 3 euro per ogni ospite in ciascuna prenotazione
-
         for (let i = 0; i < res.data.length; i++) {     //memorizzo nello state il totale di tasse da pagare
-          this.setState({ importoTotale: this.state.importoTotale + (res.data[i].n_ospiti * parseFloat(tassa)) })
+          this.setState({ importoTotale: this.state.importoTotale + ((res.data[i].n_adulti) * parseFloat(res.data[i].tassa)) })
         }
 
         const listItems = res.data.map((d) =>
@@ -40,7 +37,7 @@ export default class RendicontaTasse extends Component {
               <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{d.titolo}</h5>
-                  <p className="card-text">- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- IdCliente: {d.idCliente}<br></br> - Ospiti: {d.n_ospiti}x <br></br>- Tassa da versare: {d.n_ospiti}x{parseFloat(tassa)}€ = {d.n_ospiti * parseFloat(tassa)}€ </p>
+                  <p className="card-text">- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- IdCliente: {d.idCliente}<br></br> - Ospiti: {d.n_adulti} Adulti e {d.n_bambini} Bambini<br></br>- Tassa da versare: {d.n_adulti}x{parseFloat(d.tassa)}€ = {d.n_adulti * parseFloat(d.tassa)}€ </p>
                   {/* <button onClick={() => this.handleClick(d.idPrenotazione)} type="button" className="btn btn-primary">Invia Dati alla Questura</button><br /> */}
                 </div>
               </div>

@@ -125,8 +125,10 @@ async function rendicontaTasseSoggiorno(req, res, next) {
 
         await withTransaction(db, async () => {
             // inserimento utente
-            results = await db.query('SELECT * FROM `prenotazioni`\
-            WHERE idProprietario = ? AND confermata = 1 AND ufficioTurismo = 0', [
+            results = await db.query('SELECT P.idPrenotazione, P.idAnnuncio, P.idProprietario, \
+            P.idCliente, P.dateFrom, P.dateTo, P.n_adulti, P.n_bambini, P.costo, A.titolo, A.indirizzo, A.citta, A.cap, A.tassa\
+            FROM `prenotazioni` P JOIN `annunci` A\
+            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 1 AND P.ufficioTurismo = 0', [
                 req.body.dataReq.idProprietario
                 //req.body.dataReq.dataOdierna
             ])

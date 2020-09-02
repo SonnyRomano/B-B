@@ -73,7 +73,7 @@ async function inserisciAnnuncio(req, res, next) {
                 (`idAnnuncio` INT AUTO_INCREMENT PRIMARY KEY, `idProprietario` INT, `citta` VARCHAR(255), `cap` VARCHAR(255),\
                 `indirizzo` VARCHAR(255), `dateFrom` DATE, `dateTo` DATE, `n_bagni` INT, `n_camere` INT,\
                 `n_letti` INT, `n_posti` INT, `wifi` TINYINT(1), `doccia` TINYINT(1), `tv` TINYINT(1), `cucina` TINYINT(1), `riscaldamento` TINYINT(1),\
-                `accessibile` TINYINT(1), `descrizione` VARCHAR(255), `titolo` VARCHAR(255), `costo` INT)'
+                `accessibile` TINYINT(1), `descrizione` VARCHAR(255), `titolo` VARCHAR(255), `costo` INT, `tassa` INT)'
         db.query(query, (err, result) => {
             if (err) throw err
             console.log(result);
@@ -83,7 +83,7 @@ async function inserisciAnnuncio(req, res, next) {
         results = await db.query('INSERT INTO `annunci` \
           (idProprietario, citta, cap, indirizzo, dateFrom, dateTo, n_bagni, n_camere, n_letti, n_posti,\
              wifi, doccia, tv, cucina, riscaldamento, accessibile,\
-             descrizione, titolo, costo) VALUES ?', [
+             descrizione, titolo, costo, tassa) VALUES ?', [
             [
                 [
                     req.body.annuncio.idProprietario,
@@ -104,7 +104,8 @@ async function inserisciAnnuncio(req, res, next) {
                     req.body.annuncio.accessibile,
                     req.body.annuncio.descrizione,
                     req.body.annuncio.titolo,
-                    req.body.annuncio.costo
+                    req.body.annuncio.costo,
+                    req.body.annuncio.tasse
                 ]
             ]
         ])
