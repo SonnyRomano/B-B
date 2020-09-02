@@ -50,7 +50,7 @@ async function effettuaPrenotazione(req, res, next) {
         })
 
         results = await db.query('INSERT INTO `prenotazioni` \
-          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, n_ospiti, idPagamento, confermata, questura, ufficioTurismo) VALUES ?', [
+          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, n_adulti, n_bambini, idPagamento, confermata, questura, ufficioTurismo) VALUES ?', [
             [
                 [
                     req.body.datiPrenotazione.idAnnuncio,

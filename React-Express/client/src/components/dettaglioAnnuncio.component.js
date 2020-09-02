@@ -153,7 +153,8 @@ export default class DettaglioAnnuncio extends Component {
         dateFrom: dateFormat(this.state.datiPrenotazione.dateFrom, "yyyy-mm-dd"),
         dateTo: dateFormat(this.state.datiPrenotazione.dateTo, "yyyy-mm-dd"),
         costoTotale: this.state.costoTotale,
-        n_ospiti: this.state.datiPrenotazione.n_ospiti
+        n_adulti: this.state.datiPrenotazione.n_adulti,
+        n_bambini: this.state.datiPrenotazione.n_bambini
       };
 
       console.log(prenotazione);
@@ -173,10 +174,13 @@ export default class DettaglioAnnuncio extends Component {
     let valueTemp = this.state.datiPrenotazione
 
     switch (event.target.name) {
-      case 'n_ospiti':
-        valueTemp.n_ospiti = event.target.value
+      case 'n_adulti':
+        valueTemp.n_adulti = event.target.value
         break
 
+      case 'n_bambini':
+        valueTemp.n_bambini = event.target.value
+        break
       case 'dateFrom':
         valueTemp.dateFrom = event.target.value
         break
@@ -234,7 +238,7 @@ export default class DettaglioAnnuncio extends Component {
 
     let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     // eslint-disable-next-line
-    this.state.costoTotale = this.state.costo * diffDays * this.state.datiPrenotazione.n_ospiti
+    this.state.costoTotale = this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti) + parseInt(this.state.datiPrenotazione.n_bambini))
 
     const photos = this.state.listOfImages.map((img) =>
       <div className="carousel-item" key={img}>
@@ -369,11 +373,11 @@ export default class DettaglioAnnuncio extends Component {
 
                   <div className="form-row col-6 p-0 mx-0 mb-3">
                     <label>Adulti</label>
-                    <input className="form-control" name="n_ospiti" type="number" min="1" max={this.state.n_posti} onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
+                    <input className="form-control" name="n_adulti" type="number" min="1" max={this.state.n_posti - this.state.datiPrenotazione.n_bambini || this.state.n_posti} onChange={this.handleChange} required />
                   </div>
                   <div className="form-row col-6 p-0 mx-0 mb-3">
                     <label>Bambini</label>
-                    <input className="form-control" name="n_ospiti" type="number" min="1" max={this.state.n_posti} onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
+                    <input className="form-control" name="n_bambini" type="number" min="0" max={this.state.n_posti - this.state.datiPrenotazione.n_adulti || this.state.n_posti} onChange={this.handleChange} required />
                   </div>
 
                   <p className="lead">€{this.state.costo} / notte</p>

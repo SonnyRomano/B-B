@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-// import '../stylesheets/index.css';
 import axios from 'axios';
 import dateFormat from 'dateformat'
+import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class RiepilogoPrenotazione extends Component {
 
@@ -17,7 +17,8 @@ export default class RiepilogoPrenotazione extends Component {
       dateFrom: this.datiPrenotazione.dateFrom,
       dateTo: this.datiPrenotazione.dateTo,
       costoTotale: this.datiPrenotazione.costoTotale,
-      n_ospiti: this.datiPrenotazione.n_ospiti,
+      n_adulti: this.datiPrenotazione.n_adulti,
+      n_bambini: this.datiPrenotazione.n_bambini,
       idPagamento: this.datiPagamento.idPagamento
     }
 
@@ -36,10 +37,8 @@ export default class RiepilogoPrenotazione extends Component {
   }
 
   componentDidMount() {
-    // Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
-    // if (this.props.history.action === 'POP') {
-    //   this.props.history.push('/')
-    // }
+    checkRoutingAccess(this.props)
+    if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
 
@@ -62,7 +61,7 @@ export default class RiepilogoPrenotazione extends Component {
               ID proprietario: {this.datiPrenotazione.idProprietario}<br />
               Inizio prenotazione: {dateFormat(this.datiPrenotazione.dateFrom, "dd/mm/yyyy")}<br />
               Fine prenotazione: {dateFormat(this.datiPrenotazione.dateTo, "dd/mm/yyyy")}<br />
-              Numero di ospiti: {this.datiPagamento.n_posti}
+              Numero di ospiti: {this.datiPrenotazione.n_adulti} Adulti e {this.datiPrenotazione.n_bambini} Bambini
             </p>
           </div>
 

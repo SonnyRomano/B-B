@@ -1,6 +1,7 @@
 import React from 'react';
 import '../stylesheets/moduloPagamento.css'
 import axios from 'axios'
+import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class moduloPagamento extends React.Component {
 
@@ -62,10 +63,8 @@ export default class moduloPagamento extends React.Component {
   }
 
   componentDidMount() {
-    // Controlla se la pagina è stata chiamata correttamente o tramite inserimento manuale
-    // if (this.props.history.action === 'POP') {
-    //   this.props.history.push('/')
-    // }
+    checkRoutingAccess(this.props)
+    if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
   render() {
@@ -154,7 +153,7 @@ export default class moduloPagamento extends React.Component {
               <div className="form-row">
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState">Exp Month</label>
-                  <select className="custom-select" onChange={this.handleChange}>
+                  <select className="custom-select" name='expmonth' onChange={this.handleChange}>
                     <option value="01">01</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
@@ -172,7 +171,7 @@ export default class moduloPagamento extends React.Component {
 
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState">Exp Year</label>
-                  <select className="custom-select" onChange={this.handleChange}>
+                  <select className="custom-select" name='expyear' onChange={this.handleChange}>
                     <option value="1">2020</option>
                     <option value="2">2021</option>
                     <option value="3">2022</option>
@@ -189,11 +188,6 @@ export default class moduloPagamento extends React.Component {
                     <option value="14">2033</option>
                     <option value="15">2034</option>
                     <option value="16">2035</option>
-                    <option value="17">2036</option>
-                    <option value="18">2037</option>
-                    <option value="19">2038</option>
-                    <option value="20">2039</option>
-                    <option value="21">2040</option>
                   </select>
                 </div>
 
@@ -205,9 +199,9 @@ export default class moduloPagamento extends React.Component {
               </div>
 
               <div className="form-row">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                  <label class="form-check-label" for="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
+                <div className="form-check">
+                  <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                  <label className="form-check-label" htmlFor="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
                 </div>
               </div>
 
