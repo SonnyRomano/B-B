@@ -97,7 +97,7 @@ export default class Navbar extends Component {
                   </span>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a id='email'>{sessionStorage.getItem('email')}</a>
+                  <a className="dropdown-item" id='email'>{sessionStorage.getItem('email')}</a>
                   <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => displayComponent("SignUp", true)}>Registrati</a>
                   <a className="dropdown-item" id='login' onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
                   {/* <div className="dropdown-divider"></div> */}
@@ -127,7 +127,7 @@ export default class Navbar extends Component {
             </li>
           </ul>
         </div> */}
-      </div>
+      </div >
     );
   }
 }

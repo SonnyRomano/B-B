@@ -29,13 +29,20 @@ export default class VisualizzaPrenotazioni extends Component {
               <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{d.titolo}</h5>
-                  <p className="card-text">- Citta: {d.citta} <br></br>- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- ID Cliente: {d.idCliente}<br></br> - Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br> - Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>- Prezzo Pagato: {d.costo} €</p>
+                  <p className="card-text">
+                    {/* {d.indirizzo}<br />{d.cap} {d.citta}<br></br> */}
+                    ID prenotazione: {d.idPrenotazione}<br></br>
+                    ID cliente: {d.idCliente}<br></br>
+                    Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br>
+                    Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>
+                    Numero di ospiti: {d.n_adulti}<br></br>
+                    Pagato: €{d.costo}</p>
                   <button onClick={() => this.handleConfirm(d)} type="button" className="btn btn-success mb-2">Accetta prenotazione</button>
                   <button onClick={() => this.handleRejection(d)} type="button" className="btn btn-danger">Declina prenotazione</button>
                 </div>
               </div>
             </div>
-          </div>
+          </div >
 
           // <li key={'li' + d.idPrenotazione} className="list-group-item" style={{ marginBottom: '4rem' }}>
           //   <div key={'a' + d.idPrenotazione} className="list-group-item list-group-item-action " style={{ marginTop: '1rem', marginBottom: '1rem', background: '#E6E6FA' }}>
