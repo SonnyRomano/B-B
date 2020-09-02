@@ -58,7 +58,7 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
     return (
       <div className="container-fluid p-3 rounded" style={{ backgroundColor: '#f2f2f2' }} >
         <h1 className="display-4 text-center">Lista prenotazioni da inviare alla Questura</h1>
-        <p><i class="fas fa-info-circle mr-2"></i>Questa lista contiene tutte le prenotazioni di cui inviare alla Questura i dati degli ospiti</p>
+        <p><i className="fas fa-info-circle mr-2"></i>Questa lista contiene tutte le prenotazioni di cui inviare alla Questura i dati degli ospiti</p>
         <hr />
         {this.state.listItems}
       </div>

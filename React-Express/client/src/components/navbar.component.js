@@ -15,13 +15,26 @@ export default class Navbar extends Component {
       this.setState({ loginString: "Logout" });
       displayComponent('signUp', false)
       if (Number(sessionStorage.getItem('isHost')) === 1) {
-        displayComponent('gestioneAnnunci', true)
+        displayComponent('Annunci', true)
+        displayComponent('visualizzaGuadagni', true)
+        displayComponent('Questura', true)
+        displayComponent('rendicontaTasse', true)
+
         displayComponent('diventaHost', false)
       }
-      else displayComponent('gestioneAnnunci', false)
+      else {
+        displayComponent('Annunci', false)
+        displayComponent('visualizzaGuadagni', false)
+        displayComponent('Questura', false)
+        displayComponent('rendicontaTasse', false)
+      }
     }
     else {
-      displayComponent('gestioneAnnunci', false)
+      displayComponent('Annunci', false)
+      displayComponent('visualizzaGuadagni', false)
+      displayComponent('Questura', false)
+      displayComponent('rendicontaTasse', false)
+
       displayComponent('diventaHost', false)
       this.setState({ loginString: "Accedi" });
     }
@@ -47,37 +60,6 @@ export default class Navbar extends Component {
 
   componentDidMount() {
     this.autenticationString();
-    let path = 'http://localhost:3000'
-
-    switch (window.location.href) {
-      case path + '/gestioneAnnunci/paginaRicercaProprietario':
-        document.getElementById('Annunci').className = "nav-link active"
-        displayComponent("tabAnnunci", true)
-        break
-
-      case path + "/gestioneAnnunci/visualizzaGuadagno":
-        document.getElementById('visualizzaGuadagni').className = "nav-link active"
-        displayComponent("tabAnnunci", true)
-        break
-
-      case path + "/gestioneAnnunci/visualizzaPrenotazioni":
-        // document.getElementById('visualizzaPrenotazioni').className = "nav-link active"
-        break
-
-      case path + "/gestioneAnnunci/rendicontaTasse":
-        document.getElementById('rendicontaTasse').className = "nav-link active"
-        displayComponent("tabAnnunci", true)
-        break
-
-      case path + '/gestioneLegale/visualizzaPrenotazioniQuestura':
-        document.getElementById('Questura').className = "nav-link active"
-        displayComponent("tabAnnunci", true)
-        break
-
-      default:
-        displayComponent("tabAnnunci", false)
-        break
-    }
   }
 
   render() {

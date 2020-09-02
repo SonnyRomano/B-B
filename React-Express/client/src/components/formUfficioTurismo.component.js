@@ -71,6 +71,7 @@ export default class FormUfficioTurismo extends Component {
   }
 
   render() {
+    // eslint-disable-next-line
     this.state.versamento = this.props.location.state
 
     return (

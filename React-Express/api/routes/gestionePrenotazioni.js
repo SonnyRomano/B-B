@@ -359,8 +359,9 @@ async function visualizzaPrenotazioniProprietario(req, res, next) {
 
         await withTransaction(db, async () => {
             // inserimento utente
-            results = await db.query('SELECT * FROM `prenotazioni`\
-            WHERE idProprietario = ? AND confermata = 0', [
+            results = await db.query('SELECT P.idPrenotazione, P.idAnnuncio, P.idProprietario, \
+            P.idCliente, P.dateFrom, P.dateTo, P.costo, A.titolo, A.citta FROM `prenotazioni` P JOIN `annunci` A\
+            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 0', [
                 req.body.idProprietario
             ])
                 .catch(err => {
