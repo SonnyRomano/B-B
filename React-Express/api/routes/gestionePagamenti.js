@@ -31,7 +31,7 @@ async function insPagamento(req, res, next) {
 
         //INSERISCO RECORD DENTRO LA TABELLA estremi_pagamenti
         results = await db.query('INSERT INTO `estremi_pagamento` \
-          (fname, email, adr, city, prov, cap) VALUES ?',
+          (fname, email, adr, city, prov, cap, cardname, cardnumber, expmonth, expyear, cvv) VALUES ?',
             [
                 [
                     [
@@ -40,7 +40,12 @@ async function insPagamento(req, res, next) {
                         req.body.pagamento.adr,
                         req.body.pagamento.city,
                         req.body.pagamento.prov,
-                        req.body.pagamento.cap
+                        req.body.pagamento.cap,
+                        req.body.pagamento.cardname,
+                        req.body.pagamento.cardnumber,
+                        req.body.pagamento.expmonth,
+                        req.body.pagamento.expyear,
+                        req.body.pagamento.cvv
                     ]
                 ]
             ]).catch(err => {
