@@ -134,7 +134,7 @@ export default class moduloPagamento extends React.Component {
                 <input type="text" className="form-control" name="cardnumber" max='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
               </div>
 
-              <div className="form-row">
+              {/* <div className="form-row">
                 <div className="form-group col-md-4">
                   <label htmlFor="expmonth">Exp Month</label>
                   <input type="text" className="form-control" name="expmonth" onChange={this.handleChange} />
@@ -149,10 +149,9 @@ export default class moduloPagamento extends React.Component {
                   <label htmlFor="cvv">CVV</label>
                   <input type="text" className="form-control" name="cvv" onChange={this.handleChange} />
                 </div>
-              </div>
+              </div> */}
 
               <div className="form-row">
-
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState">Exp Month</label>
                   <select className="custom-select" onChange={this.handleChange}>
@@ -205,9 +204,11 @@ export default class moduloPagamento extends React.Component {
 
               </div>
 
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                <label class="form-check-label" for="defaultCheck1">Paga in loco</label>
+              <div className="form-row">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                  <label class="form-check-label" for="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
+                </div>
               </div>
 
             </div>

@@ -368,7 +368,11 @@ export default class DettaglioAnnuncio extends Component {
                   </div>
 
                   <div className="form-row col-6 p-0 mx-0 mb-3">
-                    <label>Ospiti</label>
+                    <label>Adulti</label>
+                    <input className="form-control" name="n_ospiti" type="number" min="1" max={this.state.n_posti} onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
+                  </div>
+                  <div className="form-row col-6 p-0 mx-0 mb-3">
+                    <label>Bambini</label>
                     <input className="form-control" name="n_ospiti" type="number" min="1" max={this.state.n_posti} onChange={this.handleChange} value={this.state.datiPrenotazione.n_ospiti || ''} required />
                   </div>
 
