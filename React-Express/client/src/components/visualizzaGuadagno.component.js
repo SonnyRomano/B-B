@@ -27,14 +27,14 @@ export default class VisualizzaGuadagno extends Component {
 
         // creo oggetto che andrò a passare nel render. Questo oggetto contiene i dati relativi agli annunci inseriti
         const listItems = res.data.map((d) =>
-          <tr>
+          <tr key='d.idAnnuncio'>
             <th scope="row">{d.idAnnuncio}</th>
             <td>{d.idCliente}</td>
             <td>?</td>
             <td>{dateFormat(d.dateFrom, "dd/mm/yyyy")}</td>
             <td>{dateFormat(d.dateTo, "dd/mm/yyyy")}</td>
             <td>{d.n_ospiti}</td>
-            <td>{d.costo} €</td>
+            <td>{d.costo}€</td>
           </tr>
           // <div className="shadow card mb-3" key={'li' + d.idAnnuncio}>
           //   <div className="row no-gutters">
@@ -76,8 +76,8 @@ export default class VisualizzaGuadagno extends Component {
         <h1 className="display-4 text-center">Guadagni ottenuti</h1>
         {/* <hr /> */}
 
-        <div class="table-responsive-sm">
-          <table class="table table-hover">
+        <div className="table-responsive-sm">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th scope="col">ID annuncio</th>
@@ -91,7 +91,6 @@ export default class VisualizzaGuadagno extends Component {
             </thead>
             <tbody>
               {this.state.listItems}
-
               {/* <tr>
                 <th scope="row">1</th>
                 <td>Mark</td>
