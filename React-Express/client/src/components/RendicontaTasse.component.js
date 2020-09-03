@@ -76,22 +76,15 @@ export default class RendicontaTasse extends Component {
         <p><i className="fas fa-info-circle mr-2"></i>Questa lista contiene tutte le prenotazioni attualmente attive e/o passate degli ultimi 3 mesi relative ai tuoi annunci pubblicati</p>
         <hr />
 
-
         <div className="list-group" >
           {this.state.listItems}
         </div>
-        <div className="list-group-item " style={{ marginTop: '1rem', marginBottom: '1rem', background: '#A6E6F2' }}>
-          <div className='row' >
-            <div className='col-8' style={{ marginTop: '2rem' }}>
-              <h1 className="h5" style={{ padding: '1rem', textAlign: 'left', marginBottom: '2rem' }}>Importo totale da versare: {this.state.importoTotale} €</h1>
-            </div>
-            <div className='col-4' style={{ marginTop: '2rem' }}>
-              <button type="button" className="btn btn-success btn-lg" onClick={() => this.handlePay(this.state.importoTotale)}>Invia generalità e paga all'ufficio turismo!</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
+        <h1>Totale da versare:<br></br>
+        €{this.state.importoTotale}</h1>
+
+        <button type="button" className="btn btn-primary btn" onClick={() => this.handlePay(this.state.importoTotale)}>Invia dati</button>
+      </div>
     );
   }
 }

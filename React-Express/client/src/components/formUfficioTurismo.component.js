@@ -93,9 +93,10 @@ export default class FormUfficioTurismo extends Component {
             <label htmlFor="img">Seleziona Immagini Documenti d'Identità:</label>
             <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} />
           </div> */}
+          <h1>Totale da versare:<br></br>
+          €{this.state.versamento}</h1>
 
-          <button className="btn btn btn-success" type="submit">Invia generalità e versa {this.state.versamento}€</button>
-
+          <button className="btn btn btn-success" type="submit">Invia dati</button>
         </form>
       </div>
 
