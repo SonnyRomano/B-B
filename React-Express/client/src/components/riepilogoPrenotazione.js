@@ -29,7 +29,7 @@ export default class RiepilogoPrenotazione extends Component {
 
         datiPrenotazione.idPagamento = res.data
 
-        //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
+        // Effettua un post passandogli i dati tramite l'oggetto "ricerca"
         axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/effettuaPrenotazione`, { datiPrenotazione })
           .then(res => {
             console.log(res);
@@ -101,6 +101,7 @@ export default class RiepilogoPrenotazione extends Component {
           <label className="form-check-label" htmlFor="impostaSoggiorno">Paga l'imposta di soggiorno in loco</label>
         </div>
 
+        <p className="lead text-center">Tasse di soggiorno: {this.datiPagamento.tassa} €</p>
         <p className="lead text-center">Totale: {this.datiPrenotazione.costoTotale} €</p>
 
         <button type="button" className="btn btn-success btn-block" onClick={() => this.effettuaPrenotazione()}>Conferma prenotazione</button>
