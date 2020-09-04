@@ -343,6 +343,7 @@ export default class DettaglioAnnuncio extends Component {
               <div className="border border-dark rounded shadow p-3">
                 <h3 className="mb-4">Aggiungi le date per conoscere i prezzi</h3>
                 <form>
+                  <p className="lead">€{this.state.costo} /notte</p>
                   <div className="form-group">
                     <div className="form-row">
                       <div className="col-6">
@@ -380,9 +381,14 @@ export default class DettaglioAnnuncio extends Component {
                     <input className="form-control" name="n_bambini" type="number" min="0" max={this.state.n_posti - this.state.datiPrenotazione.n_adulti || this.state.n_posti} onChange={this.handleChange} required />
                   </div>
 
-                  <p className="lead">€{this.state.costo} / notte</p>
-                  <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga €{this.state.costoTotale} e affitta!</button>
+                  {/* <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga €{this.state.costoTotale} e affitta!</button> */}
+                  <button type="button" className="btn btn-success btn-lg mb-3" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
                 </form>
+
+                {this.state.costo}€ x {diffDays} notti: {this.state.costo * diffDays * (this.state.datiPrenotazione.n_adulti + this.state.datiPrenotazione.n_bambini)}€<br />
+                Tasse e costi di soggiorno: €<br />
+                <hr />
+                <strong>Totale: {this.state.costoTotale}€</strong>
               </div>
             </div>
           </div>

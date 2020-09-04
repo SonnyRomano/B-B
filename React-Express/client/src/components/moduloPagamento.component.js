@@ -64,7 +64,7 @@ export default class moduloPagamento extends React.Component {
 
   componentDidMount() {
     checkRoutingAccess(this.props)
-    // if (this.props.history.action === 'POP') this.props.history.push('/')
+    if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
   render() {
