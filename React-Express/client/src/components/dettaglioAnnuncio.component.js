@@ -239,7 +239,7 @@ export default class DettaglioAnnuncio extends Component {
 
     let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     // eslint-disable-next-line
-    this.state.costoTotale = this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti) + parseInt(this.state.datiPrenotazione.n_bambini)) + this.state.tassa * parseInt(this.state.datiPrenotazione.n_adulti)
+    this.state.costoTotale = this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti, 10) + parseInt(this.state.datiPrenotazione.n_bambini, 10)) + this.state.tassa * parseInt(this.state.datiPrenotazione.n_adulti, 10) * diffDays
 
     const photos = this.state.listOfImages.map((img) =>
       <div className="carousel-item" key={img}>
@@ -248,7 +248,7 @@ export default class DettaglioAnnuncio extends Component {
     )
 
     const riepilogo = isNaN(this.state.costoTotale) ? null : (<div>
-      <p><u>{this.state.costo}€ x {diffDays} notti</u>: {this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti) + parseInt(this.state.datiPrenotazione.n_bambini))}€<br />
+      <p><u>{this.state.costo}€ x {diffDays} notti</u>: {this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti, 10) + parseInt(this.state.datiPrenotazione.n_bambini, 10))}€<br />
 
         <u>Tasse di soggiorno</u>: {this.state.tassa * diffDays * this.state.datiPrenotazione.n_adulti}€
                   </p>
