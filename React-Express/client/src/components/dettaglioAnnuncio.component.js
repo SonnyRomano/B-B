@@ -30,6 +30,7 @@ export default class DettaglioAnnuncio extends Component {
     titolo: '',
     telefono: '',
     costo: '',
+    tassa: '',
 
     listOfImages: [],
     CoverImg: '',
@@ -155,7 +156,8 @@ export default class DettaglioAnnuncio extends Component {
         dateTo: dateFormat(this.state.datiPrenotazione.dateTo, "yyyy-mm-dd"),
         costoTotale: this.state.costoTotale,
         n_adulti: this.state.datiPrenotazione.n_adulti,
-        n_bambini: this.state.datiPrenotazione.n_bambini
+        n_bambini: this.state.datiPrenotazione.n_bambini,
+        tassa: this.state.tassa
       };
 
       console.log(prenotazione);
