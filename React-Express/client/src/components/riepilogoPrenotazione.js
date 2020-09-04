@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import dateFormat from 'dateformat'
-import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class RiepilogoPrenotazione extends Component {
 
@@ -46,7 +45,6 @@ export default class RiepilogoPrenotazione extends Component {
   }
 
   componentDidMount() {
-    checkRoutingAccess(this.props)
     if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
@@ -69,7 +67,7 @@ export default class RiepilogoPrenotazione extends Component {
               ID proprietario: {this.datiPrenotazione.idProprietario}<br />
               Inizio prenotazione: {dateFormat(this.datiPrenotazione.dateFrom, "dd/mm/yyyy")}<br />
               Fine prenotazione: {dateFormat(this.datiPrenotazione.dateTo, "dd/mm/yyyy")}<br />
-              Numero di ospiti: {parseInt(this.datiPrenotazione.n_adulti) + parseInt(this.datiPrenotazione.n_bambini)}
+              Numero di ospiti: {parseInt(this.datiPrenotazione.n_adulti, 10) + parseInt(this.datiPrenotazione.n_bambini, 10)}
             </p>
           </div>
 
@@ -99,8 +97,8 @@ export default class RiepilogoPrenotazione extends Component {
 
 
         <div className="form-check">
-          <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-          <label className="form-check-label" htmlFor="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
+          <input className="form-check-input" type="checkbox" value="" id="impostaSoggiorno" />
+          <label className="form-check-label" htmlFor="impostaSoggiorno">Paga l'imposta di soggiorno in loco</label>
         </div>
 
         <p className="lead text-center">Tasse di soggiorno: {this.datiPagamento.tassa} €</p>

@@ -70,7 +70,7 @@ export default class SignUp extends Component {
                     <div className="container">
                         <div className="form-group">
                             <label htmlFor="email">E-mail</label>
-                            <input name="email" id="email" type="email" className="form-control" maxLength="40"
+                            <input name="email" id="emailInput" type="email" className="form-control" maxLength="40"
                                 pattern="^[A-z]+.*@[A-z]+.*\.[A-z]+.*$" onChange={this.handleChange} required />
                         </div>
 
