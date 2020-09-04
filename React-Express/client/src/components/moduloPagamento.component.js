@@ -1,6 +1,5 @@
 import React from 'react';
 import '../stylesheets/moduloPagamento.css'
-import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class moduloPagamento extends React.Component {
 
@@ -57,7 +56,6 @@ export default class moduloPagamento extends React.Component {
   }
 
   componentDidMount() {
-    checkRoutingAccess(this.props)
     if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 

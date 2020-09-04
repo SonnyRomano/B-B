@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import dateFormat from 'dateformat'
-import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class RiepilogoPrenotazione extends Component {
 
@@ -46,7 +45,6 @@ export default class RiepilogoPrenotazione extends Component {
   }
 
   componentDidMount() {
-    checkRoutingAccess(this.props)
     if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
