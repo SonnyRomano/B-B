@@ -76,21 +76,20 @@ export default class moduloPagamento extends React.Component {
 
               <div className="form-group">
                 <label htmlFor="fname"><i className="fa fa-user mr-2"></i>Nome e cognome</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="fname" placeholder="Mario Rossi" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="fname" placeholder="Mario Rossi" required />
               </div>
               <div className="form-group">
                 <label htmlFor="email"><i className="fa fa-envelope mr-2"></i>Email</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="email" placeholder="mariorossi@gmail.com" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="email" placeholder="mariorossi@gmail.com" required />
               </div>
               <div className="form-group">
                 <label htmlFor="adr"><i className="far fa-address-card mr-2"></i>Via e numero civico</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="adr" placeholder="Via Roma, 15" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="adr" placeholder="Via Roma, 15" required />
               </div>
               <div className="form-group">
                 <label htmlFor="city"><i className="fas fa-city mr-2"></i>Città</label>
-                <input type="text" onChange={this.handleChange} className="form-control" name="city" placeholder="Roma" />
+                <input type="text" onChange={this.handleChange} className="form-control" name="city" placeholder="Roma" required />
               </div>
-
 
               <div className="form-row">
                 <div className="form-group col-sm-6">
@@ -99,7 +98,7 @@ export default class moduloPagamento extends React.Component {
                 </div>
                 <div className="form-group col-sm-6">
                   <label htmlFor="cap">CAP</label>
-                  <input type="text" onChange={this.handleChange} className="form-control" name="cap" placeholder="90015" />
+                  <input type="text" onChange={this.handleChange} className="form-control" name="cap" placeholder="90015" required />
                 </div>
               </div>
 
@@ -120,16 +119,17 @@ export default class moduloPagamento extends React.Component {
 
               <div className="form-group">
                 <label htmlFor="cname">Nome sulla carta</label>
-                <input type="text" className="form-control" name="cardname" onChange={this.handleChange} placeholder="Mario Rossi" />
+                <input type="text" className="form-control" name="cardname" onChange={this.handleChange} placeholder="Mario Rossi" required />
               </div>
               <div className="form-group">
                 <label htmlFor="ccnum">Numero della carta</label>
-                <input type="text" className="form-control" name="cardnumber" maxLength='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
+                <input type="text" className="form-control" name="cardnumber" maxLength='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" required />
               </div>
               <div className="form-row">
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Month</label>
-                  <select className="custom-select" name='expmonth' onChange={this.handleChange}>
+                  <select className="custom-select" name='expmonth' onChange={this.handleChange} required>
+                    <option selected></option>
                     <option value="01">01</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
@@ -147,7 +147,8 @@ export default class moduloPagamento extends React.Component {
 
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Year</label>
-                  <select className="custom-select" name='expyear' onChange={this.handleChange}>
+                  <select className="custom-select" name='expyear' onChange={this.handleChange} required>
+                    <option selected></option>
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
@@ -169,7 +170,7 @@ export default class moduloPagamento extends React.Component {
 
                 <div className="form-group col-md-3">
                   <label htmlFor="cvv" style={{ marginBottom: 14 }}>CVV</label>
-                  <input className="form-control" name="cvv" maxLength='3' pattern='[0-9]{3}' onChange={this.handleChange} />
+                  <input className="form-control" name="cvv" maxLength='3' pattern='[0-9]{3}' onChange={this.handleChange} required />
                 </div>
 
               </div>

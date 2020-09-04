@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import '../stylesheets/index.css';
 import axios from 'axios';
 import moment from "moment";
+import dateFormat from 'dateformat'
 
 export default class RendicontaTasse extends Component {
 
@@ -48,11 +49,19 @@ export default class RendicontaTasse extends Component {
               <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{d.titolo}</h5>
-                  <p className="card-text">- ID Annuncio: {d.idAnnuncio} <br></br>- ID Prenotazione: {d.idPrenotazione} <br></br>- IdCliente: {d.idCliente}<br></br> - Ospiti: {d.n_adulti} Adulti e {d.n_bambini} Bambini<br></br> - Numero Giorni: {this.diffDays(d.dateTo, d.dateFrom)}<br></br> - Tassa da versare: {d.n_adulti} x {this.diffDays(d.dateTo, d.dateFrom)} x {parseFloat(d.tassa)}€ = {d.n_adulti * this.diffDays(d.dateTo, d.dateFrom) * parseFloat(d.tassa)}€ </p>
+                  <p className="card-text">
+                    {/* {d.indirizzo}<br />{d.cap} {d.citta}<br></br> */}
+                    ID prenotazione: {d.idPrenotazione}<br></br>
+                    ID cliente: {d.idCliente}<br></br>
+                    Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br>
+                    Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>
+                    Numero di ospiti: {d.n_adulti}<br></br>
+                    Pagato: €{d.costo}
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
+          </div >
         );
 
         this.setState({
