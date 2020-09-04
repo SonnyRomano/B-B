@@ -79,7 +79,8 @@ export default class VisualizzaPrenotazioni extends Component {
       idPrenotazione: d.idPrenotazione,
       idCliente: d.idCliente,
       idPagamento: d.idPagamento,
-      idProprietario: d.idProprietario
+      idProprietario: d.idProprietario,
+      costo: d.costo
     };
     axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/confermaPrenotazione`, { confermaP })
       .then(res => {

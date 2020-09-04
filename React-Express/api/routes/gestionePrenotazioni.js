@@ -43,14 +43,14 @@ async function effettuaPrenotazione(req, res, next) {
         let query = 'CREATE TABLE IF NOT EXISTS prenotazioni \
                     (`idPrenotazione` INT AUTO_INCREMENT PRIMARY KEY, `idAnnuncio` INT, `idProprietario` INT, `idCliente` INT,\
                     `dateFrom` DATE, `dateTo` DATE, `costo` INT, `n_adulti` INT, `n_bambini` INT, `idPagamento` INT,\
-                    `confermata` TINYINT(1), `questura` TINYINT(1), `ufficioTurismo` TINYINT(1) )'
+                    `confermata` TINYINT(1), `questura` TINYINT(1))'
         db.query(query, (err, result) => {
             if (err) throw err
             console.log(result);
         })
 
         results = await db.query('INSERT INTO `prenotazioni` \
-          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, n_adulti, n_bambini, idPagamento, confermata, questura, ufficioTurismo) VALUES ?', [
+          (idAnnuncio, idProprietario, idCliente, dateFrom, dateTo, costo, n_adulti, n_bambini, idPagamento, confermata, questura) VALUES ?', [
             [
                 [
                     req.body.datiPrenotazione.idAnnuncio,
@@ -62,7 +62,6 @@ async function effettuaPrenotazione(req, res, next) {
                     req.body.datiPrenotazione.n_adulti,
                     req.body.datiPrenotazione.n_bambini,
                     req.body.datiPrenotazione.idPagamento,
-                    false,
                     false,
                     false
                 ]
@@ -154,7 +153,7 @@ async function confermaPrenotazione(req, res, next) {
     let results = {}; //Variabile per memorizzare la mail del cliente destinatario
     let mailProprietario = {} //Variabile per memorizzare mail del proprietario
     let saldo = {};
-    let importo = {};
+    let importo = req.body.confermaP.costo;
     let nuovoSaldo;
 
     //Recupero la mail del destinatario cui comunicherò l'esito della prenotazione
@@ -204,23 +203,10 @@ async function confermaPrenotazione(req, res, next) {
         console.log(err);
         next(createError(500));
     }
-    //Recupero l'importo da pagare per la prenotazione effettuata
-    try {
-        importo = await db.query('SELECT* FROM `prenotazioni` WHERE idPrenotazione = ?;',
-            [
-                req.body.confermaP.idPrenotazione,
-            ]
-        ).catch(err => {
-            throw err;
-        });
-    } catch (err) {
-        console.log(err);
-        next(createError(500));
-    }
 
-    if (saldo[0].saldo >= importo[0].costo) { //SE IL SALDO NELLA CARTA E' SUFFICIENTE
+    if (saldo[0].saldo >= importo) { //SE IL SALDO NELLA CARTA E' SUFFICIENTE
 
-        nuovoSaldo = saldo[0].saldo - importo[0].costo; //NUOVO SALDO DA AGGIORNARE DOPO TRANSAZIONE
+        nuovoSaldo = saldo[0].saldo - importo; //NUOVO SALDO DA AGGIORNARE DOPO TRANSAZIONE
 
         //Accedo al dbms per settare ad attiva la prenotazione dalla rispettiva tabella
         try {
@@ -361,7 +347,8 @@ async function visualizzaPrenotazioniProprietario(req, res, next) {
         await withTransaction(db, async () => {
             // inserimento utente
             results = await db.query('SELECT P.idPrenotazione, P.idAnnuncio, P.idProprietario, \
-            P.idCliente, P.dateFrom, P.dateTo, P.costo, A.titolo, A.citta FROM `prenotazioni` P JOIN `annunci` A\
+            P.idCliente, P.dateFrom, P.dateTo, P.costo, P.idPagamento, A.titolo, A.citta \
+            FROM `prenotazioni` P JOIN `annunci` A\
             WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 0', [
                 req.body.idProprietario
             ])

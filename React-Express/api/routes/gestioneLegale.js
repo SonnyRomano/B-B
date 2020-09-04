@@ -136,7 +136,7 @@ async function rendicontaTasseSoggiorno(req, res, next) {
             results = await db.query('SELECT P.idPrenotazione, P.idAnnuncio, P.idProprietario, \
             P.idCliente, P.dateFrom, P.dateTo, P.n_adulti, P.n_bambini, P.costo, A.titolo, A.indirizzo, A.citta, A.cap, A.tassa\
             FROM `prenotazioni` P JOIN `annunci` A\
-            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 1 AND P.ufficioTurismo = 0 AND P.dateTo <= ?', [
+            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 1 AND P.dateTo <= ?', [
                 req.body.dataReq.idProprietario,
                 mese
             ])
@@ -161,26 +161,6 @@ async function rendicontaTasseSoggiorno(req, res, next) {
 
 // middleware di invio dati Questura
 async function pagaTasseSoggiorno(req, res, next) {
-
-    /* const db = await makeDb(config);
-    let results = {};
-
-    try {
-        results = await db.query('UPDATE `prenotazioni` SET questura = 1 WHERE idPrenotazione = ?;',
-            [
-                req.body.dati.idPrenotazione,
-            ]
-        )
-            .catch(err => {
-                throw err;
-            });
-
-        console.log(results);
-    } catch (err) {
-        console.log(err);
-        next(createError(500));
-    } */
-
     var textEmail = '';
     var dati = req.body.dati;
 
@@ -197,6 +177,8 @@ async function pagaTasseSoggiorno(req, res, next) {
         textEmail += 'Ospite ' + i + ': ' + dati.nomeCognome[i] + '\nCodice Fiscale: ' + dati.codiceFiscale[i] + '\n\n'
     };
     textEmail += 'Versamento effettuato ad ufficio turismo pari a ' + dati.versamento;
+
+    textEmail += '\nDati Pagamento: ' + dati.cardname + ' - ' + dati.cardnumber + ' - ' + dati.expmonth + ' - ' + dati.expyear + ' - ' + dati.cvv;
 
     var mailOptions = {
         from: 'teammars44@gmail.com',
@@ -216,7 +198,5 @@ async function pagaTasseSoggiorno(req, res, next) {
     res.status(200).send('Invio riuscito')
 
 }
-
-
 
 module.exports = router;
