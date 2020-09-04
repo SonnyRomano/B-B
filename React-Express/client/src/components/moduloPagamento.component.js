@@ -130,26 +130,8 @@ export default class moduloPagamento extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="ccnum">Numero della carta</label>
-                <input type="text" className="form-control" name="cardnumber" max='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
+                <input type="text" className="form-control" name="cardnumber" maxLength='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
               </div>
-
-              {/* <div className="form-row">
-                <div className="form-group col-md-4">
-                  <label htmlFor="expmonth">Exp Month</label>
-                  <input type="text" className="form-control" name="expmonth" onChange={this.handleChange} />
-                </div>
-
-                <div className="form-group col-md-4">
-                  <label htmlFor="expyear">Exp Year</label>
-                  <input type="text" className="form-control" name="expyear" onChange={this.handleChange} />
-                </div>
-
-                <div className="form-group col-md-3">
-                  <label htmlFor="cvv">CVV</label>
-                  <input type="text" className="form-control" name="cvv" onChange={this.handleChange} />
-                </div>
-              </div> */}
-
               <div className="form-row">
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Month</label>
@@ -193,7 +175,7 @@ export default class moduloPagamento extends React.Component {
 
                 <div className="form-group col-md-3">
                   <label htmlFor="cvv" style={{ marginBottom: 14 }}>CVV</label>
-                  <input className="form-control" name="cvv" onChange={this.handleChange} />
+                  <input className="form-control" name="cvv" maxLength='3' pattern='[0-9]{3}' onChange={this.handleChange} />
                 </div>
 
               </div>

@@ -30,10 +30,10 @@ export default class VisualizzaGuadagno extends Component {
           <tr key='d.idAnnuncio'>
             <th scope="row">{d.idAnnuncio}</th>
             <td>{d.idCliente}</td>
-            <td>?</td>
+            <td>{d.idPrenotazione}</td>
             <td>{dateFormat(d.dateFrom, "dd/mm/yyyy")}</td>
             <td>{dateFormat(d.dateTo, "dd/mm/yyyy")}</td>
-            <td>{d.n_ospiti}</td>
+            <td>{d.n_adulti + d.n_bambini}</td>
             <td>{d.costo}€</td>
           </tr>
           // <div className="shadow card mb-3" key={'li' + d.idAnnuncio}>
