@@ -1,6 +1,5 @@
 import React from 'react';
 import '../stylesheets/moduloPagamento.css'
-import axios from 'axios'
 import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class moduloPagamento extends React.Component {
@@ -47,19 +46,14 @@ export default class moduloPagamento extends React.Component {
 
     console.log(pagamento);
 
-    axios.post('http://127.0.0.1:9000/gestionePagamenti/insPagamento', { pagamento })
-      .then(res => {
-        console.log(res);
 
-        let datiRiepilogo = []
-        datiRiepilogo.push(this.datiPrenotazione)
-        pagamento.idPagamento = res.data
-        datiRiepilogo.push(pagamento)
+    let datiRiepilogo = []
+    datiRiepilogo.push(this.datiPrenotazione)
+    datiRiepilogo.push(pagamento)
 
-        console.log(datiRiepilogo)
+    console.log(datiRiepilogo)
 
-        this.props.history.push("/prenotazione/riepilogoPrenotazione", datiRiepilogo)
-      })
+    this.props.history.push("/prenotazione/riepilogoPrenotazione", datiRiepilogo)
   }
 
   componentDidMount() {

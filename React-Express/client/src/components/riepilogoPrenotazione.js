@@ -22,17 +22,26 @@ export default class RiepilogoPrenotazione extends Component {
       idPagamento: this.datiPagamento.idPagamento
     }
 
-    //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
-    axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/effettuaPrenotazione`, { datiPrenotazione })
+    let pagamento = this.datiPagamento
+
+    axios.post('http://127.0.0.1:9000/gestionePagamenti/insPagamento', { pagamento })
       .then(res => {
         console.log(res);
 
-        alert("Prenotazione Effettuata con Successo")
+        datiPrenotazione.idPagamento = res.data
 
-        this.props.history.push("/")
-      })
-      .catch(err => {
-        console.log("Error = ", err);
+        //Effettua un post passandogli i dati tramite l'oggetto "ricerca"
+        axios.post(`http://127.0.0.1:9000/gestionePrenotazioni/effettuaPrenotazione`, { datiPrenotazione })
+          .then(res => {
+            console.log(res);
+
+            alert("Prenotazione Effettuata con Successo")
+
+            this.props.history.push("/")
+          })
+          .catch(err => {
+            console.log("Error = ", err);
+          })
       })
   }
 
