@@ -91,7 +91,8 @@ export default class DettaglioAnnuncio extends Component {
           accessibile: res.data[0].accessibile,
           descrizione: res.data[0].descrizione,
           costo: res.data[0].costo,
-          titolo: res.data[0].titolo
+          titolo: res.data[0].titolo,
+          tassa: res.data[0].tassa
         })
         console.log(this.state)
 
@@ -238,13 +239,22 @@ export default class DettaglioAnnuncio extends Component {
 
     let diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     // eslint-disable-next-line
-    this.state.costoTotale = this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti) + parseInt(this.state.datiPrenotazione.n_bambini))
+    this.state.costoTotale = this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti) + parseInt(this.state.datiPrenotazione.n_bambini)) + this.state.tassa * parseInt(this.state.datiPrenotazione.n_adulti)
 
     const photos = this.state.listOfImages.map((img) =>
       <div className="carousel-item" key={img}>
         <img src={img} className="d-block w-100" alt="..." />
       </div>
     )
+
+    const riepilogo = isNaN(this.state.costoTotale) ? null : (<div>
+      <p><u>{this.state.costo}€ x {diffDays} notti</u>: {this.state.costo * diffDays * (parseInt(this.state.datiPrenotazione.n_adulti) + parseInt(this.state.datiPrenotazione.n_bambini))}€<br />
+
+        <u>Tasse di soggiorno</u>: {this.state.tassa * diffDays * this.state.datiPrenotazione.n_adulti}€
+                  </p>
+      <hr />
+      <strong>Totale: {this.state.costoTotale}€</strong>
+    </div>)
 
     return (
       <div>
@@ -385,10 +395,7 @@ export default class DettaglioAnnuncio extends Component {
                   <button type="button" className="btn btn-success btn-lg mb-3" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
                 </form>
 
-                {this.state.costo}€ x {diffDays} notti: {this.state.costo * diffDays * (this.state.datiPrenotazione.n_adulti + this.state.datiPrenotazione.n_bambini)}€<br />
-                Tasse e costi di soggiorno: €<br />
-                <hr />
-                <strong>Totale: {this.state.costoTotale}€</strong>
+                {riepilogo}
               </div>
             </div>
           </div>

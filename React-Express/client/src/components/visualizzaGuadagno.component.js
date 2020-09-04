@@ -34,31 +34,8 @@ export default class VisualizzaGuadagno extends Component {
             <td>{dateFormat(d.dateFrom, "dd/mm/yyyy")}</td>
             <td>{dateFormat(d.dateTo, "dd/mm/yyyy")}</td>
             <td>{d.n_adulti + d.n_bambini}</td>
-            <td>{d.costo}€</td>
+            <td>{d.costo} €</td>
           </tr>
-          // <div className="shadow card mb-3" key={'li' + d.idAnnuncio}>
-          //   <div className="row no-gutters">
-          //     <div className='col-md-4' key={'div' + d.idAnnuncio}>
-          //       <a href={'/gestioneAnnunci/dettaglioAnnuncio?id=' + d.idAnnuncio}>
-          //         <img className="card-img" src={require('../../../images/ID' + d.idAnnuncio + '/Cover.png')} alt="CoverImage" style={{ height: '100%', backgroundSize: 'cover' }} />
-          //       </a>
-          //     </div>
-          //     <div className="col-md-8">
-          //       <div className="card-body">
-          //         <h5 className="card-title">{d.titolo}</h5>
-          //         <p className="card-text">
-          //           ID annuncio: <br />
-          //           ID cliente: <br />
-          //           ID prenotazione: <br />
-          //           Inizio prenotazione: {dateFormat(d.dateFrom, "dd-mm-yyyy")}<br />
-          //           Fine prenotazione: {dateFormat(d.dateTo, "dd-mm-yyyy")}<br />
-          //           Numero di ospiti: <br />
-          //           Pagato: €{d.costo}
-          //         </p>
-          //       </div>
-          //     </div>
-          //   </div>
-          // </div>
         );
         this.setState({
           listItems: listItems,
@@ -91,29 +68,11 @@ export default class VisualizzaGuadagno extends Component {
             </thead>
             <tbody>
               {this.state.listItems}
-              {/* <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr> */}
+
             </tbody>
           </table>
 
           <h2>Totale: {this.state.costoTotale} €</h2>
-
-          {/* {this.state.listItems} */}
         </div>
       </div>
     );
