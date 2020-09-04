@@ -88,6 +88,15 @@ export default class RiepilogoPrenotazione extends Component {
           </div>
 
         </div>
+
+        <div className="form-row">
+          <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+            <label className="form-check-label" htmlFor="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
+          </div>
+        </div>
+
+        <p className="lead text-center">Totale: {this.datiPrenotazione.costoTotale} €</p>
         <p className="lead text-center">Totale: {this.datiPrenotazione.costoTotale} €</p>
 
         <button type="button" className="btn btn-success btn-block" onClick={() => this.effettuaPrenotazione()}>Conferma prenotazione</button>

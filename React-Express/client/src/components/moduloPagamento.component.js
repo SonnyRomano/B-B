@@ -64,7 +64,7 @@ export default class moduloPagamento extends React.Component {
 
   componentDidMount() {
     checkRoutingAccess(this.props)
-    if (this.props.history.action === 'POP') this.props.history.push('/')
+    // if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
   render() {
@@ -152,7 +152,7 @@ export default class moduloPagamento extends React.Component {
 
               <div className="form-row">
                 <div className="form-group col-md-4">
-                  <label htmlFor="inputState">Exp Month</label>
+                  <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Month</label>
                   <select className="custom-select" name='expmonth' onChange={this.handleChange}>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -160,9 +160,9 @@ export default class moduloPagamento extends React.Component {
                     <option value="04">04</option>
                     <option value="05">05</option>
                     <option value="06">06</option>
-                    <option value="7">07</option>
-                    <option value="8">08</option>
-                    <option value="9">09</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
                     <option value="12">12</option>
@@ -170,39 +170,32 @@ export default class moduloPagamento extends React.Component {
                 </div>
 
                 <div className="form-group col-md-4">
-                  <label htmlFor="inputState">Exp Year</label>
+                  <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Year</label>
                   <select className="custom-select" name='expyear' onChange={this.handleChange}>
-                    <option value="1">2020</option>
-                    <option value="2">2021</option>
-                    <option value="3">2022</option>
-                    <option value="4">2023</option>
-                    <option value="5">2024</option>
-                    <option value="6">2025</option>
-                    <option value="7">2026</option>
-                    <option value="8">2027</option>
-                    <option value="9">2028</option>
-                    <option value="10">2029</option>
-                    <option value="11">2030</option>
-                    <option value="12">2031</option>
-                    <option value="13">2032</option>
-                    <option value="14">2033</option>
-                    <option value="15">2034</option>
-                    <option value="16">2035</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                    <option value="2031">2031</option>
+                    <option value="2032">2032</option>
+                    <option value="2033">2033</option>
+                    <option value="2034">2034</option>
+                    <option value="2035">2035</option>
                   </select>
                 </div>
 
                 <div className="form-group col-md-3">
-                  <label htmlFor="cvv">CVV</label>
+                  <label htmlFor="cvv" style={{ marginBottom: 14 }}>CVV</label>
                   <input className="form-control" name="cvv" onChange={this.handleChange} />
                 </div>
 
-              </div>
-
-              <div className="form-row">
-                <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                  <label className="form-check-label" htmlFor="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
-                </div>
               </div>
 
             </div>

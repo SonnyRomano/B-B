@@ -96,6 +96,78 @@ export default class FormUfficioTurismo extends Component {
           <h1>Totale da versare:<br></br>
           €{this.state.versamento}</h1>
 
+          <div>
+            {/* <h3 className="mb-5">Payment</h3> */}
+            <div style={{ height: 101 }}>
+              <label>Accepted Cards</label>
+              <div className="icon-container">
+                <i className="fab fa-cc-visa mr-2"></i>
+                <i className="fab fa-cc-amex mr-2"></i>
+                <i className="fab fa-cc-mastercard mr-2"></i>
+                <i className="fab fa-cc-discover mr-2"></i>
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group col-md-6">
+                <label htmlFor="cname">Nome sulla carta</label>
+                <input type="text" className="form-control" name="cardname" onChange={this.handleChange} placeholder="Mario Rossi" />
+              </div>
+              <div className="form-group col-md-6">
+                <label htmlFor="ccnum">Numero della carta</label>
+                <input type="text" className="form-control" name="cardnumber" max='12' onChange={this.handleChange} placeholder="1111-2222-3333-4444" />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group col-md-2">
+                <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Month</label>
+                <select className="custom-select" name='expmonth' onChange={this.handleChange}>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+              </div>
+
+              <div className="form-group col-md-2">
+                <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Year</label>
+                <select className="custom-select" name='expyear' onChange={this.handleChange}>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+                  <option value="2030">2030</option>
+                  <option value="2031">2031</option>
+                  <option value="2032">2032</option>
+                  <option value="2033">2033</option>
+                  <option value="2034">2034</option>
+                  <option value="2035">2035</option>
+                </select>
+              </div>
+
+              <div className="form-group col-md-2">
+                <label htmlFor="cvv" style={{ marginBottom: 14 }}>CVV</label>
+                <input className="form-control" name="cvv" onChange={this.handleChange} />
+              </div>
+
+            </div>
+          </div>
+
           <button className="btn btn btn-success" type="submit">Invia dati</button>
         </form>
       </div>
