@@ -50,7 +50,6 @@ export default class RiepilogoPrenotazione extends Component {
     if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
-
   render() {
     this.datiPrenotazione = this.props.location.state[0];
     this.datiPagamento = this.props.location.state[1];
@@ -70,7 +69,7 @@ export default class RiepilogoPrenotazione extends Component {
               ID proprietario: {this.datiPrenotazione.idProprietario}<br />
               Inizio prenotazione: {dateFormat(this.datiPrenotazione.dateFrom, "dd/mm/yyyy")}<br />
               Fine prenotazione: {dateFormat(this.datiPrenotazione.dateTo, "dd/mm/yyyy")}<br />
-              Numero di ospiti: {this.datiPrenotazione.n_adulti} Adulti e {this.datiPrenotazione.n_bambini} Bambini
+              Numero di ospiti: {parseInt(this.datiPrenotazione.n_adulti) + parseInt(this.datiPrenotazione.n_bambini)}
             </p>
           </div>
 
@@ -98,14 +97,14 @@ export default class RiepilogoPrenotazione extends Component {
 
         </div>
 
-        <div className="form-row">
-          <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-            <label className="form-check-label" htmlFor="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
-          </div>
+
+        <div className="form-check">
+          <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+          <label className="form-check-label" htmlFor="defaultCheck1">Paga l'imposta di soggiorno in loco</label>
         </div>
 
-        <p className="lead text-center">Totale: {this.datiPrenotazione.costoTotale} €</p>
+
+        {/* <p className="lead text-center">Totale: {this.datiPrenotazione.costoTotale} €</p> */}
         <p className="lead text-center">Totale: {this.datiPrenotazione.costoTotale} €</p>
 
         <button type="button" className="btn btn-success btn-block" onClick={() => this.effettuaPrenotazione()}>Conferma prenotazione</button>
