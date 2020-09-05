@@ -35,7 +35,7 @@ export default class VisualizzaPrenotazioni extends Component {
                     ID cliente: {d.idCliente}<br></br>
                     Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br>
                     Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>
-                    Numero di ospiti: {d.n_adulti}<br></br>
+                    Numero di ospiti: {parseInt(d.n_adulti, 10) + parseInt(d.n_bambini, 10)}<br></br>
                     Pagato: €{d.costo}</p>
                   <button onClick={() => this.handleConfirm(d)} type="button" className="btn btn-success mb-2">Accetta prenotazione</button>
                   <button onClick={() => this.handleRejection(d)} type="button" className="btn btn-danger">Declina prenotazione</button>

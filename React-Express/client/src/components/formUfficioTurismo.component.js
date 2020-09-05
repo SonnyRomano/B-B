@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-// import '../stylesheets/gestioneAnnunci.css';
 import checkRoutingAccess from '../utility/checkRoutingAccess';
-
 
 export default class FormUfficioTurismo extends Component {
   state = {
@@ -64,13 +62,23 @@ export default class FormUfficioTurismo extends Component {
     listTemp.push(
       <div key={listTemp.length}>
         <div className="form-row">
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-3">
             <label>Nome e Cognome</label>
             <input className="form-control" name="nomeCognome" placeholder="Inserire Nome e Cognome" required />
           </div>
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-3">
             <label>Codice Fiscale</label>
             <input className="form-control" name="codiceFiscale" placeholder="Inserire Codice Fiscale" required />
+          </div>
+          <div className="form-group col-md-3">
+            <label>Inizio prenotazione</label>
+            <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl}
+              name="dateFrom" onChange={this.handleChange} required />
+          </div>
+          <div className="form-group col-md-3">
+            <label>Fine prenotazione</label>
+            <input id="dateFrom" type="date" className="form-control" onInput={this.dataControl}
+              name="dateFrom" onChange={this.handleChange} required />
           </div>
         </div>
         <hr className="my-3" />

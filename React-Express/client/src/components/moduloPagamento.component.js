@@ -127,7 +127,7 @@ export default class moduloPagamento extends React.Component {
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Month</label>
                   <select className="custom-select" name='expmonth' onChange={this.handleChange} required>
-                    <option selected></option>
+                    <option defaultValue></option>
                     <option value="01">01</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
@@ -146,7 +146,7 @@ export default class moduloPagamento extends React.Component {
                 <div className="form-group col-md-4">
                   <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Year</label>
                   <select className="custom-select" name='expyear' onChange={this.handleChange} required>
-                    <option selected></option>
+                    <option defaultValue></option>
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>

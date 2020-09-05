@@ -50,13 +50,12 @@ export default class RendicontaTasse extends Component {
                 <div className="card-body">
                   <h5 className="card-title">{d.titolo}</h5>
                   <p className="card-text">
-                    {/* {d.indirizzo}<br />{d.cap} {d.citta}<br></br> */}
+                    {d.indirizzo}<br />{d.cap} {d.citta}<br></br>
                     ID prenotazione: {d.idPrenotazione}<br></br>
-                    ID cliente: {d.idCliente}<br></br>
                     Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br>
                     Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>
-                    Numero di ospiti: {d.n_adulti}<br></br>
-                    Pagato: €{d.costo}
+                    Ospiti: {d.n_adulti} {d.n_adulti === 1 ? 'adulto' : 'adulti'}, {d.n_bambini} {d.n_bambini === 1 ? 'bambino' : 'bambini'}<br></br>
+                    {/* Pagato: €{d.costo} */}
                   </p>
                 </div>
               </div>

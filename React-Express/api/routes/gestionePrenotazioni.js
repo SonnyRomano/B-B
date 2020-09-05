@@ -347,7 +347,7 @@ async function visualizzaPrenotazioniProprietario(req, res, next) {
         await withTransaction(db, async () => {
             // inserimento utente
             results = await db.query('SELECT P.idPrenotazione, P.idAnnuncio, P.idProprietario, \
-            P.idCliente, P.dateFrom, P.dateTo, P.costo, P.idPagamento, A.titolo, A.citta \
+            P.idCliente, P.dateFrom, P.dateTo, P.costo, P.idPagamento, P.n_adulti, P.n_bambini, A.titolo, A.citta \
             FROM `prenotazioni` P JOIN `annunci` A\
             WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 0', [
                 req.body.idProprietario
