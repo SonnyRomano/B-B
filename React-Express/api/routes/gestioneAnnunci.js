@@ -105,7 +105,7 @@ async function inserisciAnnuncio(req, res, next) {
                     req.body.annuncio.descrizione,
                     req.body.annuncio.titolo,
                     req.body.annuncio.costo,
-                    req.body.annuncio.tasse
+                    req.body.annuncio.tassa
                 ]
             ]
         ])
