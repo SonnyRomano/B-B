@@ -92,26 +92,6 @@ export default class PaginaRicerca extends Component {
             <div className="card-body p-3">
               <h5 className="card-title">{d.titolo}</h5>
               <p className="card-text text-muted">Da €{d.costo}</p>
-              {/* <div>
-              <span className="mr-3">
-                <i className="fas fa-wifi"></i>
-              </span>
-              <span className="mr-3">
-                <i className="fas fa-utensils"></i>
-              </span>
-              <span className="mr-3">
-                <i className="fas fa-shower"></i>
-              </span>
-              <span className="mr-3">
-                <i className="fas fa-thermometer-half"></i>
-              </span>
-              <span className="mr-3">
-                <i className="fas fa-tv"></i>
-              </span>
-              <span className="mr-3">
-                <i className="fas fa-wheelchair"></i>
-              </span>
-            </div> */}
               <div>
                 <span className="mr-3">
                   <i className="fas fa-male mr-2"></i>{d.n_posti}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import checkRoutingAccess from '../utility/checkRoutingAccess';
+import moment from "moment";
 
 export default class FormUfficioTurismo extends Component {
   state = {
@@ -34,7 +35,10 @@ export default class FormUfficioTurismo extends Component {
       expmonth: this.state.expmonth,
       cardname: this.state.cardname,
       cardnumber: this.state.cardnumber,
-      cvv: this.state.cvv
+      cvv: this.state.cvv,
+
+      idProprietario: sessionStorage.getItem('id'),
+      mese: moment().format('M')
     }
 
     console.log(dati)
@@ -49,6 +53,7 @@ export default class FormUfficioTurismo extends Component {
 
   componentDidMount() {
     checkRoutingAccess(this.props)
+    if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
   handleChange = event => {
@@ -68,7 +73,7 @@ export default class FormUfficioTurismo extends Component {
           </div>
           <div className="form-group col-md-3">
             <label>Codice Fiscale</label>
-            <input className="form-control" name="codiceFiscale" placeholder="Inserire Codice Fiscale" required />
+            <input className="form-control" name="codiceFiscale" placeholder="Inserire Codice Fiscale" pattern='^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$' required />
           </div>
           <div className="form-group col-md-3">
             <label>Inizio prenotazione</label>
@@ -142,8 +147,7 @@ export default class FormUfficioTurismo extends Component {
             <div className="form-row">
               <div className="form-group col-md-2">
                 <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Month</label>
-                <select className="custom-select" name='expmonth' onChange={this.handleChange} required>
-                  <option selected></option>
+                <select className="custom-select" defaultValue='01' name='expmonth' onChange={this.handleChange} required>
                   <option value="01">01</option>
                   <option value="02">02</option>
                   <option value="03">03</option>
@@ -161,8 +165,7 @@ export default class FormUfficioTurismo extends Component {
 
               <div className="form-group col-md-2">
                 <label htmlFor="inputState" style={{ marginBottom: 14 }}>Exp Year</label>
-                <select className="custom-select" name='expyear' onChange={this.handleChange} required>
-                  <option selected></option>
+                <select className="custom-select" defaultValue='2020' name='expyear' onChange={this.handleChange} required>
                   <option value="2020">2020</option>
                   <option value="2021">2021</option>
                   <option value="2022">2022</option>

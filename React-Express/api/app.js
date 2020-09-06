@@ -5,7 +5,6 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 var bodyParser = require("body-parser");
-const passport = require("passport");
 
 var app = express();
 
@@ -28,8 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "images")));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // App use Routing
 app.use("/", indexRouter);
@@ -44,7 +41,6 @@ app.use("/gestioneLegale", gestioneLegaleRouter);
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(passport.session({ resave: false, saveUninitialized: true, secret: "secretKey123!!" }));
 
 
 // catch 404 and forward to error handler

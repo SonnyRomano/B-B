@@ -10,7 +10,9 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
     listItems: '',
   }
 
-  componentWillMount() {
+  componentDidmount() {
+
+    checkRoutingAccess(this.props)
 
     let idProprietario = sessionStorage.getItem('id')
 
@@ -54,10 +56,6 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
 
   handleClick(idPrenotazione) {
     this.props.history.push('/gestioneLegale/formQuestura', idPrenotazione)
-  }
-
-  componentDidMount() {
-    checkRoutingAccess(this.props)
   }
 
   render() {

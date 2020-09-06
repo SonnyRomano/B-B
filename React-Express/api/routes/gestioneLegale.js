@@ -19,8 +19,10 @@ router.post('/invioDatiQuestura', invioDatiQuestura);
 /* lista prenotazioni Questura */
 router.post('/visualizzaPrenotazioniQuestura', visualizzaPrenotazioniQuestura);
 
+/* lista prenotazioni UfficioTurismo */
 router.post('/rendicontaTasseSoggiorno', rendicontaTasseSoggiorno);
 
+/* invia dati e paga tasse UfficioTurismo */
 router.post('/pagaTasseSoggiorno', pagaTasseSoggiorno);
 
 
@@ -82,7 +84,7 @@ async function invioDatiQuestura(req, res, next) {
 }
 
 
-// middleware di visualizzaPrenotazioniQuestura Annuncio
+// middleware di visualizzaPrenotazioniQuestura
 async function visualizzaPrenotazioniQuestura(req, res, next) {
     // istanziamo il middleware
     const db = await makeDb(config);
@@ -132,11 +134,10 @@ async function rendicontaTasseSoggiorno(req, res, next) {
     try {
 
         await withTransaction(db, async () => {
-            // inserimento utente
             results = await db.query('SELECT P.idPrenotazione, P.idAnnuncio, P.idProprietario, \
             P.idCliente, P.dateFrom, P.dateTo, P.n_adulti, P.n_bambini, P.costo, A.titolo, A.indirizzo, A.citta, A.cap, A.tassa\
             FROM `prenotazioni` P JOIN `annunci` A\
-            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 1 AND P.dateTo <= ?', [
+            WHERE P.idAnnuncio=A.idAnnuncio AND P.idProprietario = ? AND P.confermata = 1 AND P.ufficioTurismo = 0 AND P.dateTo <= ?', [
                 req.body.dataReq.idProprietario,
                 mese
             ])
@@ -159,44 +160,70 @@ async function rendicontaTasseSoggiorno(req, res, next) {
     }
 }
 
-// middleware di invio dati Questura
+// middleware di invio dati UfficioTurismo
 async function pagaTasseSoggiorno(req, res, next) {
-    var textEmail = '';
-    var dati = req.body.dati;
 
-    //Invio la mail all'ufficio turismo
-    var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
-        service: 'gmail',
-        auth: {
-            user: 'teammars44@gmail.com',  //Account gmail adhoc per inviare mail dal nostro sito
-            pass: 'marspwd34'
-        }
-    });
+    // istanziamo il middleware
+    const db = await makeDb(config);
+    let results = {};
 
-    for (let i = 0; i < dati.nomeCognome.lenght; i++) {
-        textEmail += 'Ospite ' + i + ': ' + dati.nomeCognome[i] + '\nCodice Fiscale: ' + dati.codiceFiscale[i] + '\n\n'
-    };
-    textEmail += 'Versamento effettuato ad ufficio turismo pari a ' + dati.versamento;
+    let mese;
+    if (req.body.dati.mese <= 3) mese = '2020-12-31';
+    else if (req.body.dati.mese <= 6) mese = '2020-3-31';
+    else if (req.body.dati.mese <= 9) mese = '2020-6-30';
+    else mese = '2020-9-30';
 
-    textEmail += '\nDati Pagamento: ' + dati.cardname + ' - ' + dati.cardnumber + ' - ' + dati.expmonth + ' - ' + dati.expyear + ' - ' + dati.cvv;
+    try {
+        results = await db.query('UPDATE `prenotazioni` SET ufficioTurismo = 1 WHERE idProprietario = ? AND dateTo <= ?;',
+            [
+                req.body.dati.idProprietario,
+                mese
+            ]
+        ).catch(err => {
+            throw err;
+        });
 
-    var mailOptions = {
-        from: 'teammars44@gmail.com',
-        to: 'maraglianofrancesco1@gmail.com',
-        subject: 'Pagamento tasse di soggiorno',
-        text: textEmail
-    };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email inviata: ' + info.response);
-        }
-    });
+        var textEmail = '';
+        var dati = req.body.dati;
 
-    res.status(200).send('Invio riuscito')
+        //Invio la mail all'ufficio turismo
+        var transporter = nodemailer.createTransport({  //Variabili d'ambiente per permettere l'invio della mail da parte di nodemailer. 
+            service: 'gmail',
+            auth: {
+                user: 'teammars44@gmail.com',  //Account gmail adhoc per inviare mail dal nostro sito
+                pass: 'marspwd34'
+            }
+        });
 
+        for (let i = 0; i < dati.nomeCognome.lenght; i++) {
+            textEmail += 'Ospite ' + i + ': ' + dati.nomeCognome[i] + '\nCodice Fiscale: ' + dati.codiceFiscale[i] + '\n\n'
+        };
+        textEmail += 'Versamento effettuato ad ufficio turismo pari a ' + dati.versamento;
+
+        textEmail += '\nDati Pagamento: ' + dati.cardname + ' - ' + dati.cardnumber + ' - ' + dati.expmonth + ' - ' + dati.expyear + ' - ' + dati.cvv;
+
+        var mailOptions = {
+            from: 'teammars44@gmail.com',
+            to: 'maraglianofrancesco1@gmail.com',
+            subject: 'Pagamento tasse di soggiorno',
+            text: textEmail
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email inviata: ' + info.response);
+            }
+        });
+
+        res.status(200).send(results)
+
+    } catch (err) {
+        console.log(err);
+        next(createError(500));
+    }
 }
 
 module.exports = router;

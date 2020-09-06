@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-// import '../stylesheets/index.css';
 import axios from 'axios';
 import moment from "moment";
 import dateFormat from 'dateformat'
+import checkRoutingAccess from '../utility/checkRoutingAccess'
 
-export default class RendicontaTasse extends Component {
+export default class VisualizzaPrenotazioniTasse extends Component {
 
   state = {
     listItems: '',  //Oggetti da visualizzare
@@ -23,7 +23,10 @@ export default class RendicontaTasse extends Component {
     return diffDays
   }
 
-  componentWillMount() { //Eseguo queste operazioni prima di montare il componente
+  componentDidmount() {
+
+    checkRoutingAccess(this.props)
+
     console.log(moment().format("M"))
     let dataReq = {
       idProprietario: sessionStorage.getItem('id'),
@@ -55,7 +58,6 @@ export default class RendicontaTasse extends Component {
                     Inizio Prenotazione: {dateFormat(d.dateFrom, "dd/mm/yyyy")}<br></br>
                     Fine Prenotazione: {dateFormat(d.dateTo, "dd/mm/yyyy")}<br></br>
                     Ospiti: {d.n_adulti} {d.n_adulti === 1 ? 'adulto' : 'adulti'}, {d.n_bambini} {d.n_bambini === 1 ? 'bambino' : 'bambini'}<br></br>
-                    {/* Pagato: €{d.costo} */}
                   </p>
                 </div>
               </div>

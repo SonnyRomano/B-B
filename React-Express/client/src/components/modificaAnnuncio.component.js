@@ -91,9 +91,7 @@ export default class ModificaAnnuncio extends Component {
 
   componentDidMount() {
     checkRoutingAccess(this.props)
-  }
-
-  componentWillMount() {
+    if (this.props.history.action === 'POP') this.props.history.push('/')
     this.setState(this.props.location.state, () => { console.log(this.state) }); //Copia i dati dei risultati della ricerca nello state della pagina passati dal push
   }
 

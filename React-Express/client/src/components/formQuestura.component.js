@@ -52,6 +52,7 @@ export default class FormQuestura extends Component {
 
   componentDidMount() {
     checkRoutingAccess(this.props)
+    if (this.props.history.action === 'POP') this.props.history.push('/')
   }
 
   aggiungiOspite() {
@@ -65,7 +66,7 @@ export default class FormQuestura extends Component {
           </div>
           <div className="form-group col-md-4">
             <label>Codice Fiscale</label>
-            <input className="form-control" name="codiceFiscale" placeholder="Inserire Codice Fiscale" required />
+            <input className="form-control" name="codiceFiscale" placeholder="Inserire Codice Fiscale" pattern='^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$' required />
           </div>
           <div className="form-group col-md-4">
             <label>Documenti</label>
@@ -107,19 +108,6 @@ export default class FormQuestura extends Component {
               this.state.listOfFields
             }
           </div>
-
-          {/* <div className="form-row col-md-6 mb-3">
-            <label htmlFor="img">Seleziona Immagini Documenti d'Identità:</label>
-            <input type="file" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} />
-          </div> */}
-
-          {/* <div className="input-group col-md-6 mb-3 p-0">
-            <div className="custom-file">
-              <input type="file" className="custom-file-input" id="img" name="img" accept="image/*" multiple onChange={this.onImageChange} aria-describedby="inputGroupFileAddon01" />
-              <label className="custom-file-label" htmlFor="inputGroupFile01">Seleziona immagini documenti</label>
-            </div>
-          </div> */}
-
 
           <button className="btn btn btn-success" type="submit">Invia dati</button>
 

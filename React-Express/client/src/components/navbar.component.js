@@ -100,33 +100,12 @@ export default class Navbar extends Component {
                   <a className="dropdown-item" id='email'>{sessionStorage.getItem('email')}</a>
                   <a className="dropdown-item font-weight-bold" id='signUp' onClick={() => displayComponent("SignUp", true)}>Registrati</a>
                   <a className="dropdown-item" id='login' onClick={() => this.autenticationControl()}>{this.state.loginString}</a>
-                  {/* <div className="dropdown-divider"></div> */}
                   <a className="dropdown-item" id='diventaHost' onClick={() => displayComponent("DiventaHost", true)}>Diventa un host</a>
-                  {/* <a className="dropdown-item" id="gestioneAnnunci" href="/gestioneAnnunci/paginaRicercaProprietario">Gestione Annunci</a> */}
                 </div>
               </li>
             </ul>
           </div>
         </nav>
-        {/* <div id='tabAnnunci'>
-          <ul className="nav nav-pills nav-fill bg-white">
-            <li className="nav-item">
-              <a className="nav-link" id='visualizzaPrenotazioni' href="/gestioneAnnunci/visualizzaPrenotazioni">Prenotazioni Pendenti</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" id='Annunci' href="/gestioneAnnunci/paginaRicercaProprietario">Annunci</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" id='visualizzaGuadagni' href="/gestioneAnnunci/visualizzaGuadagno">Guadagni</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" id='Questura' href="/gestioneLegale/visualizzaPrenotazioniQuestura">Questura</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" id='rendicontaTasse' href="/gestioneLegale/rendicontaTasse">Ufficio del Turismo</a>
-            </li>
-          </ul>
-        </div> */}
       </div >
     );
   }

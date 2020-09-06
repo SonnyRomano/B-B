@@ -1,15 +1,6 @@
 body {
-    /* padding: 0%; */
-    background-image: url(../images/pexels-chait-goli-1918291.jpg);
-    /* height: 100vh; */
+    background-image: url(../images/HomePage.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    /* min-height: 700px; */
 }
-
-/* #page-container { */
-  /* position: relative; */
-  /* min-height: 80vh; */
-  /* padding-bottom: 2.5rem; */
-/* } */

@@ -65,7 +65,6 @@ export default class RiepilogoPrenotazione extends Component {
 
   handleChange = event => {
     this.setState({ pagaInLoco: !this.state.pagaInLoco })
-    // console.log(this.state.pagaInLoco)
 
     if (this.state.pagaInLoco === true) {
       this.datiPrenotazione.costoTotale += this.state.tasseSoggiorno
@@ -73,15 +72,11 @@ export default class RiepilogoPrenotazione extends Component {
       this.datiPrenotazione.costoTotale -= this.state.tasseSoggiorno
     }
 
-    // console.log(this.datiPrenotazione.costoTotale)
   }
 
   render() {
     this.datiPrenotazione = this.props.location.state[0];
     this.datiPagamento = this.props.location.state[1];
-
-    // this.setState({ tasseSoggiorno: this.datiPrenotazione.tassa * this.diffDays(this.datiPrenotazione.dateTo, this.datiPrenotazione.dateFrom) * this.datiPrenotazione.n_adulti })
-    // this.state.tasseSoggiorno = this.datiPrenotazione.tassa * this.diffDays(this.datiPrenotazione.dateTo, this.datiPrenotazione.dateFrom) * this.datiPrenotazione.n_adulti
 
     return (
       <div className="container p-3 rounded" style={{ backgroundColor: '#f2f2f2' }} >

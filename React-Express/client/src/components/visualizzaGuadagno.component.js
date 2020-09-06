@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import dateFormat from 'dateformat'
+import checkRoutingAccess from '../utility/checkRoutingAccess'
 
 export default class VisualizzaGuadagno extends Component {
 
@@ -10,7 +11,9 @@ export default class VisualizzaGuadagno extends Component {
   }
 
   // il metodo componentDidMount viene chiamato dopo il rendering del componente
-  componentWillMount() {
+  componentDidMount() {
+
+    checkRoutingAccess(this.props)
 
     let idProprietario = sessionStorage.getItem('id')
 
@@ -23,18 +26,17 @@ export default class VisualizzaGuadagno extends Component {
         for (let i = 0; i < res.data.length; i++) {
           this.setState({ costoTotale: this.state.costoTotale + res.data[i].costo })
         }
-        console.log(this.state.costoTotale)
 
         // creo oggetto che andrò a passare nel render. Questo oggetto contiene i dati relativi agli annunci inseriti
         const listItems = res.data.map((d) =>
-          <tr key='d.idAnnuncio'>
+          <tr key={d.idPrenotazione}>
             <th scope="row">{d.idAnnuncio}</th>
             <td>{d.idCliente}</td>
             <td>{d.idPrenotazione}</td>
             <td>{dateFormat(d.dateFrom, "dd/mm/yyyy")}</td>
             <td>{dateFormat(d.dateTo, "dd/mm/yyyy")}</td>
             <td>{d.n_adulti + d.n_bambini}</td>
-            <td>{d.costo} €</td>
+            <td>{d.costo}€</td>
           </tr>
         );
         this.setState({
@@ -51,7 +53,6 @@ export default class VisualizzaGuadagno extends Component {
     return (
       <div className="container-fluid p-3 rounded" style={{ backgroundColor: '#f2f2f2' }} >
         <h1 className="display-4 text-center">Guadagni ottenuti</h1>
-        {/* <hr /> */}
 
         <div className="table-responsive-sm">
           <table className="table table-hover">
@@ -68,7 +69,6 @@ export default class VisualizzaGuadagno extends Component {
             </thead>
             <tbody>
               {this.state.listItems}
-
             </tbody>
           </table>
 

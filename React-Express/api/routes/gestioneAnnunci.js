@@ -50,7 +50,7 @@ router.post('/recuperaAnnuncio', recuperaAnnuncio);
 /* Inserimento Annuncio */
 router.post('/inserisciAnnuncio', inserisciAnnuncio);
 
-/* Aggiorna Annuncio dopo che il proprietario lo abbia modificato */
+/* Aggiorna Annuncio dopo che il proprietario lo ha modificato */
 router.post('/aggiornaAnnuncio', aggiornaAnnuncio);
 
 /* Elimina annuncio selezionato dal proprietario */

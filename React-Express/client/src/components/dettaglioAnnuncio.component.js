@@ -393,7 +393,6 @@ export default class DettaglioAnnuncio extends Component {
                     <input className="form-control" name="n_bambini" type="number" min="0" max={this.state.n_posti - this.state.datiPrenotazione.n_adulti || this.state.n_posti} onChange={this.handleChange} required />
                   </div>
 
-                  {/* <button type="button" className="btn btn-success btn-lg" onClick={() => this.effettuaPrenotazione()}>Paga €{this.state.costoTotale} e affitta!</button> */}
                   <button type="button" className="btn btn-success btn-lg mb-3" onClick={() => this.effettuaPrenotazione()}>Paga e affitta!</button>
                 </form>
 
