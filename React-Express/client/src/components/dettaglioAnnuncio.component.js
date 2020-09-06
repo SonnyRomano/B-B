@@ -99,7 +99,7 @@ export default class DettaglioAnnuncio extends Component {
 
         // Carica le immagini dell'annuncio dentro listOfImages
         const path = require.context('../../../images', true)
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
           try {
             var joined = this.state.listOfImages.concat(path('./ID' + this.state.idAnnuncio + '/img' + i + '.png'));
             this.setState({ listOfImages: joined })
