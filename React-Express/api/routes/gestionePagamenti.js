@@ -14,8 +14,8 @@ async function insPagamento(req, res, next) {
 
         //CREO TABELLA estremi_pagamento SE NON ESISTE
         query = 'CREATE TABLE IF NOT EXISTS estremi_pagamento \
-        (`idPagamento` INT AUTO_INCREMENT PRIMARY KEY, `fname` VARCHAR(255), `email` VARCHAR(255), `adr` VARCHAR(255),\
-         `city` VARCHAR(255), `prov` VARCHAR(255), `cap` VARCHAR(255), `intestatario_carta` VARCHAR(255), `num_carta` VARCHAR(255),\
+        (`idPagamento` INT AUTO_INCREMENT PRIMARY KEY, `nome` VARCHAR(255), `email` VARCHAR(255), `indirizzo` VARCHAR(255),\
+         `citta` VARCHAR(255), `provincia` VARCHAR(255), `cap` VARCHAR(255), `intestatario_carta` VARCHAR(255), `num_carta` VARCHAR(255),\
           `mese_scadenza` INT, `anno_scadenza` INT, `cvv` INT)'
         db.query(query, (err, result) => {
             if (err) throw err
@@ -31,7 +31,7 @@ async function insPagamento(req, res, next) {
 
         //INSERISCO RECORD DENTRO LA TABELLA estremi_pagamenti
         results = await db.query('INSERT INTO `estremi_pagamento` \
-          (fname, email, adr, city, prov, cap, intestatario_carta, num_carta, mese_scadenza, anno_scadenza, cvv) VALUES ?',
+          (nome, email, indirizzo, citta, provincia, cap, intestatario_carta, num_carta, mese_scadenza, anno_scadenza, cvv) VALUES ?',
             [
                 [
                     [
