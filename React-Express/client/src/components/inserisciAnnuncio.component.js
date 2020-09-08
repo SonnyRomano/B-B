@@ -242,7 +242,7 @@ export default class InserisciAnnuncio extends Component {
 
             <div className="form-group">
               <label>Titolo annuncio</label>
-              <input className="form-control" name='titolo' maxLength='25' onChange={this.handleChange} required />
+              <input className="form-control" name='titolo' maxLength='45' onChange={this.handleChange} required />
             </div>
 
             <label>Descrizione</label>
