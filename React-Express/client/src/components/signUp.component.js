@@ -77,12 +77,16 @@ export default class SignUp extends Component {
                         <div className="form-group">
                             <label htmlFor="pass">Password</label>
                             <input name="pass" id="pass" type="password" className="form-control" maxLength="40"
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                title="Deve contenere almeno un numero, una lettera maiuscole e una minuscola, e almeno 8 o più caratteri"
                                 onChange={this.handleChange} required />
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="repass">Reinserisci password</label>
                             <input name="repass" id="repass" type="password" className="form-control" maxLength="40"
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                title="Deve contenere almeno un numero, una lettera maiuscole e una minuscola, e almeno 8 o più caratteri"
                                 onChange={this.checkPassword} required />
                         </div>
 
