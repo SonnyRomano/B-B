@@ -23,7 +23,7 @@ export default class VisualizzaPrenotazioniTasse extends Component {
     return diffDays
   }
 
-  componentDidmount() {
+  componentDidMount() {
 
     checkRoutingAccess(this.props)
 

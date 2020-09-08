@@ -11,8 +11,7 @@ export default class VisualizzaPrenotazioni extends Component {
     listItems: ''
   }
 
-  componentDidmount() {
-
+  componentDidMount() {
     checkRoutingAccess(this.props)
 
     let idProprietario = sessionStorage.getItem('id')

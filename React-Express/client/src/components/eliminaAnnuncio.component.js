@@ -8,7 +8,7 @@ export default class EliminaAnnuncio extends Component {
         listItems: '',
     }
 
-    componentDidmount() {
+    componentDidMount() {
 
         let idProprietario = sessionStorage.getItem('id')
 

@@ -10,7 +10,7 @@ export default class VisualizzaPrenotazioniQuestura extends Component {
     listItems: '',
   }
 
-  componentDidmount() {
+  componentDidMount() {
 
     checkRoutingAccess(this.props)
 
