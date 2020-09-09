@@ -36,7 +36,7 @@ export default class VisualizzaGuadagno extends Component {
             <td>{dateFormat(d.dateFrom, "dd/mm/yyyy")}</td>
             <td>{dateFormat(d.dateTo, "dd/mm/yyyy")}</td>
             <td>{d.n_adulti + d.n_bambini}</td>
-            <td>{d.costo}€</td>
+            <td>{d.costo} €</td>
           </tr>
         );
         this.setState({
