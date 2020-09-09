@@ -47,7 +47,7 @@ export default class DiventaHost extends Component {
                     <div className="container">
                         <button type="submit" style={{ marginBottom: '2rem', marginLeft: '10%', width: '30%' }}>Conferma</button>
 
-                        <button onClick={() => displayComponent("DiventaHost", false)} style={{ marginBottom: '2rem', marginLeft: '20%', width: '30%' }}>Annulla</button>
+                        <button type='button' onClick={() => displayComponent("DiventaHost", false)} style={{ marginBottom: '2rem', marginLeft: '20%', width: '30%' }}>Annulla</button>
                     </div>
                 </form>
             </div>
