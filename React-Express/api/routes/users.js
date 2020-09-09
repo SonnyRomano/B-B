@@ -77,7 +77,7 @@ async function registrazione(req, res, next) {
         });
       console.log(results);
       console.log(`Utente ${req.body.user.email} inserito!`);
-      res.status(200).send(results);
+      res.status(200).send(results.insertId.toString());
     }
   } catch (err) {
     console.log(err);
