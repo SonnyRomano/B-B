@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../stylesheets/navbar.module.css"
 import displayComponent from '../utility/displayComponent'
-import logo from '../Bootstrap.svg'
+import logo from '../images/LogoTM.png'
 
 export default class Navbar extends Component {
 
@@ -70,7 +70,7 @@ export default class Navbar extends Component {
       <div>
         <nav className="navbar navbar-expand-md navbar-dark bg-dark" style={{ zIndex: 999 }}>
           <a className="navbar-brand" href="/">
-            <img src={logo} width="30" height="30" alt='HomePageImg' className="d-inline-block align-top" />Bootstrap</a>
+            <img src={logo} width="40" height="30" alt='HomePageImg' className="d-inline-block align-top" />   Team Mars</a>
 
           <button className="navbar-toggler" style={{ width: 60 }} type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span className="navbar-toggler-icon"></span>
