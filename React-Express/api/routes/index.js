@@ -6,17 +6,4 @@ router.get('/', function (req, res, next) {
   res.send('HomePage');
 });
 
-/* GET login page. */
-router.get('/inserisciAnnuncio', function (req, res, next) {
-  res.render('InserisciAnnuncio');
-});
-
-router.get('/paginaRicerca', function (req, res, next) {
-  res.render('PaginaRicerca');
-});
-
-// router.get('/moduloPagamento', function (req, res, next) {
-//   res.render('moduloPagamento')
-// })
-
 module.exports = router;

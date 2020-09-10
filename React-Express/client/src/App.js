@@ -6,12 +6,10 @@ import HomePage from './components/homePage.component'
 import Login from './components/login.component'
 import SignUp from './components/signUp.component';
 import DiventaHost from './components/diventaHost.component'
-//import Footer from './components/footer.component';
 import PaginaRicerca from './components/paginaRicerca.component';
 
 import InserisciAnnuncio from './components/inserisciAnnuncio.component'
 import DettaglioAnnuncio from './components/dettaglioAnnuncio.component';
-import EliminaAnnuncio from './components/eliminaAnnuncio.component';
 import ModificaAnnuncio from './components/modificaAnnuncio.component';
 import PaginaRicercaProprietario from './components/paginaRicercaProprietario.component';
 import moduloPagamento from './components/moduloPagamento.component';
@@ -53,7 +51,6 @@ class App extends Component {
                         <Route exact path="/" component={HomePage} />
 
                         <Route exact path="/gestioneAnnunci/dettaglioAnnuncio" component={DettaglioAnnuncio} />
-                        <Route exact path="/gestioneAnnunci/eliminaAnnuncio" component={EliminaAnnuncio} />
                         <Route exact path="/gestioneAnnunci/inserisciAnnuncio" component={InserisciAnnuncio} />
                         <Route exact path="/gestioneAnnunci/modificaAnnuncio" component={ModificaAnnuncio} />
                         <Route exact path="/gestioneAnnunci/paginaRicerca" component={PaginaRicerca} />
@@ -70,8 +67,6 @@ class App extends Component {
                         <Route exact path="/gestioneLegale/rendicontaTasse" component={VisualizzaPrenotazioniTasse} />
                     </React.Fragment>
                 </Router>
-
-                {/* <Footer /> */}
             </React.Fragment>
         );
     }
