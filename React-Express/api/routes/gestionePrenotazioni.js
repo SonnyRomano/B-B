@@ -407,7 +407,7 @@ async function visualizzaGuadagnoProprietario(req, res, next) {
 }
 
 
-// middleware di recuperaAnnuncio
+// middleware di recuperaPrenotazioni
 async function recuperaPrenotazioni(req, res, next) {
     // istanziamo il middleware
     const db = await makeDb(config);
