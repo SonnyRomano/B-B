@@ -56,7 +56,7 @@ export default class VisualizzaPrenotazioni extends Component {
       })
   }
 
-  handleConfirm(d) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
+  handleConfirm(d) {
     const confermaP = {
       idPrenotazione: d.idPrenotazione,
       idCliente: d.idCliente,
@@ -77,7 +77,7 @@ export default class VisualizzaPrenotazioni extends Component {
       })
   }
 
-  handleRejection(d) { //React passa i dati dell'annuncio alla  successiva pagina visualizza dettaglio annuncio
+  handleRejection(d) {
     const annullaP = {
       idPrenotazione: d.idPrenotazione,
       idCliente: d.idCliente,
